@@ -11,4 +11,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd2b6c6e499ba84db401685dc8fc5a3, type: 3}
   m_Name: CharactersDB
   m_EditorClassIdentifier: 
-  Database: []
+  Database:
+  - Id: 1
+    Name: Barbarian
+    AssetPath: Assets/Game/Resources/Characters/Barbarian.prefab
+    MainStatValue: 0
+    LevelConstitution: 0
+    LevelDexterity: 0
+    LevelIntelligence: 0
+    LevelStrength: 0
+    StartConstitution: 0
+    StartDexterity: 0
+    StartIntelligence: 0
+    StartStrength: 0
+    SecondGradeMultiplier: 0
+    ThirdGradeMultiplier: 0
+    ForthGradeMultiplier: 0
+    FifthGradeMultiplier: 0
+    Skills: []
+  - Id: 2
+    Name: Bear
+    AssetPath: Assets/Game/Resources/Characters/Bear.prefab
+    MainStatValue: 0
+    LevelConstitution: 0
+    LevelDexterity: 0
+    LevelIntelligence: 0
+    LevelStrength: 0
+    StartConstitution: 0
+    StartDexterity: 0
+    StartIntelligence: 0
+    StartStrength: 0
+    SecondGradeMultiplier: 0
+    ThirdGradeMultiplier: 0
+    ForthGradeMultiplier: 0
+    FifthGradeMultiplier: 0
+    Skills: []
+  - Id: 3
+    Name: Warrior
+    AssetPath: Assets/Game/Resources/Characters/Warrior.prefab
+    MainStatValue: 0
+    LevelConstitution: 0
+    LevelDexterity: 0
+    LevelIntelligence: 0
+    LevelStrength: 0
+    StartConstitution: 0
+    StartDexterity: 0
+    StartIntelligence: 0
+    StartStrength: 0
+    SecondGradeMultiplier: 0
+    ThirdGradeMultiplier: 0
+    ForthGradeMultiplier: 0
+    FifthGradeMultiplier: 0
+    Skills: []

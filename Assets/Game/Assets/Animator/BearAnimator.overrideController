@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BearAnimator
+  m_Controller: {fileID: 9100000, guid: 1063225001e363f489723a634ea7eaae, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 0cf34b49f6b307844bd316bc847d4be4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 626bcf84241e6ff4b97828347932a6c9, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 8d5c8f97d8640dd479a7c7bdc0e038ce, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 35445d8d55713df499cd3f689b849dbb, type: 3}
