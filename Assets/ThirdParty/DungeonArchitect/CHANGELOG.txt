@@ -1,0 +1,29 @@
+Version 1.2.0
+=============
+* Spatial constraints allow you to specify meshes selectively based on nearby constraints 
+* Added better 2D support with custom 2D markers and spatial constraint support
+* Added a new builder to create levels like Binding of Isaac (check third party demos for more details)
+* Fixed various bugs
+
+Version 1.1.0
+=============
+* Added a new builder algorithm for generating simple cities.    This also serves as a simple example reference to your own builders 
+* Refactored the directory structure to make the builders more modular
+* Added new demo theme files (Outdoor Cliff, Medieval Stronghold etc).   
+* Updated survival shooter demo to use these new theme files
+* Added various city builder samples
+* Added an example demonstrating the use of dungeon event listeners and dynamic volume spawning 
+* Added various samples that work with third-party assets (Gaia, 3DForge Village Interior / Exterior kit etc).  Created an alternate version of the landscape transformer script to beautify Gaia generated terrains
+
+Version 1.0.2
+=============
+* Added Indoor demos and Volumes demo for the Candy Theme
+* Fixed System.IO class name clash issues with beta preview version of Unity 5.3.x
+* Added notification in the 2D demo game to disable anti-aliasing to get rid of sprite dark edge artifacts
+* Removed dependecies on custom tags from the 2D and 3D game demos to avoid import issues due to missing tags.   The sample games work without tags now
+
+Version 1.0.1
+=============
+Initial Version
+
+
