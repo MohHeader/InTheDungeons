@@ -32,6 +32,7 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
         protected override void DisplayEditor(CharacterData element) {
             base.DisplayEditor(element);
             element.Asset = EditorGUILayout.ObjectField(new GUIContent("Asset:"), element.Asset, typeof(GameObject), false) as GameObject;
+            element.Icon = (Sprite)EditorGUILayout.ObjectField("Icon:", element.Icon, typeof(Sprite), false);
             element.MainStatValue = (MainStatEnum) EditorGUILayout.EnumPopup(new GUIContent("Main Attribute:"), element.MainStatValue);
 
             EditorGUILayout.Space();

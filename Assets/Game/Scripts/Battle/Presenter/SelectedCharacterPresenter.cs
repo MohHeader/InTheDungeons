@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
-    public class SelectedCharacterPresenter : PresenterBase<BattlePresenter>
+    public class SelectedCharacterPresenter : PresenterBase<SquadPresenter>
     {
         private readonly List<GameObject> _lastRender = new List<GameObject>();
 
@@ -24,7 +24,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             get { return EmptyChildren; }
         }
 
-        protected override void BeforeInitialize(BattlePresenter argument)
+        protected override void BeforeInitialize(SquadPresenter argument)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             StartCoroutine(CalculateConstantPath());
         }
 
-        protected override void Initialize(BattlePresenter argument) {
+        protected override void Initialize(SquadPresenter argument) {
             argument.SelectedCharacter.Subscribe(SelectedCharacterChanged);
         }
 

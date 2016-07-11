@@ -13,8 +13,6 @@ GameObject:
   - 114: {fileID: 11434460}
   - 143: {fileID: 14357568}
   - 114: {fileID: 11452296}
-  - 114: {fileID: 11440496}
-  - 114: {fileID: 11424006}
   m_Layer: 12
   m_Name: Character
   m_TagString: Character
@@ -35,27 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11424006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b090bec917bbe4c3bbc612ef13f7c4a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useRaycasting: 1
-  mask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  thickRaycast: 0
-  thickRaycastRadius: 0
-  raycastOffset: {x: 0, y: 0, z: 0}
-  subdivideEveryIter: 0
-  iterations: 2
-  useGraphRaycasting: 0
 --- !u!114 &11434460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -67,9 +44,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5452bbfbb63bdc2489a1bff892de3ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  nextWaypointDistance: 0.5
-  rotationSpeed: 180
+  Speed: 3
+  RotationSpeed: 360
+  CharacterData:
+    Id: 0
+    Name: 
+    AssetPath: 
+    IconPath: 
+    MainStatValue: 0
+    Skills: []
+    LevelConstitution: 0
+    LevelDexterity: 0
+    LevelIntelligence: 0
+    LevelStrength: 0
+    StartConstitution: 0
+    StartDexterity: 0
+    StartIntelligence: 0
+    StartStrength: 0
+    SecondGradeMultiplier: 0
+    ThirdGradeMultiplier: 0
+    ForthGradeMultiplier: 0
+    FifthGradeMultiplier: 0
 --- !u!114 &11440220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,19 +76,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11440496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163824}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ffa084e9f3d48b59e691352d40eb68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 1
-  detail: 10
 --- !u!114 &11452296
 MonoBehaviour:
   m_ObjectHideFlags: 1

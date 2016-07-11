@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Game.Scripts.Battle.Model;
+using Assets.Game.Scripts.Battle.Presenter.UI;
 using DungeonArchitect;
 using DungeonArchitect.Utils;
 using UniRx;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
@@ -16,25 +18,32 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public List<CharacterPresenter> Characters;
         protected Squad Squad;
 
+        public ReactiveProperty<CharacterPresenter> SelectedCharacter;
+        public SelectedCharacterPresenter SelectedCharacterPresenter;
+
+        public GameObject PortraightPrefab;
+        public Transform PortraightsRoot;
+
         protected override IPresenter[] Children
         {
-            get { return EmptyChildren; }
+            get { return new IPresenter[] {SelectedCharacterPresenter}; }
         }
 
         protected override void BeforeInitialize(Squad argument)
         {
+            SelectedCharacter = new ReactiveProperty<CharacterPresenter>();
+            SelectedCharacter.Subscribe(SelectedCharacterChanged);
+
             if (argument == null || argument.Characters == null || argument.Characters.Count == 0) 
                 throw new Exception("Squad not configured");
 
             Squad = argument;
             Characters = new List<CharacterPresenter>();
-        }
 
-        protected override void Initialize(Squad argument)
-        {
             var dungeon = FindObjectOfType<DungeonArchitect.Dungeon>();
             var grid = (dungeon.ActiveModel as GridDungeonModel);
             var startCell = GridDungeonModelUtils.FindFurthestRooms(grid)[0];
+            Debug.Assert(grid != null, "grid != null");
             var roomCenter = MathUtils.GridToWorld(grid.Config.GridCellSize, startCell.CenterF);
             var index = 0;
 
@@ -42,13 +51,58 @@ namespace Assets.Game.Scripts.Battle.Presenter
             {
                 var instance = Instantiate(CharacterPrefab);
                 var characterInstance = instance.GetComponent<CharacterPresenter>();
-                characterInstance.PropagateArgument(character);
+                characterInstance.ForceInitialize(character);
                 Characters.Add(characterInstance);
 
                 var spawnNode = AstarPath.active.GetNearest(roomCenter + Deltas[index]);
                 instance.transform.position = (Vector3)spawnNode.node.position;
                 index++;
             }
+            SelectedCharacterPresenter.PropagateArgument(this);
+        }
+
+        private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
+        {
+        }
+
+        protected override void Initialize(Squad argument)
+        {
+            SpawnPortraights();
+
+            SelectCharacter(Characters.First());
+        }
+
+        protected void SpawnPortraights()
+        {
+            foreach (var characterPresenter in Characters)
+            {
+                var portraight = Instantiate(PortraightPrefab);
+                portraight.transform.SetParent(PortraightsRoot, false);
+                var presenter = portraight.GetComponent<CharacterPortraightPresenter>();
+                presenter.SquadPresenter = this;
+                presenter.ForceInitialize(characterPresenter);
+            }
+        }
+
+        public void Update()
+        {
+            // For debugging purposes
+            if (Input.GetMouseButtonUp(0))
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
+                {
+                    var character = hit.transform.GetComponent<CharacterPresenter>();
+                    SelectCharacter(character);
+                }
+            }
+        }
+
+        public void SelectCharacter(CharacterPresenter character)
+        {
+            if (character != null)
+                SelectedCharacter.SetValueAndForceNotify(character);
         }
     }
 }

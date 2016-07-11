@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
-    public class BattleCameraPresenter : PresenterBase<BattlePresenter>
+    public class BattleCameraPresenter : PresenterBase<SquadPresenter>
     {
         public Vector3 Offset;         //Private variable to store the offset distance between the player and camera
         protected override IPresenter[] Children
@@ -11,11 +11,11 @@ namespace Assets.Game.Scripts.Battle.Presenter
             get { return EmptyChildren; }
         }
 
-        protected override void BeforeInitialize(BattlePresenter argument)
+        protected override void BeforeInitialize(SquadPresenter argument)
         {
         }
 
-        protected override void Initialize(BattlePresenter argument)
+        protected override void Initialize(SquadPresenter argument)
         {
             argument.SelectedCharacter.Subscribe(SelectedCharacterChanged);
         }
@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             FollowTransform = characterPresenter.transform;
         }
 
-        void LateUpdate()
+        protected void LateUpdate()
         {
             if (FollowTransform == null) return;
             // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.

@@ -15,7 +15,9 @@ MonoBehaviour:
   - Id: 1
     Name: Barbarian
     AssetPath: Assets/Game/Resources/Characters/Barbarian.prefab
+    IconPath: Assets/Game/Resources/CharacterIcons/Barbarian.png
     MainStatValue: 0
+    Skills: []
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -28,11 +30,12 @@ MonoBehaviour:
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
     FifthGradeMultiplier: 0
-    Skills: []
   - Id: 2
     Name: Bear
     AssetPath: Assets/Game/Resources/Characters/Bear.prefab
+    IconPath: Assets/Game/Resources/CharacterIcons/Bear.png
     MainStatValue: 0
+    Skills: []
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -45,11 +48,12 @@ MonoBehaviour:
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
     FifthGradeMultiplier: 0
-    Skills: []
   - Id: 3
     Name: Warrior
     AssetPath: Assets/Game/Resources/Characters/Warrior.prefab
+    IconPath: Assets/Game/Resources/CharacterIcons/Warrior.png
     MainStatValue: 0
+    Skills: []
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -62,4 +66,3 @@ MonoBehaviour:
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
     FifthGradeMultiplier: 0
-    Skills: []
