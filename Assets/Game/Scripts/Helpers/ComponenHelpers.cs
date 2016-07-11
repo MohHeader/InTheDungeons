@@ -28,6 +28,27 @@ namespace Assets.Game.Scripts.Helpers
             }
         }
 
+        public static DynamicGridObstacle FindDynamicGridObstacleComponent(this GameObject gameObject)
+        {
+            try
+            {
+                var gameObjects = gameObject.DescendantsAndSelf().ToList();
+                var componentHolder =
+                    gameObjects.FirstOrDefault(_ => _.GetComponent<DynamicGridObstacle>() != null);
+                if (componentHolder != null)
+                    return componentHolder.GetComponent<DynamicGridObstacle>();
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant",
+                    gameObject.name, typeof(DynamicGridObstacle));
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
+                    gameObject.name, typeof(DynamicGridObstacle), ex);
+                return null;
+            }
+        }
+
         public static Animator FindAnimatorComponent(this GameObject gameObject)
         {
             try

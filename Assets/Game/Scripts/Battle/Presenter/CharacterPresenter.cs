@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Game.Scripts.Battle.Model;
+﻿using Assets.Game.Scripts.Battle.Model;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
 using Pathfinding;
@@ -27,7 +26,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
             }
         }
         protected Animator animator;
-        private CharacterController controller;
+        protected CharacterController controller;
+        protected DynamicGridObstacle obstacle;
 
         private Seeker _seeker;
         //The AI's speed per second
@@ -51,6 +51,10 @@ namespace Assets.Game.Scripts.Battle.Presenter
             prefab.transform.SetParent(transform, false);
             animator = gameObject.FindAnimatorComponent();
             controller = gameObject.FindCharacterControllerComponent();
+            obstacle = gameObject.FindDynamicGridObstacleComponent();
+            if (obstacle != null) {
+                obstacle.DoUpdateGraphs();
+            }
         }
 
         protected override void Initialize(Character argument)
@@ -71,6 +75,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 currentWaypoint = 0;
 
                 path = newPath;
+                if (obstacle != null) obstacle.enabled = false;
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
                 animator.SetBool("Moving", true);
             }
@@ -89,6 +94,10 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 Debug.Log("End Of Path Reached");
                 animator.SetBool("Moving", false);
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+                if (obstacle != null) {
+                    obstacle.enabled = true;
+                    obstacle.DoUpdateGraphs();
+                }
                 path = null;
                 return;
             }
