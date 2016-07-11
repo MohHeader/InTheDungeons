@@ -1,14 +1,15 @@
 ﻿using System;
+using UnityEngine;
+
+
+
+#if UNITY_EDITOR
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.UI;
-
 [SerializableAttribute]
-public class OutlineColor {
+public class OutlineColor
+{
     public Color color;
     public string colorName;
 }
@@ -515,3 +516,4 @@ public class IconCreator : MonoBehaviour {
         iconSizeY = IconSizeY;
     }
 }
+#endif

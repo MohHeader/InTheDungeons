@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Dungeon.Scripts.DataLayer.Skills;
 using Assets.Dungeon.Scripts.Utility.Common;
+using Assets.Game.Scripts.Helpers;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -43,7 +44,8 @@ namespace Assets.Game.Scripts.Utility.Characters
             }
             set { AssetPath = AssetDatabase.GetAssetPath(value); }
 #else
-            get { return Resources.Load<GameObject>(AssetPath); }
+            get {
+                return Resources.Load<GameObject>(AssetPath.CutString("Resources/", ".")); }
 #endif
         }
 
@@ -58,7 +60,8 @@ namespace Assets.Game.Scripts.Utility.Characters
             }
             set { IconPath = AssetDatabase.GetAssetPath(value); }
 #else
-            get { return Resources.Load<Sprite>(IconPath); }
+            get {                 
+return Resources.Load<Sprite>(IconPath.CutString("Resources/", ".")); }
 #endif
         }
 
