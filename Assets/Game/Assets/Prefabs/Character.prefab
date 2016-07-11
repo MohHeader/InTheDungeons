@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5452bbfbb63bdc2489a1bff892de3ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 3
   nextWaypointDistance: 0.5
   rotationSpeed: 180
 --- !u!114 &11440220

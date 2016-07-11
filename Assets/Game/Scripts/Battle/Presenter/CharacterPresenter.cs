@@ -1,6 +1,7 @@
 ﻿using Assets.Game.Scripts.Battle.Model;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
+using DG.Tweening;
 using Pathfinding;
 using UniRx;
 using UnityEngine;
@@ -72,51 +73,72 @@ namespace Assets.Game.Scripts.Battle.Presenter
             if (!newPath.error)
             {
                 //Reset the waypoint counter
-                currentWaypoint = 0;
+                currentWaypoint = -1;
 
                 path = newPath;
                 if (obstacle != null) obstacle.enabled = false;
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
                 animator.SetBool("Moving", true);
+                RotateCallback();
             }
+        }
+
+        protected void MoveCallback() {
+            var duration = Vector3.Distance(path.vectorPath[currentWaypoint], transform.position)/speed;
+            Debug.Log(duration);
+            transform.DOMove(path.vectorPath[currentWaypoint], duration).OnComplete(RotateCallback);
+        }
+
+        protected void RotateCallback() {
+            currentWaypoint ++;
+            if (currentWaypoint >= path.vectorPath.Count)
+            {
+                MoveFinished();
+                return;
+            }
+            transform.DOLookAt(path.vectorPath[currentWaypoint], 0.15f, AxisConstraint.None).OnComplete(MoveCallback);
+        }
+
+        protected void MoveFinished() {
+            Debug.Log("End Of Path Reached");
+            animator.SetBool("Moving", false);
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+            if (obstacle != null)
+            {
+                obstacle.enabled = true;
+                obstacle.DoUpdateGraphs();
+            }
+            path = null;
         }
 
         void Update()
         {
-            if (path == null)
-            {
-                //We have no path to move after yet
-                return;
-            }
+            //if (path == null)
+            //{
+            //    //We have no path to move after yet
+            //    return;
+            //}
 
-            if (currentWaypoint >= path.vectorPath.Count)
-            {
-                Debug.Log("End Of Path Reached");
-                animator.SetBool("Moving", false);
-                CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
-                if (obstacle != null) {
-                    obstacle.enabled = true;
-                    obstacle.DoUpdateGraphs();
-                }
-                path = null;
-                return;
-            }
-            //Direction to the next waypoint
-            Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-            //transform.LookAt(path.vectorPath[currentWaypoint]);
-            // Rotate towards the target
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //if (currentWaypoint >= path.vectorPath.Count)
+            //{
+            //    return;
+            //}
+            ////Direction to the next waypoint
+            //Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+            ////transform.LookAt(path.vectorPath[currentWaypoint]);
+            //// Rotate towards the target
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotationSpeed * Time.deltaTime);
+            //transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            dir *= speed * Time.deltaTime;
-            controller.SimpleMove(dir);
-            //Check if we are close enough to the next waypoint
-            //If we are, proceed to follow the next waypoint
-            if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
-            {
-                currentWaypoint++;
-                return;
-            }
+            //dir *= speed * Time.deltaTime;
+            //controller.SimpleMove(dir);
+            ////Check if we are close enough to the next waypoint
+            ////If we are, proceed to follow the next waypoint
+            //if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
+            //{
+            //    currentWaypoint++;
+            //    return;
+            //}
         }
     }
 }
