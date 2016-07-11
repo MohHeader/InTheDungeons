@@ -10,12 +10,14 @@ GameObject:
   - 4: {fileID: 498174}
   - 114: {fileID: 11479492}
   - 114: {fileID: 11437716}
-  - 143: {fileID: 14329042}
   - 114: {fileID: 11440220}
   - 114: {fileID: 11434460}
-  m_Layer: 0
+  - 143: {fileID: 14357568}
+  - 114: {fileID: 11452296}
+  - 114: {fileID: 11440496}
+  m_Layer: 12
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,6 +73,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11440496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ffa084e9f3d48b59e691352d40eb68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  detail: 10
+--- !u!114 &11452296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateError: 0.2
+  checkTime: 0.2
 --- !u!114 &11479492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -87,18 +115,18 @@ MonoBehaviour:
   startEndModifier:
     addPoints: 0
     exactStartPoint: 1
-    exactEndPoint: 0
+    exactEndPoint: 1
     useRaycasting: 0
     mask:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 6144
     useGraphRaycasting: 0
-  traversableTags: -1
+  traversableTags: 1
   traversableTagsCompatibility:
     tagsChange: -1
     tagsSet: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
---- !u!143 &14329042
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000080969800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!143 &14357568
 CharacterController:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

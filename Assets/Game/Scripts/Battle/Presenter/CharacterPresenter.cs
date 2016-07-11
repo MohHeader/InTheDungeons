@@ -7,6 +7,18 @@ namespace Assets.Game.Scripts.Battle.Presenter
     public class CharacterPresenter : PresenterBase<Character>
     {
         protected Character Character;
+
+        public Seeker Seeker
+        {
+            get
+            {
+                if (_seeker == null) _seeker = GetComponent<Seeker>();
+                return _seeker;
+            }
+        }
+
+        private Seeker _seeker;
+
         protected override IPresenter[] Children
         {
             get { return EmptyChildren; }
