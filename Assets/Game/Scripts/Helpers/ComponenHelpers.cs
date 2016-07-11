@@ -3,7 +3,7 @@ using System.Linq;
 using Unity.Linq;
 using UnityEngine;
 
-namespace Assets.Dungeon.Scripts.Helpers
+namespace Assets.Game.Scripts.Helpers
 {
     public static class ComponenHelpers
     {
@@ -27,6 +27,49 @@ namespace Assets.Dungeon.Scripts.Helpers
                 return null;
             }
         }
+
+        public static Animator FindAnimatorComponent(this GameObject gameObject)
+        {
+            try
+            {
+                var gameObjects = gameObject.DescendantsAndSelf().ToList();
+                var componentHolder =
+                    gameObjects.FirstOrDefault(_ => _.GetComponent<Animator>() != null);
+                if (componentHolder != null)
+                    return componentHolder.GetComponent<Animator>();
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant",
+                    gameObject.name, typeof(Animator));
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
+                    gameObject.name, typeof(Animator), ex);
+                return null;
+            }
+        }
+        
+        public static CharacterController FindCharacterControllerComponent(this GameObject gameObject)
+        {
+            try
+            {
+                var gameObjects = gameObject.DescendantsAndSelf().ToList();
+                var componentHolder =
+                    gameObjects.FirstOrDefault(_ => _.GetComponent<CharacterController>() != null);
+                if (componentHolder != null)
+                    return componentHolder.GetComponent<CharacterController>();
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant",
+                    gameObject.name, typeof(CharacterController));
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
+                    gameObject.name, typeof(CharacterController), ex);
+                return null;
+            }
+        }
+        
         public static NavMeshAgent FindNavMeshAgentComponent(this GameObject gameObject) 
         {
             try

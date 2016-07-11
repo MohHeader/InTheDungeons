@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 498174}
   - 114: {fileID: 11479492}
-  - 114: {fileID: 11437716}
   - 114: {fileID: 11440220}
   - 114: {fileID: 11434460}
   - 143: {fileID: 14357568}
@@ -46,22 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5452bbfbb63bdc2489a1bff892de3ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11437716
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163824}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c08fa155b015bd943861bd1db3104da4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
-  speed: 150
+  speed: 30
   nextWaypointDistance: 0.5
-  rotationSpeed: 360
+  rotationSpeed: 180
 --- !u!114 &11440220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,7 +65,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64ffa084e9f3d48b59e691352d40eb68, type: 3}
   m_Name: 

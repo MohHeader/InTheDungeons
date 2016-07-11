@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Battle.Presenter {
-    public class SelectedCharacterPresenter : PresenterBase<BattlePresenter> {
+namespace Assets.Game.Scripts.Battle.Presenter
+{
+    public class SelectedCharacterPresenter : PresenterBase<BattlePresenter>
+    {
         private readonly List<GameObject> _lastRender = new List<GameObject>();
 
         protected Path LastPath;
@@ -21,11 +24,14 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             get { return EmptyChildren; }
         }
 
-        protected override void BeforeInitialize(BattlePresenter argument) {
+        protected override void BeforeInitialize(BattlePresenter argument)
+        {
         }
 
-        private void SelectedCharacterChanged(CharacterPresenter characterPresenter) {
-            if (characterPresenter == null) {
+        private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
+        {
+            if (characterPresenter == null)
+            {
                 SelectedCharacter = null;
                 if (SelectionGameObject != null) SelectionGameObject.SetActive(false);
                 ClearPrevious();
@@ -34,12 +40,26 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             if (SelectionGameObject == null) SelectionGameObject = Instantiate(SelectionPrefab);
             // AstarPath.active.Scan();
             SelectedCharacter = characterPresenter;
+            SelectedCharacter.CharacterState.Subscribe(CharacterStateChanged);
             SelectionGameObject.transform.SetParent(characterPresenter.transform, false);
             SelectionGameObject.transform.localPosition = new Vector3(0f, 0.2f, 0f);
-            StartCoroutine(CalculateConstantPath());
+        }
+
+        private void CharacterStateChanged(CharacterPresenter.CharacterStateEnum characterStateEnum) {
+            switch (characterStateEnum) {
+                case CharacterPresenter.CharacterStateEnum.Idle:
+                    ShowPossibleMovements();
+                    break;
+                case CharacterPresenter.CharacterStateEnum.Moving:
+                    ClearPrevious();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("characterStateEnum", characterStateEnum, null);
+            }
         }
 
         protected void ShowPossibleMovements() {
+            StartCoroutine(CalculateConstantPath());
         }
 
         protected override void Initialize(BattlePresenter argument) {
@@ -47,7 +67,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         }
 
         public IEnumerator CalculateConstantPath() {
-            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, 8000, OnPathComplete);
+            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, 4000, OnPathComplete);
 
             SelectedCharacter.Seeker.StartPath(constPath);
             LastPath = constPath;
@@ -124,11 +144,16 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 mesh.uv = uv;
                 mesh.RecalculateNormals();
 
-                var go = new GameObject("Mesh", typeof(MeshRenderer), typeof(MeshFilter));
+                var go = new GameObject("PathMesh", typeof(MeshRenderer), typeof(MeshFilter), typeof(MeshCollider));
+                go.layer = 31;
                 var fi = go.GetComponent<MeshFilter>();
                 fi.mesh = mesh;
                 var re = go.GetComponent<MeshRenderer>();
                 re.material = SquareMat;
+                var meshCollider = go.GetComponent<MeshCollider>();
+                meshCollider.convex = true;
+                meshCollider.sharedMesh = mesh;
+                meshCollider.isTrigger = true;
 
                 _lastRender.Add(go);
             }
@@ -139,6 +164,17 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 Destroy(_lastRender[i]);
             }
             _lastRender.Clear();
+        }
+
+        public void Update() {
+            if (Input.GetMouseButtonDown(0) && SelectedCharacter != null) {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh") {
+                    Debug.Log("Coordinate acquired");
+                    SelectedCharacter.MoveTo(hit.point);
+                }
+            }
         }
     }
 }
