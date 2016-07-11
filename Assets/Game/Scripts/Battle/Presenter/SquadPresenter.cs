@@ -45,7 +45,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 characterInstance.PropagateArgument(character);
                 Characters.Add(characterInstance);
 
-                instance.transform.position = roomCenter + Deltas[index];
+                var spawnNode = AstarPath.active.GetNearest(roomCenter + Deltas[index]);
+                instance.transform.position = (Vector3)spawnNode.node.position;
                 index++;
             }
         }

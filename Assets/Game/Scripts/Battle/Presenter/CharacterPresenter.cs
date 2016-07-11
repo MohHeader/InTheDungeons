@@ -76,6 +76,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 currentWaypoint = -1;
 
                 path = newPath;
+                Debug.Log(path.vectorPath.Count);
                 if (obstacle != null) obstacle.enabled = false;
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
                 animator.SetBool("Moving", true);
@@ -85,7 +86,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         protected void MoveCallback() {
             var duration = Vector3.Distance(path.vectorPath[currentWaypoint], transform.position)/speed;
-            Debug.Log(duration);
             transform.DOMove(path.vectorPath[currentWaypoint], duration).OnComplete(RotateCallback);
         }
 
@@ -96,7 +96,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 MoveFinished();
                 return;
             }
-            transform.DOLookAt(path.vectorPath[currentWaypoint], 0.15f, AxisConstraint.None).OnComplete(MoveCallback);
+            var duration = Vector3.Angle(transform.forward, path.vectorPath[currentWaypoint]) / rotationSpeed;
+            transform.DOLookAt(path.vectorPath[currentWaypoint], duration, AxisConstraint.None).OnComplete(MoveCallback);
         }
 
         protected void MoveFinished() {
