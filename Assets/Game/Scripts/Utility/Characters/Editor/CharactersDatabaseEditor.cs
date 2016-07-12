@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Assets.Dungeon.Scripts.DataLayer.Skills;
 using Assets.Game.Scripts.Utility.Common;
+using Assets.Game.Scripts.Utility.Skills;
 using UnityEditor;
 using UnityEngine;
 
@@ -66,18 +66,18 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             EditorGUILayout.LabelField(new GUIContent("Skills"));
             EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Melee Skill")))
+            if (GUILayout.Button(new GUIContent("Active Skill")))
             {
-                element.Skills.Add(new MeleeSkillData());
+                element.Skills.Add(new SkillData());
             }
-            if (GUILayout.Button(new GUIContent("Shooting Skill")))
-            {
-                element.Skills.Add(new ShootSkillData());
-            }
-            if (GUILayout.Button(new GUIContent("Spell Skill")))
-            {
-                element.Skills.Add(new SpellSkillData());
-            }
+            //if (GUILayout.Button(new GUIContent("Shooting Skill")))
+            //{
+            //    element.Skills.Add(new ShootSkillData());
+            //}
+            //if (GUILayout.Button(new GUIContent("Spell Skill")))
+            //{
+            //    element.Skills.Add(new SpellSkillData());
+            //}
             if (GUILayout.Button(new GUIContent("Passive Skill")))
             {
                 element.Skills.Add(new PassiveSkillData());

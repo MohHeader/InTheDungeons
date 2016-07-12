@@ -1,17 +1,19 @@
 ﻿using System;
-using Assets.Game.Scripts.Helpers;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+#else
+using Assets.Game.Scripts.Helpers;
 #endif
 
-namespace Assets.Dungeon.Scripts.DataLayer.Skills
+namespace Assets.Game.Scripts.Utility.Skills
 {
     public enum TargetEnum
     {
         SingleEnemy,
         AllEnemies,
         Self,
+        SingleAlly,
         AllAllies
     }
 
@@ -37,6 +39,9 @@ namespace Assets.Dungeon.Scripts.DataLayer.Skills
         [SerializeField] public TargetEnum Target;
 
         [SerializeField] public TriggerEnum TriggerName;
+
+        [SerializeField] public float MinimumDistance;
+        [SerializeField] public float MaximumDistance;
 
         public Sprite Icon
         {

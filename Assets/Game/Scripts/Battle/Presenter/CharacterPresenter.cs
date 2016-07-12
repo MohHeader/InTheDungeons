@@ -72,13 +72,13 @@ namespace Assets.Game.Scripts.Battle.Presenter
         {
             if (!newPath.error)
             {
+                CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
                 //Reset the waypoint counter
                 _currentWaypoint = -1;
 
                 Path = newPath;
                 Debug.Log(Path.vectorPath.Count);
-                if (Obstacle != null) Obstacle.enabled = false;
-                CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
+                //if (Obstacle != null) Obstacle.enabled = false;
                 Animator.SetBool("Moving", true);
                 RotateCallback();
             }
@@ -97,7 +97,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 return;
             }
             var duration = Vector3.Angle(transform.forward, Path.vectorPath[_currentWaypoint]) / RotationSpeed;
-            transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration, AxisConstraint.None).OnComplete(MoveCallback);
+            transform.DOLookAt(Path.vectorPath[_currentWaypoint], 0.1f, AxisConstraint.None).OnComplete(MoveCallback);
         }
 
         protected void MoveFinished() {
@@ -105,11 +105,11 @@ namespace Assets.Game.Scripts.Battle.Presenter
             Animator.SetBool("Moving", false);
             if (Obstacle != null)
             {
-                Obstacle.enabled = true;
+                //Obstacle.enabled = true;
                 Obstacle.DoUpdateGraphs();
             }
-            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
             Path = null;
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
         }
     }
 }

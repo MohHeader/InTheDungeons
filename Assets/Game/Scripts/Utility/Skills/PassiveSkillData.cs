@@ -1,4 +1,4 @@
-﻿namespace Assets.Dungeon.Scripts.DataLayer.Skills
+﻿namespace Assets.Game.Scripts.Utility.Skills
 {
     public class PassiveSkillData : SkillData
     {
