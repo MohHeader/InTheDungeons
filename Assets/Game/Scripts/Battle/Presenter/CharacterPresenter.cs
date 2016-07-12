@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Battle.Model;
+﻿using System.Linq;
+using Assets.Game.Scripts.Battle.Model;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
 using DG.Tweening;
@@ -17,6 +18,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         public ReactiveProperty<CharacterStateEnum> CharacterState = new ReactiveProperty<CharacterStateEnum>();
         protected Character Character;
+
+        public BattleSkill[] Skills;
 
         public Seeker Seeker
         {
@@ -57,6 +60,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             if (Obstacle != null) {
                 Obstacle.DoUpdateGraphs();
             }
+            Skills = CharacterData.Skills.Select(_ => new BattleSkill(_)).ToArray();
         }
 
         protected override void Initialize(Character argument)

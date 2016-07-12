@@ -54,7 +54,7 @@ namespace Assets.Game.Scripts.Utility.Skills
             }
             set { IconPath = AssetDatabase.GetAssetPath(value); }
 #else
-            get { return Resources.Load<Sprite>(IconPath.CutString("Resources/", ".")); }
+            get { return Resources.Load<Sprite>(IconPath.CutResAndExtension()); }
 #endif
         }
 
@@ -72,7 +72,9 @@ namespace Assets.Game.Scripts.Utility.Skills
                 Cooldown = Cooldown,
                 Name = Name,
                 Target = Target,
-                TriggerName = TriggerName
+                TriggerName = TriggerName,
+                MinimumDistance = MinimumDistance,
+                MaximumDistance = MaximumDistance
             };
         }
     }

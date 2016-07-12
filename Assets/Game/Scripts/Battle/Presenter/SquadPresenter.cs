@@ -24,9 +24,11 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public GameObject PortraightPrefab;
         public Transform PortraightsRoot;
 
+        public BattleSkillPresenter[] Skills;
+
         protected override IPresenter[] Children
         {
-            get { return new IPresenter[] {SelectedCharacterPresenter}; }
+            get { return Skills.Select(_ => (IPresenter)_).Union(new List<IPresenter> { SelectedCharacterPresenter}).ToArray(); }
         }
 
         protected override void BeforeInitialize(Squad argument)
@@ -59,10 +61,15 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 index++;
             }
             SelectedCharacterPresenter.PropagateArgument(this);
+            foreach (var battleSkillPresenter in Skills)
+            {
+                battleSkillPresenter.PropagateArgument(this);
+            }
         }
 
         private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
         {
+            // TODO: Show skills
         }
 
         protected override void Initialize(Squad argument)

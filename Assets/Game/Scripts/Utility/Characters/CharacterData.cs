@@ -44,7 +44,7 @@ namespace Assets.Game.Scripts.Utility.Characters
             }
             set { AssetPath = AssetDatabase.GetAssetPath(value); }
 #else
-            get { return Resources.Load<GameObject>(AssetPath.CutString("Resources/", ".")); }
+            get { return Resources.Load<GameObject>(AssetPath.CutResAndExtension()); }
 #endif
         }
 
@@ -59,7 +59,7 @@ namespace Assets.Game.Scripts.Utility.Characters
             }
             set { IconPath = AssetDatabase.GetAssetPath(value); }
 #else
-            get { return Resources.Load<Sprite>(IconPath.CutString("Resources/", ".")); }
+            get { return Resources.Load<Sprite>(IconPath.CutResAndExtension()); }
 #endif
         }
 

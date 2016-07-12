@@ -17,7 +17,23 @@ MonoBehaviour:
     AssetPath: Assets/Game/Resources/Characters/Barbarian.prefab
     IconPath: Assets/Game/Resources/CharacterIcons/Barbarian.png
     MainStatValue: 0
-    Skills: []
+    Skills:
+    - Cooldown: 0
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_25.png
+      Index: 0
+      Name: Attack
+      Target: 0
+      TriggerName: 1
+      MinimumDistance: 0
+      MaximumDistance: 0
+    - Cooldown: 2
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_17.png
+      Index: 1
+      Name: Slash around
+      Target: 0
+      TriggerName: 0
+      MinimumDistance: 0
+      MaximumDistance: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -35,7 +51,23 @@ MonoBehaviour:
     AssetPath: Assets/Game/Resources/Characters/Bear.prefab
     IconPath: Assets/Game/Resources/CharacterIcons/Bear.png
     MainStatValue: 0
-    Skills: []
+    Skills:
+    - Cooldown: 0
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_36.png
+      Index: 0
+      Name: Attack
+      Target: 0
+      TriggerName: 1
+      MinimumDistance: 0
+      MaximumDistance: 0
+    - Cooldown: 2
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_39.png
+      Index: 1
+      Name: Stomp of bear
+      Target: 0
+      TriggerName: 2
+      MinimumDistance: 0
+      MaximumDistance: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -53,7 +85,23 @@ MonoBehaviour:
     AssetPath: Assets/Game/Resources/Characters/Warrior.prefab
     IconPath: Assets/Game/Resources/CharacterIcons/Warrior.png
     MainStatValue: 0
-    Skills: []
+    Skills:
+    - Cooldown: 0
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_45.png
+      Index: 0
+      Name: Attack
+      Target: 0
+      TriggerName: 1
+      MinimumDistance: 0
+      MaximumDistance: 0
+    - Cooldown: 2
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_49.png
+      Index: 1
+      Name: Rush
+      Target: 0
+      TriggerName: 2
+      MinimumDistance: 0
+      MaximumDistance: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
