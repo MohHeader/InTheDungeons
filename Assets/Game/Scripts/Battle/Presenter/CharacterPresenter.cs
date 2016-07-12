@@ -48,7 +48,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
             get { return EmptyChildren; }
         }
 
-        protected override void BeforeInitialize(Character argument) {
+        protected override void BeforeInitialize(Character argument)
+        {
             Character = argument;
             var instance = DataLayer.GetInstance();
             CharacterData = instance.Database.GetCharacterData(Character.Id);
@@ -100,8 +101,16 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 MoveFinished();
                 return;
             }
-            var duration = Vector3.Angle(transform.forward, Path.vectorPath[_currentWaypoint]) / RotationSpeed;
-            transform.DOLookAt(Path.vectorPath[_currentWaypoint], 0.1f, AxisConstraint.None).OnComplete(MoveCallback);
+            if (Vector3.Distance(transform.position, Path.vectorPath[_currentWaypoint]) < 0.1f)
+            {
+                RotateCallback();
+            }
+            else
+            {
+                var duration = Vector3.Angle(transform.forward, Path.vectorPath[_currentWaypoint])/RotationSpeed;
+                transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration, AxisConstraint.None)
+                    .OnComplete(MoveCallback);
+            }
         }
 
         protected void MoveFinished() {
