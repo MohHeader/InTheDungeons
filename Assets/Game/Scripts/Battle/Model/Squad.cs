@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Battle.Model
-{
+namespace Assets.Game.Scripts.Battle.Model {
     [Serializable]
-    public class Squad
-    {
+    public class Squad {
         [SerializeField] public List<Character> Characters = new List<Character>();
     }
 }

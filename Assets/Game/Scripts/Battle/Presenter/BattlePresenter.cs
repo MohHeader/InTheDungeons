@@ -10,7 +10,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public DungeonArchitect.Dungeon Dungeon;
 
         public Squad PlayerSquad;
+        public DefenderSquad DefendersSquad;
         public SquadPresenter SquadPresenter;
+        public DefendersPresenter DefendersPresenter;
 
         protected override IPresenter[] Children
         {
@@ -19,7 +21,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 return new IPresenter[]
                 {
                     SquadPresenter,
-                    CameraPresenter
+                    CameraPresenter,
+                    DefendersPresenter
                 };
             }
         }
@@ -30,6 +33,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             AstarPath.active.Scan();
             SquadPresenter.PropagateArgument(PlayerSquad);
             CameraPresenter.PropagateArgument(SquadPresenter);
+            DefendersPresenter.PropagateArgument(DefendersSquad);
         }
 
         protected override void Initialize()

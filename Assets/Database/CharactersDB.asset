@@ -80,6 +80,24 @@ MonoBehaviour:
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
     FifthGradeMultiplier: 0
+  - Id: 4
+    Name: Skeleton Archer
+    AssetPath: Assets/Game/Resources/Monsters/Skeleton_archer.prefab
+    IconPath: 
+    MainStatValue: 0
+    Skills: []
+    LevelConstitution: 0
+    LevelDexterity: 0
+    LevelIntelligence: 0
+    LevelStrength: 0
+    StartConstitution: 0
+    StartDexterity: 0
+    StartIntelligence: 0
+    StartStrength: 0
+    SecondGradeMultiplier: 0
+    ThirdGradeMultiplier: 0
+    ForthGradeMultiplier: 0
+    FifthGradeMultiplier: 0
   - Id: 3
     Name: Warrior
     AssetPath: Assets/Game/Resources/Characters/Warrior.prefab

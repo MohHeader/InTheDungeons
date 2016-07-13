@@ -69,7 +69,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
         {
-            // TODO: Show skills
+            // TODO: Show skills???
         }
 
         protected override void Initialize(Squad argument)

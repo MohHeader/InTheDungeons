@@ -87,8 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateError: 0.5
-  checkTime: 0.05
+  updateError: 0.4
+  checkTime: 0.1
 --- !u!114 &11479492
 MonoBehaviour:
   m_ObjectHideFlags: 1

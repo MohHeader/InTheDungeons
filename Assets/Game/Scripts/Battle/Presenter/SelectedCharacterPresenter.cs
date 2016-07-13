@@ -28,8 +28,11 @@ namespace Assets.Game.Scripts.Battle.Presenter
         {
         }
 
+        private CompositeDisposable characterDisposables = new CompositeDisposable();
+
         private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
         {
+            characterDisposables.Clear();
             if (characterPresenter == null)
             {
                 SelectedCharacter = null;
@@ -40,7 +43,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             if (SelectionGameObject == null) SelectionGameObject = Instantiate(SelectionPrefab);
             // AstarPath.active.Scan();
             SelectedCharacter = characterPresenter;
-            SelectedCharacter.CharacterState.Subscribe(CharacterStateChanged);
+            SelectedCharacter.CharacterState.Subscribe(CharacterStateChanged).AddTo(characterDisposables);
             SelectionGameObject.transform.SetParent(characterPresenter.transform, false);
             SelectionGameObject.transform.localPosition = new Vector3(0f, 0.2f, 0f);
         }
@@ -59,6 +62,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         protected void ShowPossibleMovements() {
+            Debug.LogFormat("Character {0} requesting path", gameObject.name);
             StartCoroutine(CalculateConstantPath());
         }
 
