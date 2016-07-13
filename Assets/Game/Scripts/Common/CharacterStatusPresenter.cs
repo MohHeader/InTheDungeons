@@ -23,6 +23,9 @@ namespace Assets.Game.Scripts.Common {
         public ReactiveProperty<float> ActionPointsRegen { get; protected set; }
         public ReactiveProperty<float> RemainingActionPoint { get; protected set; }
 
+        public ReactiveProperty<float> MaximumHealth { get; protected set; }
+        public ReactiveProperty<float> RemainingHealth { get; protected set; }
+
         public CharacterStatusPresenter(CharacterData characterData, int level) {
             CharacterData = new ReactiveProperty<CharacterData>();
             Level = new ReactiveProperty<int>();
@@ -40,6 +43,9 @@ namespace Assets.Game.Scripts.Common {
             Dexterity = CharacterData.CombineLatest(Level, (data, level) => data.StartDexterity + data.LevelDexterity*level).ToReadOnlyReactiveProperty();
             Intelligence = CharacterData.CombineLatest(Level, (data, level) => data.StartIntelligence + data.LevelIntelligence*level).ToReadOnlyReactiveProperty();
             Consitution = CharacterData.CombineLatest(Level, (data, level) => data.StartConstitution + data.LevelConstitution*level).ToReadOnlyReactiveProperty();
+
+            MaximumHealth = Consitution.Select(_ => _ * 25f).ToReactiveProperty();
+            RemainingHealth = Consitution.Select(_ => _ * 25f).ToReactiveProperty();
         }
 
         protected void SetupActionPoints() {
@@ -50,6 +56,11 @@ namespace Assets.Game.Scripts.Common {
 
         public void RegenerateActionPoints() {
             RemainingActionPoint.Value = Mathf.Clamp(RemainingActionPoint.Value + ActionPointsRegen.Value, 0f, MaximumActionPoints.Value);
+        }
+
+        public void DealDamage(float damageAmount)
+        {
+            RemainingHealth.Value = Mathf.Clamp(RemainingHealth.Value - damageAmount, 0f, MaximumHealth.Value);
         }
 
         #region Inherited properties
