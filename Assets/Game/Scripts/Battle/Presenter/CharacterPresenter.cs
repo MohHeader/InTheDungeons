@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assets.Game.Scripts.Battle.Model;
+using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
 using DG.Tweening;
@@ -41,7 +42,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public float RotationSpeed = 360;
         protected Path Path;
 
-        public CharacterData CharacterData;
+        public CharacterStatusPresenter CharacterData;
 
         protected override IPresenter[] Children
         {
@@ -52,7 +53,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         {
             Character = argument;
             var instance = DataLayer.GetInstance();
-            CharacterData = instance.Database.GetCharacterData(Character.Id);
+            CharacterData = new CharacterStatusPresenter(instance.Database.GetCharacterData(Character.Id), Character.Level);
             var prefab = Instantiate(CharacterData.Asset);
             prefab.transform.SetParent(transform, false);
             Animator = gameObject.FindAnimatorComponent();
@@ -69,6 +70,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
         }
 
+        #region Movement methods
+        // TODO: Возможно имеет смысл разделить представление от логики перемещения
+
         public void MoveTo(Vector3 position) {
             Seeker.StartPath(transform.position, position, PathCallback);
         }
@@ -82,8 +86,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 _currentWaypoint = -1;
 
                 Path = newPath;
-                Debug.Log(Path.vectorPath.Count);
-                //if (Obstacle != null) Obstacle.enabled = false;
+                Debug.LogFormat("Path lenght {0}", Path.vectorPath.GetPathLength());
                 Animator.SetBool("Moving", true);
                 RotateCallback();
             }
@@ -108,7 +111,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             else
             {
                 var duration = Vector3.Angle(transform.forward, Path.vectorPath[_currentWaypoint])/RotationSpeed;
-                transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration, AxisConstraint.None)
+                transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration)
                     .OnComplete(MoveCallback);
             }
         }
@@ -121,8 +124,12 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 //Obstacle.enabled = true;
                 Obstacle.DoUpdateGraphs();
             }
+            CharacterData.RemainingActionPoint.Value -= Path.vectorPath.GetPathLength()*10;
+            Debug.LogFormat("Remaining action points {0}", CharacterData.RemainingActionPoint.Value);
             Path = null;
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
         }
+
+        #endregion
     }
 }

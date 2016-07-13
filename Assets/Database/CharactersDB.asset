@@ -42,6 +42,7 @@ MonoBehaviour:
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
+    ActionPoints: 50
     SecondGradeMultiplier: 0
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
@@ -76,6 +77,7 @@ MonoBehaviour:
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
+    ActionPoints: 70
     SecondGradeMultiplier: 0
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
@@ -94,6 +96,7 @@ MonoBehaviour:
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
+    ActionPoints: 40
     SecondGradeMultiplier: 0
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
@@ -128,6 +131,7 @@ MonoBehaviour:
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
+    ActionPoints: 60
     SecondGradeMultiplier: 0
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0

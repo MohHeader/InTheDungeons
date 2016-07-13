@@ -28,11 +28,11 @@ namespace Assets.Game.Scripts.Battle.Presenter
         {
         }
 
-        private CompositeDisposable characterDisposables = new CompositeDisposable();
+        private readonly CompositeDisposable _characterDisposables = new CompositeDisposable();
 
         private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
         {
-            characterDisposables.Clear();
+            _characterDisposables.Clear();
             if (characterPresenter == null)
             {
                 SelectedCharacter = null;
@@ -43,7 +43,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             if (SelectionGameObject == null) SelectionGameObject = Instantiate(SelectionPrefab);
             // AstarPath.active.Scan();
             SelectedCharacter = characterPresenter;
-            SelectedCharacter.CharacterState.Subscribe(CharacterStateChanged).AddTo(characterDisposables);
+            SelectedCharacter.CharacterState.Subscribe(CharacterStateChanged).AddTo(_characterDisposables);
             SelectionGameObject.transform.SetParent(characterPresenter.transform, false);
             SelectionGameObject.transform.localPosition = new Vector3(0f, 0.2f, 0f);
         }
@@ -71,7 +71,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         public IEnumerator CalculateConstantPath() {
-            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, 4000, OnPathComplete);
+            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int)(SelectedCharacter.CharacterData.RemainingActionPoint.Value * 100), OnPathComplete);
 
             SelectedCharacter.Seeker.StartPath(constPath);
             LastPath = constPath;

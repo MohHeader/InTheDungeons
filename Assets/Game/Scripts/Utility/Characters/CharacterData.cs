@@ -81,6 +81,8 @@ namespace Assets.Game.Scripts.Utility.Characters
 
         [SerializeField] public float StartStrength;
 
+        [SerializeField] public float ActionPoints;
+
         #endregion
 
         #region Grades multipliers
