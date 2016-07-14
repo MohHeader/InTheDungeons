@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11434460}
   - 143: {fileID: 14357568}
   - 114: {fileID: 11452296}
+  - 114: {fileID: 11463028}
   m_Layer: 12
   m_Name: Character
   m_TagString: Character
@@ -44,27 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5452bbfbb63bdc2489a1bff892de3ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StatusPresenter: {fileID: 11463028}
   Speed: 3
   RotationSpeed: 360
-  CharacterData:
-    Id: 0
-    Name: 
-    AssetPath: 
-    IconPath: 
-    MainStatValue: 0
-    Skills: []
-    LevelConstitution: 0
-    LevelDexterity: 0
-    LevelIntelligence: 0
-    LevelStrength: 0
-    StartConstitution: 0
-    StartDexterity: 0
-    StartIntelligence: 0
-    StartStrength: 0
-    SecondGradeMultiplier: 0
-    ThirdGradeMultiplier: 0
-    ForthGradeMultiplier: 0
-    FifthGradeMultiplier: 0
 --- !u!114 &11440220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,6 +72,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateError: 0.4
   checkTime: 0.1
+--- !u!114 &11463028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169ae5ff84db89049b7c03753954b454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HudPrefab: {fileID: 144582, guid: c7ab3ee547f42c14b98d00f95c85901e, type: 2}
 --- !u!114 &11479492
 MonoBehaviour:
   m_ObjectHideFlags: 1

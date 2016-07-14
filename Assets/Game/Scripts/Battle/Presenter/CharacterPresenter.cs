@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assets.Game.Scripts.Battle.Model;
+using Assets.Game.Scripts.Battle.Presenter.UI;
 using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
@@ -10,8 +11,9 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
-    public class CharacterPresenter : PresenterBase<Character>
-    {
+    public class CharacterPresenter : PresenterBase<Character> {
+        public BattleCharacterStatusPresenter StatusPresenter;
+
         public enum CharacterStateEnum {
             Idle,
             Moving
@@ -46,7 +48,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         protected override IPresenter[] Children
         {
-            get { return EmptyChildren; }
+            get { return new []{ StatusPresenter }; }
         }
 
         protected override void BeforeInitialize(Character argument)
@@ -63,6 +65,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 Obstacle.DoUpdateGraphs();
             }
             Skills = CharacterData.Skills.Select(_ => new BattleSkill(_)).ToArray();
+            StatusPresenter.PropagateArgument(CharacterData);
         }
 
         protected override void Initialize(Character argument)

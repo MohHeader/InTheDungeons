@@ -38,7 +38,7 @@ MonoBehaviour:
     LevelDexterity: 0
     LevelIntelligence: 0
     LevelStrength: 0
-    StartConstitution: 0
+    StartConstitution: 5
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
     LevelDexterity: 0
     LevelIntelligence: 0
     LevelStrength: 0
-    StartConstitution: 0
+    StartConstitution: 5
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
     LevelDexterity: 0
     LevelIntelligence: 0
     LevelStrength: 0
-    StartConstitution: 0
+    StartConstitution: 3
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
     LevelDexterity: 0
     LevelIntelligence: 0
     LevelStrength: 0
-    StartConstitution: 0
+    StartConstitution: 5
     StartDexterity: 0
     StartIntelligence: 0
     StartStrength: 0

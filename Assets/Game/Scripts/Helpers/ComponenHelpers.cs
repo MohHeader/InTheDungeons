@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Linq;
+using TMPro;
 using Unity.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.Helpers
-{
-    public static class ComponenHelpers
-    {
-        public static Animation FindAnimationComponent(this GameObject gameObject) 
-        {
-            try
-            {
+namespace Assets.Game.Scripts.Helpers {
+    public static class ComponenHelpers {
+        public static Animation FindAnimationComponent(this GameObject gameObject) {
+            try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<Animation>() != null);
@@ -20,18 +18,15 @@ namespace Assets.Game.Scripts.Helpers
                     gameObject.name, typeof(Animation));
                 return null;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(Animation), ex);
                 return null;
             }
         }
 
-        public static DynamicGridObstacle FindDynamicGridObstacleComponent(this GameObject gameObject)
-        {
-            try
-            {
+        public static DynamicGridObstacle FindDynamicGridObstacleComponent(this GameObject gameObject) {
+            try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<DynamicGridObstacle>() != null);
@@ -41,18 +36,15 @@ namespace Assets.Game.Scripts.Helpers
                     gameObject.name, typeof(DynamicGridObstacle));
                 return null;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(DynamicGridObstacle), ex);
                 return null;
             }
         }
 
-        public static Animator FindAnimatorComponent(this GameObject gameObject)
-        {
-            try
-            {
+        public static Animator FindAnimatorComponent(this GameObject gameObject) {
+            try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<Animator>() != null);
@@ -62,18 +54,15 @@ namespace Assets.Game.Scripts.Helpers
                     gameObject.name, typeof(Animator));
                 return null;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(Animator), ex);
                 return null;
             }
         }
-        
-        public static CharacterController FindCharacterControllerComponent(this GameObject gameObject)
-        {
-            try
-            {
+
+        public static CharacterController FindCharacterControllerComponent(this GameObject gameObject) {
+            try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<CharacterController>() != null);
@@ -83,18 +72,15 @@ namespace Assets.Game.Scripts.Helpers
                     gameObject.name, typeof(CharacterController));
                 return null;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(CharacterController), ex);
                 return null;
             }
         }
-        
-        public static NavMeshAgent FindNavMeshAgentComponent(this GameObject gameObject) 
-        {
-            try
-            {
+
+        public static NavMeshAgent FindNavMeshAgentComponent(this GameObject gameObject) {
+            try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<NavMeshAgent>() != null);
@@ -104,17 +90,15 @@ namespace Assets.Game.Scripts.Helpers
                     gameObject.name, typeof(NavMeshAgent));
                 return null;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(NavMeshAgent), ex);
                 return null;
             }
         }
-        public static NavMeshObstacle FindNavMeshObstacleComponent(this GameObject gameObject) 
-        {
-            try
-            {
+
+        public static NavMeshObstacle FindNavMeshObstacleComponent(this GameObject gameObject) {
+            try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<NavMeshObstacle>() != null);
@@ -124,10 +108,45 @@ namespace Assets.Game.Scripts.Helpers
                     gameObject.name, typeof(NavMeshObstacle));
                 return null;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(NavMeshObstacle), ex);
+                return null;
+            }
+        }
+
+        public static Slider FindSliderComponent(this GameObject gameObject) {
+            try {
+                var gameObjects = gameObject.DescendantsAndSelf().ToList();
+                var componentHolder =
+                    gameObjects.FirstOrDefault(_ => _.GetComponent<Slider>() != null);
+                if (componentHolder != null)
+                    return componentHolder.GetComponent<Slider>();
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant",
+                    gameObject.name, typeof(Slider));
+                return null;
+            }
+            catch (Exception ex) {
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
+                    gameObject.name, typeof(Slider), ex);
+                return null;
+            }
+        }
+
+        public static TextMeshProUGUI FindTextMeshProUguiComponent(this GameObject gameObject) {
+            try {
+                var gameObjects = gameObject.DescendantsAndSelf().ToList();
+                var componentHolder =
+                    gameObjects.FirstOrDefault(_ => _.GetComponent<TextMeshProUGUI>() != null);
+                if (componentHolder != null)
+                    return componentHolder.GetComponent<TextMeshProUGUI>();
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant",
+                    gameObject.name, typeof(TextMeshProUGUI));
+                return null;
+            }
+            catch (Exception ex) {
+                Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
+                    gameObject.name, typeof(TextMeshProUGUI), ex);
                 return null;
             }
         }

@@ -27,13 +27,13 @@ namespace Assets.Game.Scripts.Common {
         public ReactiveProperty<float> RemainingHealth { get; protected set; }
 
         public CharacterStatusPresenter(CharacterData characterData, int level) {
-            CharacterData = new ReactiveProperty<CharacterData>();
-            Level = new ReactiveProperty<int>();
-
-            SetupStatCalculations();
+            CharacterData = new ReactiveProperty<CharacterData>(new CharacterData());
+            Level = new ReactiveProperty<int>(0);
 
             CharacterData.SetValueAndForceNotify(characterData);
             Level.SetValueAndForceNotify(level);
+
+            SetupStatCalculations();
 
             SetupActionPoints();
         }
@@ -44,8 +44,11 @@ namespace Assets.Game.Scripts.Common {
             Intelligence = CharacterData.CombineLatest(Level, (data, level) => data.StartIntelligence + data.LevelIntelligence*level).ToReadOnlyReactiveProperty();
             Consitution = CharacterData.CombineLatest(Level, (data, level) => data.StartConstitution + data.LevelConstitution*level).ToReadOnlyReactiveProperty();
 
-            MaximumHealth = Consitution.Select(_ => _ * 25f).ToReactiveProperty();
-            RemainingHealth = Consitution.Select(_ => _ * 25f).ToReactiveProperty();
+            Consitution.Subscribe(_ => MaximumHealth.Value = _*25f);
+            Consitution.Subscribe(_ => RemainingHealth.Value = _*25f);
+            //MaximumHealth = Consitution.Select(_ => _ * 25f).ToReactiveProperty();
+
+            //RemainingHealth = Consitution.Select(_ => _ * 25f).ToReactiveProperty();
         }
 
         protected void SetupActionPoints() {
