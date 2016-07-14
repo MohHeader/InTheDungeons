@@ -111,6 +111,11 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             EditorGUILayout.BeginHorizontal();
             skill.Name = EditorGUILayout.TextField("Skill name:", skill.Name);
             skill.Cooldown = EditorGUILayout.IntField("Cooldown (turns):", skill.Cooldown);
+            skill.DamageMultiplier = EditorGUILayout.FloatField("Damage:", skill.DamageMultiplier);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            skill.MinimumDistance = EditorGUILayout.FloatField("Min Distance", skill.MinimumDistance);
+            skill.MaximumDistance = EditorGUILayout.FloatField("Max distance", skill.MaximumDistance);
             EditorGUILayout.EndHorizontal();
             skill.Icon = (Sprite)EditorGUILayout.ObjectField("Icon:", skill.Icon, typeof(Sprite), false);
             return null;

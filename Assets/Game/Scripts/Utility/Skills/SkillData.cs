@@ -41,7 +41,10 @@ namespace Assets.Game.Scripts.Utility.Skills
         [SerializeField] public TriggerEnum TriggerName;
 
         [SerializeField] public float MinimumDistance;
+
         [SerializeField] public float MaximumDistance;
+
+        [SerializeField] public float DamageMultiplier;
 
         public Sprite Icon
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Game.Scripts.Utility.Characters;
 using Assets.Game.Scripts.Utility.Skills;
 using UniRx;
@@ -42,6 +43,8 @@ namespace Assets.Game.Scripts.Common
         public ReactiveProperty<float> MaximumHealth { get; protected set; }
         public ReactiveProperty<float> RemainingHealth { get; protected set; }
 
+        public ReactiveProperty<float> Damage { get; protected set; }
+
         protected void SetupProperties()
         {
             Strength = new ReactiveProperty<float>();
@@ -51,6 +54,23 @@ namespace Assets.Game.Scripts.Common
 
             MaximumHealth = new ReactiveProperty<float>();
             RemainingHealth = new ReactiveProperty<float>();
+
+            Damage = new ReactiveProperty<float>();
+
+            switch (CharacterData.Value.MainStatValue)
+            {
+                case MainStatEnum.Strength:
+                    Strength.Subscribe(_ => Damage.Value = _*2f);
+                    break;
+                case MainStatEnum.Dexterity:
+                    Dexterity.Subscribe(_ => Damage.Value = _ * 2f);
+                    break;
+                case MainStatEnum.Intelligence:
+                    Intelligence.Subscribe(_ => Damage.Value = _ * 2f);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         protected void SetupStatCalculations()
@@ -76,8 +96,7 @@ namespace Assets.Game.Scripts.Common
 
         public void RegenerateActionPoints()
         {
-            RemainingActionPoint.Value = Mathf.Clamp(RemainingActionPoint.Value + ActionPointsRegen.Value, 0f,
-                MaximumActionPoints.Value);
+            RemainingActionPoint.Value = Mathf.Clamp(RemainingActionPoint.Value + ActionPointsRegen.Value, 0f, MaximumActionPoints.Value);
         }
 
         public void DealDamage(float damageAmount)

@@ -128,7 +128,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 Obstacle.DoUpdateGraphs();
             }
             CharacterData.RemainingActionPoint.Value -= Path.vectorPath.GetPathLength()*10;
-            Debug.LogFormat("Remaining action points {0}", CharacterData.RemainingActionPoint.Value);
             Path = null;
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
         }

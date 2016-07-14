@@ -34,8 +34,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
             SquadPresenter.PropagateArgument(PlayerSquad);
             CameraPresenter.PropagateArgument(SquadPresenter);
             DefendersPresenter.PropagateArgument(DefendersSquad);
-
-            AstarPath.active.Scan();
         }
 
         protected override void Initialize()

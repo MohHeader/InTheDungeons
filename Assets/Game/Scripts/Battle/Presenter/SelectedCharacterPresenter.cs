@@ -41,7 +41,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 return;
             }
             if (SelectionGameObject == null) SelectionGameObject = Instantiate(SelectionPrefab);
-            // AstarPath.active.Scan();
+
             SelectedCharacter = characterPresenter;
             SelectedCharacter.CharacterState.Subscribe(CharacterStateChanged).AddTo(_characterDisposables);
             SelectionGameObject.transform.SetParent(characterPresenter.transform, false);
@@ -62,7 +62,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         protected void ShowPossibleMovements() {
-            Debug.LogFormat("Character {0} requesting path", gameObject.name);
             StartCoroutine(CalculateConstantPath());
         }
 
