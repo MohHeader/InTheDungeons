@@ -434,6 +434,8 @@ MonoBehaviour:
       Position: {x: 14, y: 0, z: -16}
   SquadPresenter: {fileID: 494039852}
   DefendersPresenter: {fileID: 494039857}
+  Seed: 524145472
+  Rooms: 10
 --- !u!114 &494039855
 MonoBehaviour:
   m_ObjectHideFlags: 0

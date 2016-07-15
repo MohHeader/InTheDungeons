@@ -7,7 +7,6 @@ using DungeonArchitect;
 using DungeonArchitect.Utils;
 using UniRx;
 using UnityEngine;
-using Debug = System.Diagnostics.Debug;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
@@ -44,8 +43,12 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
             var dungeon = FindObjectOfType<DungeonArchitect.Dungeon>();
             var grid = (dungeon.ActiveModel as GridDungeonModel);
-            var startCell = GridDungeonModelUtils.FindFurthestRooms(grid)[0];
-            Debug.Assert(grid != null, "grid != null");
+            var furthestrooms = GridDungeonModelUtils.FindFurthestRooms(grid);
+            foreach (var furthestroom in furthestrooms) {
+                Debug.LogFormat("Room id {0}", furthestroom.Id);
+            }
+            var startCell = furthestrooms.OrderBy(_ => _.Id).ElementAt(0);
+            Debug.LogFormat("Selected {0} room for start", startCell.Id);
             var roomCenter = MathUtils.GridToWorld(grid.Config.GridCellSize, startCell.CenterF);
             var index = 0;
 

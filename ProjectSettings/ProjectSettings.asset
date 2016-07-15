@@ -8,8 +8,8 @@ PlayerSettings:
   defaultScreenOrientation: 4
   targetDevice: 2
   useOnDemandResources: 0
-  accelerometerFrequency: 60
-  companyName: DefaultCompany
+  accelerometerFrequency: 0
+  companyName: Astaror Games
   productName: Rogue
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -370,7 +370,7 @@ PlayerSettings:
   metroCertificateNotAfter: 808ceb4b25f9d201
   metroApplicationDescription: Rogue
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Rogue
   metroCommandLineArgsFile: 
   metroTileShowName: 0
   metroMediumTileShowName: 0

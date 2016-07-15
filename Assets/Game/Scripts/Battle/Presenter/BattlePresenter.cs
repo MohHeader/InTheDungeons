@@ -1,4 +1,5 @@
 ﻿using Assets.Game.Scripts.Battle.Model;
+using DungeonArchitect;
 using UniRx;
 
 namespace Assets.Game.Scripts.Battle.Presenter
@@ -14,6 +15,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public SquadPresenter SquadPresenter;
         public DefendersPresenter DefendersPresenter;
 
+        public uint Seed = 524145472;
+        public int Rooms = 10;
+
         protected override IPresenter[] Children
         {
             get
@@ -27,8 +31,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
             }
         }
 
-        protected override void BeforeInitialize()
-        {
+        protected override void BeforeInitialize() {
+            Dungeon.Config.Seed = Seed;
+            (Dungeon.Config as GridDungeonConfig).NumCells = 10;
             Dungeon.Build();
             AstarPath.active.Scan();
             SquadPresenter.PropagateArgument(PlayerSquad);

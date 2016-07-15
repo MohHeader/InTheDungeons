@@ -24,8 +24,8 @@ MonoBehaviour:
       Name: Attack
       Target: 0
       TriggerName: 1
-      MinimumDistance: 0
-      MaximumDistance: 0
+      MinimumDistance: 0.5
+      MaximumDistance: 1.5
       DamageMultiplier: 0
     - Cooldown: 2
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_17.png
@@ -33,8 +33,8 @@ MonoBehaviour:
       Name: Slash around
       Target: 0
       TriggerName: 0
-      MinimumDistance: 0
-      MaximumDistance: 0
+      MinimumDistance: 0.5
+      MaximumDistance: 1.5
       DamageMultiplier: 0
     LevelConstitution: 0
     LevelDexterity: 0
@@ -61,8 +61,8 @@ MonoBehaviour:
       Name: Attack
       Target: 0
       TriggerName: 1
-      MinimumDistance: 0
-      MaximumDistance: 0
+      MinimumDistance: 0.5
+      MaximumDistance: 1.5
       DamageMultiplier: 1
     - Cooldown: 2
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_39.png
@@ -70,8 +70,8 @@ MonoBehaviour:
       Name: Stomp of bear
       Target: 0
       TriggerName: 2
-      MinimumDistance: 0
-      MaximumDistance: 0
+      MinimumDistance: 0.5
+      MaximumDistance: 1.5
       DamageMultiplier: 1
     LevelConstitution: 0
     LevelDexterity: 0
