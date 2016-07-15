@@ -48,7 +48,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         protected override IPresenter[] Children
         {
-            get { return new []{ StatusPresenter }; }
+            get { return new IPresenter[]{ StatusPresenter }; }
         }
 
         protected override void BeforeInitialize(Character argument)

@@ -84,6 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HudPrefab: {fileID: 144582, guid: c7ab3ee547f42c14b98d00f95c85901e, type: 2}
+  DamageColor: {r: 1, g: 0.014285715, b: 0, a: 1}
+  HealingColor: {r: 0.05709342, g: 0.9705882, b: 0.5169908, a: 1}
 --- !u!114 &11479492
 MonoBehaviour:
   m_ObjectHideFlags: 1

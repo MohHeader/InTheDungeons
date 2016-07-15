@@ -1,4 +1,6 @@
-﻿using Assets.Game.Scripts.Common;
+﻿using System;
+using System.Collections;
+using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using TMPro;
 using UniRx;
@@ -8,6 +10,9 @@ using UnityEngine.UI;
 namespace Assets.Game.Scripts.Battle.Presenter.UI {
     public class BattleCharacterStatusPresenter : PresenterBase<CharacterStatusPresenter> {
         public GameObject HudPrefab;
+        public Color DamageColor;
+        public Color HealingColor;
+
         protected GameObject Hud;
         protected Transform CharacterTransform;
 
@@ -34,7 +39,35 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
 
             argument.MaximumHealth.Subscribe(_ => HealthSlider.maxValue = _);
             argument.RemainingHealth.Subscribe(_ => HealthSlider.value = _);
+            argument.RemainingHealth.Subscribe(UpdateStatusText);
 
+            StatusText.transform.gameObject.SetActive(false);
+        }
+
+        protected float LastHealthValue;
+        protected IDisposable CancelHandler;
+
+        private void UpdateStatusText(float f) {
+            Debug.Log(f);
+            var delta = f - LastHealthValue;
+            LastHealthValue = f;
+            if (CancelHandler != null) CancelHandler.Dispose();
+            StatusText.text = delta.ToString();
+
+            if (delta < 0f) {
+                StatusText.color = DamageColor;
+                CancelHandler = Observable.FromCoroutine(HealthChangedCoroutine).Subscribe();
+            }
+            else if (delta > 0f)
+            {
+                StatusText.color = HealingColor;
+                CancelHandler = Observable.FromCoroutine(HealthChangedCoroutine).Subscribe();
+            }
+        }
+
+        private IEnumerator HealthChangedCoroutine() {
+            StatusText.transform.gameObject.SetActive(true);
+            yield return new WaitForSeconds(2f);
             StatusText.transform.gameObject.SetActive(false);
         }
 

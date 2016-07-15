@@ -77,7 +77,8 @@ namespace Assets.Game.Scripts.Utility.Skills
                 Target = Target,
                 TriggerName = TriggerName,
                 MinimumDistance = MinimumDistance,
-                MaximumDistance = MaximumDistance
+                MaximumDistance = MaximumDistance,
+                DamageMultiplier = DamageMultiplier
             };
         }
     }

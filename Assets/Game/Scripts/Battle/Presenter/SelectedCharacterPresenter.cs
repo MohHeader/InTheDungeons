@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
@@ -177,6 +178,10 @@ namespace Assets.Game.Scripts.Battle.Presenter
                     Debug.Log("Coordinate acquired");
                     SelectedCharacter.MoveTo(hit.point);
                 }
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space)) {
+                SelectedCharacter.CharacterData.DealDamage(Random.Range(10, -19));
             }
         }
     }
