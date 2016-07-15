@@ -1,9 +1,7 @@
 ﻿//$ Copyright 2016, Code Respawn Technologies Pvt Ltd - All Rights Reserved $//
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Assets.Game.Scripts.Utility.Common;
 
 namespace DungeonArchitect.Utils
 {
@@ -16,8 +14,8 @@ namespace DungeonArchitect.Utils
         const int M = 2147483647;
         
         uint seed = 0;
-        Random random = new Random();
-		public Random UniformRandom {
+        FastRandom random = new FastRandom();
+		public FastRandom UniformRandom {
 			get {
 				return random;
 			}
@@ -47,7 +45,7 @@ namespace DungeonArchitect.Utils
         /// <param name="seed"></param>
 		public void Initialize(uint seed) {
 			this.seed = seed;
-			random = new Random((int)this.seed);
+			random = new FastRandom((int)this.seed);
 		}
 
         // http://stackoverflow.com/a/218600

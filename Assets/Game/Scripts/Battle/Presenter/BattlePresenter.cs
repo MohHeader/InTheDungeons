@@ -33,7 +33,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         protected override void BeforeInitialize() {
             Dungeon.Config.Seed = Seed;
-            (Dungeon.Config as GridDungeonConfig).NumCells = 10;
+            (Dungeon.Config as GridDungeonConfig).NumCells = Rooms;
             Dungeon.Build();
             AstarPath.active.Scan();
             SquadPresenter.PropagateArgument(PlayerSquad);

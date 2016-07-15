@@ -1,8 +1,7 @@
 ﻿//$ Copyright 2016, Code Respawn Technologies Pvt Ltd - All Rights Reserved $//
 
 using UnityEngine;
-using System.Collections;
-using DungeonArchitect;
+using Assets.Game.Scripts.Utility.Common;
 
 namespace DungeonArchitect
 {
@@ -19,7 +18,7 @@ namespace DungeonArchitect
         /// <param name="model">The dungeon model</param>
         /// <param name="random">The random stream used by the builder. User this random stream for any randomness for consistancy</param>
         /// <returns></returns>
-        public virtual bool CanSelect(PropSocket socket, Matrix4x4 propTransform, DungeonModel model, System.Random random)
+        public virtual bool CanSelect(PropSocket socket, Matrix4x4 propTransform, DungeonModel model, FastRandom random)
         {
             return true;
         }

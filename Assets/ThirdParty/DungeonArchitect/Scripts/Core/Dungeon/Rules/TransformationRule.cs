@@ -1,8 +1,7 @@
 ﻿//$ Copyright 2016, Code Respawn Technologies Pvt Ltd - All Rights Reserved $//
 
 using UnityEngine;
-using System.Collections;
-using DungeonArchitect;
+using Assets.Game.Scripts.Utility.Common;
 
 namespace DungeonArchitect
 {
@@ -21,7 +20,7 @@ namespace DungeonArchitect
         /// <param name="outPosition">Set your position offset here</param>
         /// <param name="outRotation">Set your rotation offset here</param>
         /// <param name="outScale">Set your scale offset here</param>
-        public virtual void GetTransform(PropSocket socket, DungeonModel model, Matrix4x4 propTransform, System.Random random, out Vector3 outPosition, out Quaternion outRotation, out Vector3 outScale)
+        public virtual void GetTransform(PropSocket socket, DungeonModel model, Matrix4x4 propTransform, FastRandom random, out Vector3 outPosition, out Quaternion outRotation, out Vector3 outScale)
         {
             outPosition = Vector3.zero;
             outRotation = Quaternion.identity;
