@@ -48,7 +48,6 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         protected IDisposable CancelHandler;
 
         private void UpdateStatusText(float f) {
-            Debug.Log(f);
             var delta = f - LastHealthValue;
             LastHealthValue = f;
             if (CancelHandler != null) CancelHandler.Dispose();

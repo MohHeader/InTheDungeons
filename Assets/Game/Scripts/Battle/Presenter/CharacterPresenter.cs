@@ -1,12 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Linq;
 using Assets.Game.Scripts.Battle.Model;
 using Assets.Game.Scripts.Battle.Presenter.UI;
 using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
+using Assets.Game.Scripts.Utility.Skills;
 using DG.Tweening;
 using Pathfinding;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter
@@ -127,9 +131,38 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 //Obstacle.enabled = true;
                 Obstacle.DoUpdateGraphs();
             }
-            CharacterData.RemainingActionPoint.Value -= Path.vectorPath.GetPathLength()*10;
+            // TODO: Hack
+            // CharacterData.RemainingActionPoint.Value -= Path.vectorPath.GetPathLength()*10;
             Path = null;
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+        }
+
+        #endregion
+
+        #region Skill Player
+
+        public IEnumerator PlayTargetedSkill(SkillData skill, CharacterPresenter target) {
+            Animator.SetTrigger(TriggerEnumToTriggerName(skill.TriggerName));
+            yield return new WaitForSeconds(0.4f);
+            while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                yield return new WaitForEndOfFrame();
+            }
+            target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value);
+        }
+
+        protected string TriggerEnumToTriggerName(TriggerEnum trigger) {
+            switch (trigger) {
+                case TriggerEnum.None:
+                    return "";
+                case TriggerEnum.Attack:
+                    return "Attack";
+                case TriggerEnum.Skill1:
+                    return "Skill1";
+                case TriggerEnum.Skill2:
+                    return "Skill2";
+                default:
+                    throw new ArgumentOutOfRangeException("trigger", trigger, null);
+            }
         }
 
         #endregion

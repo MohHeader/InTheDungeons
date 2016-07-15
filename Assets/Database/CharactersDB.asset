@@ -26,6 +26,7 @@ MonoBehaviour:
       TriggerName: 1
       MinimumDistance: 0
       MaximumDistance: 0
+      DamageMultiplier: 0
     - Cooldown: 2
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_17.png
       Index: 1
@@ -34,6 +35,7 @@ MonoBehaviour:
       TriggerName: 0
       MinimumDistance: 0
       MaximumDistance: 0
+      DamageMultiplier: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -61,6 +63,7 @@ MonoBehaviour:
       TriggerName: 1
       MinimumDistance: 0
       MaximumDistance: 0
+      DamageMultiplier: 1
     - Cooldown: 2
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_39.png
       Index: 1
@@ -69,15 +72,16 @@ MonoBehaviour:
       TriggerName: 2
       MinimumDistance: 0
       MaximumDistance: 0
+      DamageMultiplier: 1
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
-    LevelStrength: 0
+    LevelStrength: 2
     StartConstitution: 5
     StartDexterity: 0
     StartIntelligence: 0
-    StartStrength: 0
-    ActionPoints: 70
+    StartStrength: 10
+    ActionPoints: 140
     SecondGradeMultiplier: 0
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
@@ -115,6 +119,7 @@ MonoBehaviour:
       TriggerName: 1
       MinimumDistance: 0
       MaximumDistance: 0
+      DamageMultiplier: 0
     - Cooldown: 2
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_49.png
       Index: 1
@@ -123,6 +128,7 @@ MonoBehaviour:
       TriggerName: 2
       MinimumDistance: 0
       MaximumDistance: 0
+      DamageMultiplier: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0

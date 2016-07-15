@@ -101,7 +101,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
                 {
                     var character = hit.transform.GetComponent<CharacterPresenter>();
-                    SelectCharacter(character);
+                    if (Characters.Contains(character))
+                        SelectCharacter(character);
                 }
             }
         }

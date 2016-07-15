@@ -6,7 +6,8 @@ namespace Assets.Game.Scripts.Battle.Model
 {
     public class BattleSkill
     {
-        protected SkillData SkillData;
+        // TODO: Hack
+        public SkillData SkillData;
 
         public BattleSkill(SkillData argument)
         {

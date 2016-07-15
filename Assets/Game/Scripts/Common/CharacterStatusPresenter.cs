@@ -101,6 +101,7 @@ namespace Assets.Game.Scripts.Common
 
         public void DealDamage(float damageAmount)
         {
+            Debug.LogFormat("Dealing damage {0}", damageAmount);
             RemainingHealth.Value = Mathf.Clamp(RemainingHealth.Value - damageAmount, 0f, MaximumHealth.Value);
         }
 

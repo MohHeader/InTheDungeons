@@ -11019,7 +11019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   astarData:
-    dataString: AgAAAA1ncmFwaDAuYmluYXJ55gAAABVYi5NXyWIF4MNpMIEusX4AAAAAAQpHcmlkIEdyYXBoAQD//38/AAAAAAAAAAD//xXDAAAAAAAAgD8AAAAAAAAAAAAAAAAAAAAA//9/P///FcMAAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkMAAJZDAAAAAAAAgD8BAAAAMzNzPwAAAEAAAIA/AgAAAAAYAAAABAAAAADIQgAAAIA/AQABAc3MzD0BAAAAAAC0QgAAAAAAAQAAAAAAAAAAAQAAAIA/AAAAyEIAAIA/AAAAAAAAC21ldGEuYmluYXJ5XwAAAAJBKgMAAAAIAAAAAgAAAP////8BAAAAAQAAACEwNTYyYzk1NzkzOGI1ODE1LTdlYjEyZTgxMzA2OWMzZTABAAAAFVBhdGhmaW5kaW5nLkdyaWRHcmFwaAEAAAAAAAAA
+    dataString: AgAAAA1ncmFwaDAuYmluYXJ55gAAABVYi5NXyWIF4MNpMIEusX4AAAAAAQpHcmlkIEdyYXBoAQD//38/AAAAAAAAAAD//xXDAAAAAAAAgD8AAAAAAAAAAAAAAAAAAAAA//9/P///FcMAAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkMAAJZDAAAAAAAAgD8BAAAAMzNzPwAAAEAAAIA/AgAAAAAYAAAABAAAAADIQgAAAIA/AQABAc3MzD0BAAAAAADwQQAAAAAAAQAAAAAAAAAAAQAAAIA/AAAAyEIAAIA/AAAAAAAAC21ldGEuYmluYXJ5XwAAAAJBKgMAAAAIAAAAAgAAAP////8BAAAAAQAAACEwNTYyYzk1NzkzOGI1ODE1LTdlYjEyZTgxMzA2OWMzZTABAAAAFVBhdGhmaW5kaW5nLkdyaWRHcmFwaAEAAAAAAAAA
     upgradeData: 
     data_backup: 
     file_cachedStartup: {fileID: 0}
@@ -11106,6 +11106,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp:DungeonArchitect:DungeonToolData
+  paintedCells: []
 --- !u!1001 &1204959851
 Prefab:
   m_ObjectHideFlags: 0
@@ -11457,10 +11458,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 3
+  m_BlockingObjects: 1
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967263
 --- !u!114 &1689407255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11491,15 +11492,15 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_Camera: {fileID: 1987058145}
+  m_PlaneDistance: 4
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1689407257
 RectTransform:

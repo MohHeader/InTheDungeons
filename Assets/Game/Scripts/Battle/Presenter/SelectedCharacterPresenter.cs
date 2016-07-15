@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using UniRx;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 namespace Assets.Game.Scripts.Battle.Presenter
@@ -171,17 +172,13 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         public void Update() {
-            if (Input.GetMouseButtonDown(0) && SelectedCharacter != null) {
+            if (Input.GetMouseButtonDown(0) && SelectedCharacter != null && !EventSystem.current.IsPointerOverGameObject()) {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh") {
                     Debug.Log("Coordinate acquired");
                     SelectedCharacter.MoveTo(hit.point);
                 }
-            }
-
-            if (Input.GetKeyUp(KeyCode.Space)) {
-                SelectedCharacter.CharacterData.DealDamage(Random.Range(10, -19));
             }
         }
     }

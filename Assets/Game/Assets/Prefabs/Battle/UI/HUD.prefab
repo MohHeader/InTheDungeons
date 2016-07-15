@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 22457788}
   - 222: {fileID: 22286706}
+  - 225: {fileID: 22558412}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -414,6 +415,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 128, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &22558412
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144582}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
