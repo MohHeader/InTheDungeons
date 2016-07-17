@@ -81,7 +81,12 @@ namespace Assets.Game.Scripts.Battle.Presenter
         // TODO: Возможно имеет смысл разделить представление от логики перемещения
 
         public void MoveTo(Vector3 position) {
-            Seeker.StartPath(transform.position, position, PathCallback);
+            //var p = ABPath.Construct(transform.position, position, PathCallback);
+            //AstarPath.StartPath(p);
+            var start = AstarPath.active.GetNearest(transform.position);
+            var end = AstarPath.active.GetNearest(position);
+
+            Seeker.StartPath((Vector3)start.node.position, (Vector3)end.node.position, PathCallback);
         }
 
         public void PathCallback(Path newPath)
@@ -126,6 +131,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         protected void MoveFinished() {
             Debug.Log("End Of Path Reached");
             Animator.SetBool("Moving", false);
+            AstarPath.active.Scan();
             if (Obstacle != null)
             {
                 //Obstacle.enabled = true;
