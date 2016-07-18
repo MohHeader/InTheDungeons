@@ -1,4 +1,5 @@
-﻿using Assets.Game.Scripts.Battle.Model;
+﻿using System;
+using Assets.Game.Scripts.Battle.Model;
 using DungeonArchitect;
 using UniRx;
 
@@ -32,13 +33,19 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         protected override void BeforeInitialize() {
-            Dungeon.Config.Seed = Seed;
-            (Dungeon.Config as GridDungeonConfig).NumCells = Rooms;
-            Dungeon.Build();
-            AstarPath.active.Scan();
-            SquadPresenter.PropagateArgument(PlayerSquad);
-            CameraPresenter.PropagateArgument(SquadPresenter);
-            DefendersPresenter.PropagateArgument(DefendersSquad);
+            var gridDungeonConfig = Dungeon.Config as GridDungeonConfig;
+            if (gridDungeonConfig != null) {
+                Dungeon.Config.Seed = Seed;
+                gridDungeonConfig.NumCells = Rooms;
+                Dungeon.Build();
+                AstarPath.active.Scan();
+                SquadPresenter.PropagateArgument(PlayerSquad);
+                CameraPresenter.PropagateArgument(SquadPresenter);
+                DefendersPresenter.PropagateArgument(DefendersSquad);
+            }
+            else {
+                throw new Exception("Dungeon config not valid. Use GridDungeonConfig");
+            }
         }
 
         protected override void Initialize()

@@ -5,12 +5,11 @@ using Pathfinding;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Random = UnityEngine.Random;
+using Debug = System.Diagnostics.Debug;
 
-namespace Assets.Game.Scripts.Battle.Presenter
-{
-    public class SelectedCharacterPresenter : PresenterBase<SquadPresenter>
-    {
+namespace Assets.Game.Scripts.Battle.Presenter {
+    public class SelectedCharacterPresenter : PresenterBase<SquadPresenter> {
+        private readonly CompositeDisposable _characterDisposables = new CompositeDisposable();
         private readonly List<GameObject> _lastRender = new List<GameObject>();
 
         protected Path LastPath;
@@ -26,17 +25,12 @@ namespace Assets.Game.Scripts.Battle.Presenter
             get { return EmptyChildren; }
         }
 
-        protected override void BeforeInitialize(SquadPresenter argument)
-        {
+        protected override void BeforeInitialize(SquadPresenter argument) {
         }
 
-        private readonly CompositeDisposable _characterDisposables = new CompositeDisposable();
-
-        private void SelectedCharacterChanged(CharacterPresenter characterPresenter)
-        {
+        private void SelectedCharacterChanged(CharacterPresenter characterPresenter) {
             _characterDisposables.Clear();
-            if (characterPresenter == null)
-            {
+            if (characterPresenter == null) {
                 SelectedCharacter = null;
                 if (SelectionGameObject != null) SelectionGameObject.SetActive(false);
                 ClearPrevious();
@@ -72,7 +66,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         public IEnumerator CalculateConstantPath() {
-            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int)(SelectedCharacter.CharacterData.RemainingActionPoint.Value * 100), OnPathComplete);
+            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int) (SelectedCharacter.CharacterData.RemainingActionPoint.Value*100), OnPathComplete);
 
             SelectedCharacter.Seeker.StartPath(constPath);
             LastPath = constPath;
@@ -85,7 +79,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 //The following code will build a mesh with a square for each node visited
 
                 var constPath = p as ConstantPath;
-                System.Diagnostics.Debug.Assert(constPath != null, "constPath != null");
+                Debug.Assert(constPath != null, "constPath != null");
                 var nodes = constPath.allNodes;
 
                 var mesh = new Mesh();
@@ -100,12 +94,12 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 for (var i = nodes.Count - 1; i >= 0; i--) {
                     var pos = (Vector3) nodes[i].position + PathOffset;
                     if (verts.Count == 65000 && !drawRaysInstead) {
-                        Debug.LogError("Too many nodes, rendering a mesh would throw 65K vertex error. Using Debug.DrawRay instead for the rest of the nodes");
+                        UnityEngine.Debug.LogError("Too many nodes, rendering a mesh would throw 65K vertex error. Using Debug.DrawRay instead for the rest of the nodes");
                         drawRaysInstead = true;
                     }
 
                     if (drawRaysInstead) {
-                        Debug.DrawRay(pos, Vector3.up, Color.blue);
+                        UnityEngine.Debug.DrawRay(pos, Vector3.up, Color.blue);
                         continue;
                     }
 
@@ -174,9 +168,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public void Update() {
             if (Input.GetMouseButtonDown(0) && SelectedCharacter != null && !EventSystem.current.IsPointerOverGameObject()) {
                 RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh") {
-                    Debug.Log("Coordinate acquired");
+                    UnityEngine.Debug.Log("Coordinate acquired");
                     SelectedCharacter.MoveTo(hit.point);
                 }
             }

@@ -38,7 +38,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
         protected Animator Animator;
         protected CharacterController Controller;
-        protected DynamicGridObstacle Obstacle;
 
         private Seeker _seeker;
         //The AI's speed per second
@@ -64,10 +63,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
             prefab.transform.SetParent(transform, false);
             Animator = gameObject.FindAnimatorComponent();
             Controller = gameObject.FindCharacterControllerComponent();
-            Obstacle = gameObject.FindDynamicGridObstacleComponent();
-            if (Obstacle != null) {
-                Obstacle.DoUpdateGraphs();
-            }
             Skills = CharacterData.Skills.Select(_ => new BattleSkill(_)).ToArray();
             StatusPresenter.PropagateArgument(CharacterData);
         }
@@ -98,7 +93,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 _currentWaypoint = -1;
 
                 Path = newPath;
-                Debug.LogFormat("Path lenght {0}", Path.vectorPath.GetPathLength());
                 Animator.SetBool("Moving", true);
                 RotateCallback();
             }
@@ -129,14 +123,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         protected void MoveFinished() {
-            Debug.Log("End Of Path Reached");
             Animator.SetBool("Moving", false);
             AstarPath.active.Scan();
-            if (Obstacle != null)
-            {
-                //Obstacle.enabled = true;
-                Obstacle.DoUpdateGraphs();
-            }
+
             // TODO: Hack
             // CharacterData.RemainingActionPoint.Value -= Path.vectorPath.GetPathLength()*10;
             Path = null;
