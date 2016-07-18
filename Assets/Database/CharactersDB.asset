@@ -14,7 +14,7 @@ MonoBehaviour:
   Database:
   - Id: 1
     Name: Barbarian
-    AssetPath: Assets/Game/Resources/Characters/Barbarian.prefab
+    AssetPath: Assets/Game/Resources/Characters/Barbarian Merged.prefab
     IconPath: Assets/Game/Resources/CharacterIcons/Barbarian.png
     MainStatValue: 0
     Skills:
@@ -51,7 +51,7 @@ MonoBehaviour:
     FifthGradeMultiplier: 0
   - Id: 2
     Name: Bear
-    AssetPath: Assets/Game/Resources/Characters/Bear.prefab
+    AssetPath: Assets/Game/Resources/Characters/Bear Merged.prefab
     IconPath: Assets/Game/Resources/CharacterIcons/Bear.png
     MainStatValue: 0
     Skills:
@@ -107,7 +107,7 @@ MonoBehaviour:
     FifthGradeMultiplier: 0
   - Id: 3
     Name: Warrior
-    AssetPath: Assets/Game/Resources/Characters/Warrior.prefab
+    AssetPath: Assets/Game/Resources/Characters/Warrior Merged.prefab
     IconPath: Assets/Game/Resources/CharacterIcons/Warrior.png
     MainStatValue: 0
     Skills:
