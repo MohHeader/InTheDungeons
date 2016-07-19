@@ -13,12 +13,19 @@ namespace Assets.Game.Scripts.Common
     /// </summary>
     public class CharacterStatusPresenter
     {
+        public enum CharactersStateEnum
+        {
+            Alive,
+            Dead
+        }
+
+        public ReactiveProperty<CharactersStateEnum> CharacterState = new ReactiveProperty<CharactersStateEnum>(CharactersStateEnum.Alive);
         protected ReactiveProperty<CharacterData> CharacterData;
 
         public CharacterStatusPresenter(CharacterData characterData, int level)
         {
             CharacterData = new ReactiveProperty<CharacterData>(new CharacterData());
-            Level = new ReactiveProperty<int>(0);
+            Level = new ReactiveProperty<int>(1);
 
             CharacterData.SetValueAndForceNotify(characterData);
             Level.SetValueAndForceNotify(level);
@@ -27,6 +34,11 @@ namespace Assets.Game.Scripts.Common
             SetupStatCalculations();
 
             SetupActionPoints();
+            RemainingHealth.Select(_ => _ <= 0).Subscribe(_ =>
+            {
+                if (_)
+                    CharacterState.Value = CharactersStateEnum.Dead;
+            });
         }
 
         public ReactiveProperty<int> Level { get; protected set; }
@@ -52,8 +64,8 @@ namespace Assets.Game.Scripts.Common
             Intelligence = new ReactiveProperty<float>();
             Consitution = new ReactiveProperty<float>();
 
-            MaximumHealth = new ReactiveProperty<float>();
-            RemainingHealth = new ReactiveProperty<float>();
+            MaximumHealth = new ReactiveProperty<float>(1);
+            RemainingHealth = new ReactiveProperty<float>(1);
 
             Damage = new ReactiveProperty<float>();
 

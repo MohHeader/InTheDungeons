@@ -40,6 +40,14 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             argument.MaximumHealth.Subscribe(_ => HealthSlider.maxValue = _);
             argument.RemainingHealth.Subscribe(_ => HealthSlider.value = _);
             argument.RemainingHealth.Subscribe(UpdateStatusText);
+            argument.CharacterState.Subscribe(_ =>
+            {
+                if (_ == CharacterStatusPresenter.CharactersStateEnum.Dead)
+                {
+                    DestroyImmediate(Hud);
+                    Destroy(this, 3f);
+                }
+            });
 
             StatusText.transform.gameObject.SetActive(false);
         }
@@ -51,6 +59,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             var delta = f - LastHealthValue;
             LastHealthValue = f;
             if (CancelHandler != null) CancelHandler.Dispose();
+            if (StatusText == null) return;
             StatusText.text = delta.ToString();
 
             if (delta < 0f) {

@@ -64,6 +64,20 @@ namespace Assets.Game.Scripts.Battle.Presenter
             Controller = gameObject.FindCharacterControllerComponent();
             Skills = CharacterData.Skills.Select(_ => new BattleSkill(_)).ToArray();
             StatusPresenter.PropagateArgument(CharacterData);
+            CharacterData.CharacterState.Subscribe(_ => StartCoroutine(StateChanged(_)));
+        }
+
+        private IEnumerator StateChanged(CharacterStatusPresenter.CharactersStateEnum charactersStateEnum)
+        {
+            if (charactersStateEnum == CharacterStatusPresenter.CharactersStateEnum.Dead)
+            {
+                DestroyImmediate(gameObject.GetComponent<Collider>());
+                AstarPath.active.Scan();
+                Animator.SetBool("Dead", true);
+                yield return new WaitForSeconds(3f);
+                DestroyImmediate(StatusPresenter);
+                DestroyImmediate(gameObject);
+            }
         }
 
         protected override void Initialize(Character argument)
@@ -126,7 +140,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             AstarPath.active.Scan();
 
             // TODO: Hack
-            // CharacterData.RemainingActionPoint.Value -= Path.vectorPath.GetPathLength()*10;
+            CharacterData.RemainingActionPoint.Value --;
             Path = null;
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
         }
