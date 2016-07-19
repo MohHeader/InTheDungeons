@@ -5,25 +5,23 @@ using Assets.Game.Scripts.Utility.Skills;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Common
-{
+namespace Assets.Game.Scripts.Common {
     /// <summary>
     ///     Состояние персонажа, зависит от данных и от уровня
     ///     TODO: добавить звёзды
     /// </summary>
-    public class CharacterStatusPresenter
-    {
-        public enum CharactersStateEnum
-        {
+    public class CharacterStatusPresenter {
+        public enum CharactersStateEnum {
             Alive,
             Dead
         }
 
-        public ReactiveProperty<CharactersStateEnum> CharacterState = new ReactiveProperty<CharactersStateEnum>(CharactersStateEnum.Alive);
         protected ReactiveProperty<CharacterData> CharacterData;
 
-        public CharacterStatusPresenter(CharacterData characterData, int level)
-        {
+        public ReactiveProperty<CharactersStateEnum> CharacterState =
+            new ReactiveProperty<CharactersStateEnum>(CharactersStateEnum.Alive);
+
+        public CharacterStatusPresenter(CharacterData characterData, int level) {
             CharacterData = new ReactiveProperty<CharacterData>(new CharacterData());
             Level = new ReactiveProperty<int>(1);
 
@@ -48,17 +46,16 @@ namespace Assets.Game.Scripts.Common
         public ReactiveProperty<float> Intelligence { get; protected set; }
         public ReactiveProperty<float> Consitution { get; protected set; }
 
-        public ReactiveProperty<float> MaximumActionPoints { get; protected set; }
-        public ReactiveProperty<float> ActionPointsRegen { get; protected set; }
-        public ReactiveProperty<float> RemainingActionPoint { get; protected set; }
+        public ReactiveProperty<int> MaximumActionPoints { get; protected set; }
+        public ReactiveProperty<int> ActionPointsRegen { get; protected set; }
+        public ReactiveProperty<int> RemainingActionPoint { get; protected set; }
 
         public ReactiveProperty<float> MaximumHealth { get; protected set; }
         public ReactiveProperty<float> RemainingHealth { get; protected set; }
 
         public ReactiveProperty<float> Damage { get; protected set; }
 
-        protected void SetupProperties()
-        {
+        protected void SetupProperties() {
             Strength = new ReactiveProperty<float>();
             Dexterity = new ReactiveProperty<float>();
             Intelligence = new ReactiveProperty<float>();
@@ -75,44 +72,43 @@ namespace Assets.Game.Scripts.Common
                     Strength.Subscribe(_ => Damage.Value = _*2f);
                     break;
                 case MainStatEnum.Dexterity:
-                    Dexterity.Subscribe(_ => Damage.Value = _ * 2f);
+                    Dexterity.Subscribe(_ => Damage.Value = _*2f);
                     break;
                 case MainStatEnum.Intelligence:
-                    Intelligence.Subscribe(_ => Damage.Value = _ * 2f);
+                    Intelligence.Subscribe(_ => Damage.Value = _*2f);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        protected void SetupStatCalculations()
-        {
+        protected void SetupStatCalculations() {
             Level.Subscribe(_ =>
             {
                 Strength.Value = Level.Value*CharacterData.Value.LevelStrength + CharacterData.Value.StartStrength;
                 Dexterity.Value = Level.Value*CharacterData.Value.LevelDexterity + CharacterData.Value.StartDexterity;
-                Intelligence.Value = Level.Value*CharacterData.Value.LevelIntelligence + CharacterData.Value.StartIntelligence;
-                Consitution.Value = Level.Value*CharacterData.Value.LevelConstitution + CharacterData.Value.StartConstitution;
+                Intelligence.Value = Level.Value*CharacterData.Value.LevelIntelligence +
+                                     CharacterData.Value.StartIntelligence;
+                Consitution.Value = Level.Value*CharacterData.Value.LevelConstitution +
+                                    CharacterData.Value.StartConstitution;
             });
 
             Consitution.Subscribe(_ => MaximumHealth.Value = _*25f);
             Consitution.Subscribe(_ => RemainingHealth.Value = _*25f);
         }
 
-        protected void SetupActionPoints()
-        {
-            MaximumActionPoints = new ReactiveProperty<float>(CharacterData.Value.ActionPoints);
-            RemainingActionPoint = new ReactiveProperty<float>(CharacterData.Value.ActionPoints);
-            ActionPointsRegen = new ReactiveProperty<float>(CharacterData.Value.ActionPoints);
+        protected void SetupActionPoints() {
+            MaximumActionPoints = new ReactiveProperty<int>(CharacterData.Value.ActionPoints);
+            RemainingActionPoint = new ReactiveProperty<int>(CharacterData.Value.ActionPoints);
+            ActionPointsRegen = new ReactiveProperty<int>(CharacterData.Value.ActionPoints);
         }
 
-        public void RegenerateActionPoints()
-        {
-            RemainingActionPoint.Value = Mathf.Clamp(RemainingActionPoint.Value + ActionPointsRegen.Value, 0f, MaximumActionPoints.Value);
+        public void RegenerateActionPoints() {
+            RemainingActionPoint.Value = Mathf.Clamp(RemainingActionPoint.Value + ActionPointsRegen.Value, 0,
+                MaximumActionPoints.Value);
         }
 
-        public void DealDamage(float damageAmount)
-        {
+        public void DealDamage(float damageAmount) {
             Debug.LogFormat("Dealing damage {0}", damageAmount);
             RemainingHealth.Value = Mathf.Clamp(RemainingHealth.Value - damageAmount, 0f, MaximumHealth.Value);
         }

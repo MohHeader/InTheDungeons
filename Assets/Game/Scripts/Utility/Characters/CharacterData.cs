@@ -5,22 +5,20 @@ using Assets.Game.Scripts.Utility.Skills;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #else
 using Assets.Game.Scripts.Helpers;
 #endif
 
-namespace Assets.Game.Scripts.Utility.Characters
-{
-    public enum MainStatEnum
-    {
+namespace Assets.Game.Scripts.Utility.Characters {
+    public enum MainStatEnum {
         Strength,
         Dexterity,
         Intelligence
     }
 
     [Serializable]
-    public class CharacterData : ACommonData
-    {
+    public class CharacterData : ACommonData {
         [SerializeField] public string AssetPath;
 
         [SerializeField] public string IconPath;
@@ -66,33 +64,23 @@ namespace Assets.Game.Scripts.Utility.Characters
         #region Main Stats
 
         [SerializeField] public float LevelConstitution;
-
         [SerializeField] public float LevelDexterity;
-
         [SerializeField] public float LevelIntelligence;
-
         [SerializeField] public float LevelStrength;
-
         [SerializeField] public float StartConstitution;
-
         [SerializeField] public float StartDexterity;
-
         [SerializeField] public float StartIntelligence;
-
         [SerializeField] public float StartStrength;
-
-        [SerializeField] public float ActionPoints;
+        [SerializeField] public int ActionPoints;
+        [SerializeField] public int MovementRange;
 
         #endregion
 
         #region Grades multipliers
 
         [SerializeField] public float SecondGradeMultiplier;
-
         [SerializeField] public float ThirdGradeMultiplier;
-
         [SerializeField] public float ForthGradeMultiplier;
-
         [SerializeField] public float FifthGradeMultiplier;
 
         #endregion

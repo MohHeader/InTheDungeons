@@ -4606,6 +4606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterPrefab: {fileID: 163824, guid: bbaaa1dc39c1e8540a9301d718f2722c, type: 2}
+  Characters: []
   Deltas:
   - {x: -2, y: 0, z: 2}
   - {x: 0, y: 0, z: 2}
@@ -4616,10 +4617,9 @@ MonoBehaviour:
   - {x: -2, y: 0, z: -2}
   - {x: 0, y: 0, z: -2}
   - {x: 2, y: 0, z: -2}
-  Characters: []
-  SelectedCharacterPresenter: {fileID: 494039856}
   PortraightPrefab: {fileID: 106610, guid: 6765a2c8f396b634cb59f6c3c3fb0182, type: 2}
   PortraightsRoot: {fileID: 1307079724}
+  SelectedCharacterPresenter: {fileID: 494039856}
   Skills:
   - {fileID: 270305453}
   - {fileID: 233675397}
@@ -26409,19 +26409,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1600.6997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchorMin.x
@@ -26429,7 +26429,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchorMax.x
@@ -26437,7 +26437,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_Pivot.x

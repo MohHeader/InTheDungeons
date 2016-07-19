@@ -34,7 +34,7 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             element.Asset = EditorGUILayout.ObjectField(new GUIContent("Asset:"), element.Asset, typeof(GameObject), false) as GameObject;
             element.Icon = (Sprite)EditorGUILayout.ObjectField("Icon:", element.Icon, typeof(Sprite), false);
             element.MainStatValue = (MainStatEnum) EditorGUILayout.EnumPopup(new GUIContent("Main Attribute:"), element.MainStatValue);
-            element.ActionPoints = EditorGUILayout.FloatField("Action points:", element.ActionPoints);
+            element.ActionPoints = EditorGUILayout.IntField("Action points:", element.ActionPoints);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(new GUIContent("Starting attributes"));

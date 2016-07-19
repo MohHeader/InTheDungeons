@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using Assets.Game.Scripts.Battle.Model;
+using Assets.Game.Scripts.Battle.Presenter.Interfaces;
 using Assets.Game.Scripts.Battle.Presenter.UI;
 using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
@@ -14,7 +15,7 @@ using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
-    public class CharacterPresenter : PresenterBase<Character> {
+    public class CharacterPresenter : PresenterBase<Character>, IActor {
         public BattleCharacterStatusPresenter StatusPresenter;
 
         public enum CharacterStateEnum {
@@ -184,6 +185,15 @@ namespace Assets.Game.Scripts.Battle.Presenter
             }
         }
 
+        #endregion
+        #region IActor Implementation
+        public void NewTurn() {
+            CharacterData.RegenerateActionPoints();
+        }
+
+        public void EndTurn() {
+            CharacterData.RemainingActionPoint.Value = 0;
+        }
         #endregion
     }
 }

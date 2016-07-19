@@ -9,6 +9,10 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         private readonly CompositeDisposable _characterDisposables = new CompositeDisposable();
 
         public Image Icon;
+        public Image Border;
+
+        public Sprite UnselectedSprite;
+        public Sprite SelectedSprite;
 
         protected CharacterPresenter SelectedCharacterPresenter;
 
@@ -36,6 +40,9 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
                 Skill = null;
                 Icon.sprite = null;
                 Icon.enabled = false;
+
+                Border.sprite = null;
+                Border.enabled = false;
             }
             else
             {
@@ -43,6 +50,9 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
                 Skill = characterPresenter.Skills[SkillIndex].SkillData;
                 Icon.enabled = true;
                 Icon.sprite = characterPresenter.Skills[SkillIndex].Icon;
+
+                Border.enabled = true;
+                Border.sprite = UnselectedSprite;
             }
         }
 
@@ -57,7 +67,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         }
 
         private void ToggleSkillSelection(bool select) {
-            Icon.color = select ? Color.blue : Color.white;
+            Border.sprite = select ? SelectedSprite : UnselectedSprite;
         }
 
         private void SkillSelection(bool b) {
