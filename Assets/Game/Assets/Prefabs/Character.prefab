@@ -40,7 +40,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163824}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
   m_Name: 
@@ -97,9 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169ae5ff84db89049b7c03753954b454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HudPrefab: {fileID: 144582, guid: c7ab3ee547f42c14b98d00f95c85901e, type: 2}
   DamageColor: {r: 1, g: 0.014285715, b: 0, a: 1}
   HealingColor: {r: 0.05709342, g: 0.9705882, b: 0.5169908, a: 1}
+  HudPrefab: {fileID: 144582, guid: c7ab3ee547f42c14b98d00f95c85901e, type: 2}
 --- !u!114 &11488530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,12 +115,12 @@ MonoBehaviour:
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0
-    exactStartPoint: 0
+    exactStartPoint: 1
     exactEndPoint: 0
     useRaycasting: 0
     mask:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1024
     useGraphRaycasting: 0
   traversableTags: -1
   traversableTagsCompatibility:

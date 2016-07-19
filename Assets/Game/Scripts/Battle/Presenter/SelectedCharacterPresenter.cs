@@ -20,12 +20,16 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         public GameObject SelectionPrefab;
         public Material SquareMat;
 
+        private float CellSize;
+
         protected override IPresenter[] Children
         {
             get { return EmptyChildren; }
         }
 
         protected override void BeforeInitialize(SquadPresenter argument) {
+            var gridGraph = AstarPath.active.astarData.gridGraph;
+            CellSize = gridGraph.nodeSize*1000;
         }
 
         private void SelectedCharacterChanged(CharacterPresenter characterPresenter) {
@@ -75,9 +79,10 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         }
 
         public IEnumerator CalculateConstantPath() {
-            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int) (SelectedCharacter.CharacterData.RemainingActionPoint.Value*100), OnPathComplete);
+            UnityEngine.Debug.LogFormat("Path Length {0}", (int)(SelectedCharacter.CharacterData.MovementRange.Value * CellSize));
+            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int) (SelectedCharacter.CharacterData.MovementRange.Value * CellSize), OnPathComplete);
 
-            SelectedCharacter.Seeker.StartPath(constPath);
+            AstarPath.StartPath(constPath);
             LastPath = constPath;
             yield return constPath.WaitForPath();
         }

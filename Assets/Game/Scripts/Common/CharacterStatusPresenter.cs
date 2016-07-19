@@ -54,6 +54,7 @@ namespace Assets.Game.Scripts.Common {
         public ReactiveProperty<float> RemainingHealth { get; protected set; }
 
         public ReactiveProperty<float> Damage { get; protected set; }
+        public ReactiveProperty<int> MovementRange { get; protected set; }
 
         protected void SetupProperties() {
             Strength = new ReactiveProperty<float>();
@@ -65,6 +66,8 @@ namespace Assets.Game.Scripts.Common {
             RemainingHealth = new ReactiveProperty<float>(1);
 
             Damage = new ReactiveProperty<float>();
+
+            MovementRange = new ReactiveProperty<int>(CharacterData.Value.MovementRange);
 
             switch (CharacterData.Value.MainStatValue)
             {
