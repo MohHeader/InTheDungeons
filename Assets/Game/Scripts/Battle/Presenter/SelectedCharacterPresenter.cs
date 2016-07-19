@@ -33,11 +33,13 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         }
 
         private void SelectedCharacterChanged(CharacterPresenter characterPresenter) {
+            _constantPathNodes = null;
             _characterDisposables.Clear();
+            ClearPrevious();
+
             if (characterPresenter == null) {
                 SelectedCharacter = null;
                 if (SelectionGameObject != null) SelectionGameObject.SetActive(false);
-                ClearPrevious();
                 return;
             }
             if (SelectionGameObject == null) SelectionGameObject = Instantiate(SelectionPrefab);
@@ -86,14 +88,15 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 yield return new WaitForFixedUpdate();
             }
 
-            UnityEngine.Debug.LogFormat("Path Length {0}", (int)(SelectedCharacter.CharacterData.MovementRange.Value * CellSize));
-            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int) (SelectedCharacter.CharacterData.MovementRange.Value * CellSize), OnPathComplete);
+            var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int) ((SelectedCharacter.CharacterData.MovementRange.Value + 1) * CellSize), OnPathComplete);
 
             SelectedCharacter.Seeker.StartPath(constPath);
             LastPath = constPath;
             yield return constPath.WaitForPath();
             SelectedCharacter.GetComponent<GraphUpdateScene>().enabled = true;
         }
+
+        private List<GraphNode> _constantPathNodes = null;
 
         protected void OnPathComplete(Path p) {
             if (p.GetType() == typeof(ConstantPath)) {
@@ -103,6 +106,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 var constPath = p as ConstantPath;
                 Debug.Assert(constPath != null, "constPath != null");
                 var nodes = constPath.allNodes;
+                _constantPathNodes = nodes;
 
                 var mesh = new Mesh();
 
@@ -113,6 +117,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 //This will loop through the nodes from furthest away to nearest, not really necessary... but why not :D
                 //Note that the reverse does not, as common sense would suggest, loop through from the closest to the furthest away
                 //since is might contain duplicates and only the node duplicate placed at the highest index is guarenteed to be ordered correctly.
+                // i >= 1 - для исключения ноды на которой стоит персонаж
                 for (var i = nodes.Count - 1; i >= 1; i--) {
                     var pos = (Vector3) nodes[i].position + PathOffset;
                     if (verts.Count == 65000 && !drawRaysInstead) {
@@ -186,14 +191,18 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 Destroy(_lastRender[i]);
             }
             _lastRender.Clear();
+            _constantPathNodes = null;
         }
 
         public void Update() {
-            if (Input.GetMouseButtonDown(0) && SelectedCharacter != null && !EventSystem.current.IsPointerOverGameObject()) {
+            if (Input.GetMouseButtonDown(0) && SelectedCharacter != null && !EventSystem.current.IsPointerOverGameObject() && _constantPathNodes != null) {
                 RaycastHit hit;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh") {
-                    StartCoroutine(SelectedCharacter.MoveTo(hit.point));
+                if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh")
+                {
+                    var closestNode = AstarPath.active.GetNearest(hit.point).node;
+                    if (_constantPathNodes.Contains(closestNode))
+                        StartCoroutine(SelectedCharacter.MoveTo(hit.point));
                 }
             }
         }

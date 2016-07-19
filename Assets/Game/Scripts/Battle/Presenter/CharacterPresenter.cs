@@ -171,15 +171,17 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public IEnumerator PlayTargetedSkill(SkillData skill, CharacterPresenter target) {
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.UsingSkill);
 
-            SelectedSkill.Value = null;
+            transform.LookAt(target.transform);
             Animator.SetTrigger(TriggerEnumToTriggerName(skill.TriggerName));
             yield return new WaitForSeconds(0.4f);
             while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 yield return new WaitForEndOfFrame();
             }
             target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value);
+            yield return new WaitForFixedUpdate();
 
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+            SelectedSkill.Value = null;
         }
 
         protected string TriggerEnumToTriggerName(TriggerEnum trigger) {

@@ -68,6 +68,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
 
         private void ToggleSkillSelection(bool select) {
             Border.sprite = select ? SelectedSprite : UnselectedSprite;
+            SelectingTarget.Value = select;
         }
 
         private void SkillSelection(bool b) {
@@ -96,7 +97,6 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
                                 character.transform.position);
                             if (distance <= Skill.MaximumDistance && distance >= Skill.MinimumDistance)
                             {
-                                SelectingTarget.Value = false;
                                 StartCoroutine(SelectedCharacterPresenter.PlayTargetedSkill(Skill, character));
                             }
                         }
