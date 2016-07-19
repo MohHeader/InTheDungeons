@@ -79,12 +79,20 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         }
 
         public IEnumerator CalculateConstantPath() {
+            SelectedCharacter.GetComponent<GraphUpdateScene>().enabled = false;
+            AstarPath.active.Scan();
+            while (AstarPath.active.isScanning)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
             UnityEngine.Debug.LogFormat("Path Length {0}", (int)(SelectedCharacter.CharacterData.MovementRange.Value * CellSize));
             var constPath = ConstantPath.Construct(SelectedCharacter.transform.position, (int) (SelectedCharacter.CharacterData.MovementRange.Value * CellSize), OnPathComplete);
 
-            AstarPath.StartPath(constPath);
+            SelectedCharacter.Seeker.StartPath(constPath);
             LastPath = constPath;
             yield return constPath.WaitForPath();
+            SelectedCharacter.GetComponent<GraphUpdateScene>().enabled = true;
         }
 
         protected void OnPathComplete(Path p) {
@@ -105,7 +113,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 //This will loop through the nodes from furthest away to nearest, not really necessary... but why not :D
                 //Note that the reverse does not, as common sense would suggest, loop through from the closest to the furthest away
                 //since is might contain duplicates and only the node duplicate placed at the highest index is guarenteed to be ordered correctly.
-                for (var i = nodes.Count - 1; i >= 0; i--) {
+                for (var i = nodes.Count - 1; i >= 1; i--) {
                     var pos = (Vector3) nodes[i].position + PathOffset;
                     if (verts.Count == 65000 && !drawRaysInstead) {
                         UnityEngine.Debug.LogError("Too many nodes, rendering a mesh would throw 65K vertex error. Using Debug.DrawRay instead for the rest of the nodes");
@@ -185,7 +193,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 RaycastHit hit;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh") {
-                    SelectedCharacter.MoveTo(hit.point);
+                    StartCoroutine(SelectedCharacter.MoveTo(hit.point));
                 }
             }
         }

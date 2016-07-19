@@ -96,9 +96,16 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         #region Movement methods
-        public void MoveTo(Vector3 position) {
+        public IEnumerator MoveTo(Vector3 position) {
             //var p = ABPath.Construct(transform.position, position, PathCallback);
             //AstarPath.StartPath(p);
+            gameObject.GetComponent<GraphUpdateScene>().enabled = false;
+            AstarPath.active.Scan();
+            while (AstarPath.active.isScanning)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
             var start = AstarPath.active.GetNearest(transform.position);
             var end = AstarPath.active.GetNearest(position);
 
@@ -109,6 +116,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         {
             if (!newPath.error)
             {
+                gameObject.GetComponent<GraphUpdateScene>().enabled = true;
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
                 //Reset the waypoint counter
                 _currentWaypoint = -1;
@@ -137,8 +145,12 @@ namespace Assets.Game.Scripts.Battle.Presenter
             }
             else
             {
-                var duration = Vector3.Angle(transform.forward, Path.vectorPath[_currentWaypoint])/RotationSpeed;
-                transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration)
+                var sourceVector = new Vector3(gameObject.transform.position.x, 0f, gameObject.transform.position.z);
+                var destinationVector = new Vector3(Path.vectorPath[_currentWaypoint].x, 0f, Path.vectorPath[_currentWaypoint].z);
+                var relativePos = (destinationVector - sourceVector).normalized;
+                var duration = Vector3.Angle(transform.forward, relativePos);
+                if (duration < 0.2f) MoveCallback();
+                else transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration/RotationSpeed)
                     .OnComplete(MoveCallback);
             }
         }
