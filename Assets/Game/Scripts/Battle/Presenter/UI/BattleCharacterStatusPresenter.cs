@@ -32,7 +32,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
 
         protected override void Initialize(CharacterStatusPresenter argument) {
             Hud = Instantiate(HudPrefab);
-            var canvas = GameObject.FindGameObjectWithTag("MainCanvas");
+            var canvas = GameObject.FindGameObjectWithTag("HUDCanvas");
             Hud.transform.SetParent(canvas.transform, false);
             StatusText = Hud.FindTextMeshProUguiComponent();
             HealthSlider = Hud.FindSliderComponent();

@@ -10,7 +10,6 @@ using Assets.Game.Scripts.Utility.Skills;
 using DG.Tweening;
 using Pathfinding;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter

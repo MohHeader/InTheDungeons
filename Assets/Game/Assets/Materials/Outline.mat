@@ -1,0 +1,357 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Outline
+  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    RenderType: Transparent
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3ebe907059d3d56499b9ccd5ec0d17c8, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MaskTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BaseTextureRGBA
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DistortTexture
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ShadowTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _FalloffTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 10
+      data:
+        first:
+          name: _Cutoff
+        second: 0.72
+      data:
+        first:
+          name: _Shininess
+        second: 1
+      data:
+        first:
+          name: PixelSnap
+        second: 0
+      data:
+        first:
+          name: _Parallax
+        second: 0.02
+      data:
+        first:
+          name: _ZWrite
+        second: 0
+      data:
+        first:
+          name: _Glossiness
+        second: 0.009
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 3
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Emission
+        second: 0.8
+      data:
+        first:
+          name: _FaceDilate
+        second: 0
+      data:
+        first:
+          name: _OutlineWidth
+        second: 1
+      data:
+        first:
+          name: _OutlineSoftness
+        second: 0
+      data:
+        first:
+          name: _WeightNormal
+        second: 0
+      data:
+        first:
+          name: _WeightBold
+        second: 0.5
+      data:
+        first:
+          name: _ShaderFlags
+        second: 0
+      data:
+        first:
+          name: _ScaleRatioA
+        second: 1
+      data:
+        first:
+          name: _ScaleRatioB
+        second: 1
+      data:
+        first:
+          name: _ScaleRatioC
+        second: 1
+      data:
+        first:
+          name: _TextureWidth
+        second: 512
+      data:
+        first:
+          name: _TextureHeight
+        second: 512
+      data:
+        first:
+          name: _GradientScale
+        second: 5
+      data:
+        first:
+          name: _ScaleX
+        second: 1
+      data:
+        first:
+          name: _ScaleY
+        second: 1
+      data:
+        first:
+          name: _PerspectiveFilter
+        second: 0.875
+      data:
+        first:
+          name: _VertexOffsetX
+        second: 0
+      data:
+        first:
+          name: _VertexOffsetY
+        second: 0
+      data:
+        first:
+          name: _UnderlayOffsetX
+        second: 0
+      data:
+        first:
+          name: _UnderlayOffsetY
+        second: 0
+      data:
+        first:
+          name: _UnderlayDilate
+        second: 0
+      data:
+        first:
+          name: _UnderlaySoftness
+        second: 0
+      data:
+        first:
+          name: _MaskSoftnessX
+        second: 0
+      data:
+        first:
+          name: _MaskSoftnessY
+        second: 0
+      data:
+        first:
+          name: _Stencil
+        second: 0
+      data:
+        first:
+          name: _StencilComp
+        second: 8
+      data:
+        first:
+          name: _StencilOp
+        second: 0
+      data:
+        first:
+          name: _StencilReadMask
+        second: 255
+      data:
+        first:
+          name: _StencilWriteMask
+        second: 255
+      data:
+        first:
+          name: _InvFade
+        second: 0.01
+      data:
+        first:
+          name: _Outline
+        second: 0.0043
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 0.35517246, b: 0.35517246, a: 0.991}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 0}
+      data:
+        first:
+          name: _Emission
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _EmisColor
+        second: {r: 0.2, g: 0.2, b: 0.2, a: 0}
+      data:
+        first:
+          name: _NotVisibleColor
+        second: {r: 0, g: 1, b: 0, a: 1}
+      data:
+        first:
+          name: _FaceColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 1, g: 1, b: 0, a: 0.309}
+      data:
+        first:
+          name: _UnderlayColor
+        second: {r: 0, g: 0, b: 0, a: 0.5}
+      data:
+        first:
+          name: _MaskCoord
+        second: {r: 0, g: 0, b: 100000, a: 100000}
+      data:
+        first:
+          name: _Color1
+        second: {r: 0.4411765, g: 0.2099391, b: 0, a: 1}
+      data:
+        first:
+          name: _Color2
+        second: {r: 0.9568627, g: 0.8509804, b: 0, a: 1}
+      data:
+        first:
+          name: _TintColor
+        second: {r: 0, g: 1, b: 0.16176462, a: 1}

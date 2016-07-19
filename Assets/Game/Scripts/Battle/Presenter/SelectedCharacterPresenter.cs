@@ -131,7 +131,8 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
                 var uv = new Vector2[vs.Length];
                 //Set up some basic UV
-                for (var i = 0; i < uv.Length; i += 4) {
+                for (var i = 0; i < uv.Length; i += 4)
+                {
                     uv[i] = new Vector2(0, 0);
                     uv[i + 1] = new Vector2(1, 0);
                     uv[i + 2] = new Vector2(0, 1);
