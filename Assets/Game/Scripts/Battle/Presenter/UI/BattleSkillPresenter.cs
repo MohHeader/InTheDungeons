@@ -4,58 +4,75 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Game.Scripts.Battle.Presenter.UI
-{
-    public class BattleSkillPresenter : PresenterBase<SquadPresenter>
-    {
+namespace Assets.Game.Scripts.Battle.Presenter.UI {
+    public class BattleSkillPresenter : PresenterBase<SquadPresenter> {
+        private readonly CompositeDisposable _characterDisposables = new CompositeDisposable();
+
         public Image Icon;
+
+        protected CharacterPresenter SelectedCharacterPresenter;
+
+        protected ReactiveProperty<bool> SelectingTarget = new ReactiveProperty<bool>(false);
+        protected SkillData Skill;
         public int SkillIndex;
+
         protected override IPresenter[] Children
         {
             get { return EmptyChildren; }
         }
 
-        protected override void BeforeInitialize(SquadPresenter argument)
-        {
+        protected override void BeforeInitialize(SquadPresenter argument) {
         }
 
-        protected CharacterPresenter SelectedCharacterPresenter;
-        protected SkillData Skill;
-
         private void CharacterChanged(CharacterPresenter characterPresenter) {
+            _characterDisposables.Clear();
+            ToggleSkillSelection(false);
+
             SelectedCharacterPresenter = characterPresenter;
-            SelectingCharacter.Value = false;
+            SelectingTarget.Value = false;
             if (characterPresenter == null || characterPresenter.Skills.Length <= SkillIndex ||
-                characterPresenter.Skills[SkillIndex] == null) {
+                characterPresenter.Skills[SkillIndex] == null)
+            {
                 Skill = null;
                 Icon.sprite = null;
                 Icon.enabled = false;
             }
-            else {
+            else
+            {
+                characterPresenter.SelectedSkill.Subscribe(SelectedSkill).AddTo(_characterDisposables);
                 Skill = characterPresenter.Skills[SkillIndex].SkillData;
                 Icon.enabled = true;
                 Icon.sprite = characterPresenter.Skills[SkillIndex].Icon;
             }
         }
 
-        protected override void Initialize(SquadPresenter argument)
-        {
+        protected override void Initialize(SquadPresenter argument) {
             argument.SelectedCharacter.Subscribe(CharacterChanged);
-            SelectingCharacter.Subscribe(_ => SkillSelection(_));
+            SelectingTarget.Subscribe(SkillSelection);
+        }
+
+        private void SelectedSkill(SkillData skillData) {
+            if (skillData == null) ToggleSkillSelection(false);
+            else ToggleSkillSelection(skillData == Skill);
+        }
+
+        private void ToggleSkillSelection(bool select) {
+            Icon.color = select ? Color.blue : Color.white;
         }
 
         private void SkillSelection(bool b) {
-            Icon.color = b ? Color.blue : Color.white;
+            if (SelectedCharacterPresenter == null) return;
+
+            SelectedCharacterPresenter.SelectedSkill.Value = SelectingTarget.Value ? Skill : null;
         }
 
-        protected ReactiveProperty<bool> SelectingCharacter = new ReactiveProperty<bool>(false);
-
         public void OnSelected() {
-            SelectingCharacter.Value = !SelectingCharacter.Value;
+            SelectingTarget.Value = !SelectingTarget.Value;
         }
 
         protected void Update() {
-            if (SelectingCharacter.Value) {
+            if (SelectingTarget.Value)
+            {
                 if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -63,10 +80,15 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI
                     if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
                     {
                         var character = hit.transform.GetComponent<CharacterPresenter>();
-                        if (character != null) {
-                            var distance = Vector3.Distance(SelectedCharacterPresenter.transform.position, character.transform.position);
+                        if (character != null)
+                        {
+                            var distance = Vector3.Distance(SelectedCharacterPresenter.transform.position,
+                                character.transform.position);
                             if (distance <= Skill.MaximumDistance && distance >= Skill.MinimumDistance)
+                            {
+                                SelectingTarget.Value = false;
                                 StartCoroutine(SelectedCharacterPresenter.PlayTargetedSkill(Skill, character));
+                            }
                         }
                     }
                 }

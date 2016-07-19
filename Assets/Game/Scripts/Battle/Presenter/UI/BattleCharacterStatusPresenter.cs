@@ -9,17 +9,20 @@ using UnityEngine.UI;
 
 namespace Assets.Game.Scripts.Battle.Presenter.UI {
     public class BattleCharacterStatusPresenter : PresenterBase<CharacterStatusPresenter> {
-        public GameObject HudPrefab;
+        protected IDisposable CancelHandler;
+        protected Transform CharacterTransform;
         public Color DamageColor;
         public Color HealingColor;
-
-        protected GameObject Hud;
-        protected Transform CharacterTransform;
-
-        protected TextMeshProUGUI StatusText;
         protected Slider HealthSlider;
 
+        protected GameObject Hud;
+        public GameObject HudPrefab;
+
+        protected float LastHealthValue;
+
         protected Rect ScreenRect;
+
+        protected TextMeshProUGUI StatusText;
 
         protected override IPresenter[] Children
         {
@@ -52,9 +55,6 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             StatusText.transform.gameObject.SetActive(false);
         }
 
-        protected float LastHealthValue;
-        protected IDisposable CancelHandler;
-
         private void UpdateStatusText(float f) {
             var delta = f - LastHealthValue;
             LastHealthValue = f;
@@ -62,7 +62,8 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             if (StatusText == null) return;
             StatusText.text = delta.ToString();
 
-            if (delta < 0f) {
+            if (delta < 0f)
+            {
                 StatusText.color = DamageColor;
                 CancelHandler = Observable.FromCoroutine(HealthChangedCoroutine).Subscribe();
             }
@@ -82,10 +83,12 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         protected void LateUpdate() {
             if (Hud == null) return;
             Hud.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-            if (ScreenRect.Contains(Hud.transform.position)) {
+            if (ScreenRect.Contains(Hud.transform.position))
+            {
                 if (!Hud.activeSelf) Hud.SetActive(true);
             }
-            else {
+            else
+            {
                 if (Hud.activeSelf) Hud.SetActive(false);
             }
         }

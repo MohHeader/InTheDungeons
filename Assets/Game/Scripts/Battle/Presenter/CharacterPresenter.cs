@@ -19,21 +19,22 @@ namespace Assets.Game.Scripts.Battle.Presenter
 
         public enum CharacterStateEnum {
             Idle,
-            Moving
+            Moving,
+            SelectingTarget,
+            UsingSkill,
+            Dead
         }
 
         public ReactiveProperty<CharacterStateEnum> CharacterState = new ReactiveProperty<CharacterStateEnum>();
+        public ReactiveProperty<SkillData> SelectedSkill = new ReactiveProperty<SkillData>();
+
         protected Character Character;
 
         public BattleSkill[] Skills;
 
         public Seeker Seeker
         {
-            get
-            {
-                if (_seeker == null) _seeker = GetComponent<Seeker>();
-                return _seeker;
-            }
+            get { return _seeker ?? (_seeker = GetComponent<Seeker>()); }
         }
         protected Animator Animator;
         protected CharacterController Controller;
@@ -56,6 +57,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         protected override void BeforeInitialize(Character argument)
         {
             Character = argument;
+            SelectedSkill.Value = null;
             var instance = DataLayer.GetInstance();
             CharacterData = new CharacterStatusPresenter(instance.Database.GetCharacterData(Character.Id), Character.Level);
             var prefab = Instantiate(CharacterData.Asset);
@@ -64,13 +66,14 @@ namespace Assets.Game.Scripts.Battle.Presenter
             Controller = gameObject.FindCharacterControllerComponent();
             Skills = CharacterData.Skills.Select(_ => new BattleSkill(_)).ToArray();
             StatusPresenter.PropagateArgument(CharacterData);
-            CharacterData.CharacterState.Subscribe(_ => StartCoroutine(StateChanged(_)));
+            CharacterData.CharacterState.Subscribe(_ => StartCoroutine(AliveStateChanged(_)));
         }
 
-        private IEnumerator StateChanged(CharacterStatusPresenter.CharactersStateEnum charactersStateEnum)
+        private IEnumerator AliveStateChanged(CharacterStatusPresenter.CharactersStateEnum charactersStateEnum)
         {
             if (charactersStateEnum == CharacterStatusPresenter.CharactersStateEnum.Dead)
             {
+                CharacterState.SetValueAndForceNotify(CharacterStateEnum.Dead);
                 DestroyImmediate(gameObject.GetComponent<Collider>());
                 AstarPath.active.Scan();
                 Animator.SetBool("Dead", true);
@@ -83,11 +86,15 @@ namespace Assets.Game.Scripts.Battle.Presenter
         protected override void Initialize(Character argument)
         {
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+            SelectedSkill.Subscribe(_ =>
+            {
+                CharacterState.SetValueAndForceNotify(_ != null
+                    ? CharacterStateEnum.SelectingTarget
+                    : CharacterStateEnum.Idle);
+            });
         }
 
         #region Movement methods
-        // TODO: Возможно имеет смысл разделить представление от логики перемещения
-
         public void MoveTo(Vector3 position) {
             //var p = ABPath.Construct(transform.position, position, PathCallback);
             //AstarPath.StartPath(p);
@@ -139,7 +146,6 @@ namespace Assets.Game.Scripts.Battle.Presenter
             Animator.SetBool("Moving", false);
             AstarPath.active.Scan();
 
-            // TODO: Hack
             CharacterData.RemainingActionPoint.Value --;
             Path = null;
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
@@ -150,12 +156,17 @@ namespace Assets.Game.Scripts.Battle.Presenter
         #region Skill Player
 
         public IEnumerator PlayTargetedSkill(SkillData skill, CharacterPresenter target) {
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.UsingSkill);
+
+            SelectedSkill.Value = null;
             Animator.SetTrigger(TriggerEnumToTriggerName(skill.TriggerName));
             yield return new WaitForSeconds(0.4f);
             while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 yield return new WaitForEndOfFrame();
             }
             target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value);
+
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
         }
 
         protected string TriggerEnumToTriggerName(TriggerEnum trigger) {

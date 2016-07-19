@@ -52,6 +52,15 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 case CharacterPresenter.CharacterStateEnum.Moving:
                     ClearPrevious();
                     break;
+                case CharacterPresenter.CharacterStateEnum.SelectingTarget:
+                    ClearPrevious();
+                    break;
+                case CharacterPresenter.CharacterStateEnum.UsingSkill:
+                    ClearPrevious();
+                    break;
+                case CharacterPresenter.CharacterStateEnum.Dead:
+                    ClearPrevious();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("characterStateEnum", characterStateEnum, null);
             }
@@ -104,7 +113,6 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                     }
 
                     //Add vertices in a square
-
                     var gg = AstarData.GetGraph(nodes[i]) as GridGraph;
                     var scale = 1F;
 
@@ -155,7 +163,8 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 meshCollider.sharedMesh = mesh;
                 meshCollider.isTrigger = true;
 
-                _lastRender.Add(go);
+                if (SelectedCharacter.CharacterState.Value == CharacterPresenter.CharacterStateEnum.Idle)
+                    _lastRender.Add(go);
             }
         }
 
@@ -171,7 +180,6 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 RaycastHit hit;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit) && hit.transform.name == "PathMesh") {
-                    UnityEngine.Debug.Log("Coordinate acquired");
                     SelectedCharacter.MoveTo(hit.point);
                 }
             }
