@@ -12,6 +12,8 @@ namespace DungeonArchitect
     [ExecuteInEditMode]
     public class NegationVolume : Volume
     {
+        public bool inverse = false;
+
         void Awake()
         {
             COLOR_WIRE = new Color(1, 0.5f, 0, 1);

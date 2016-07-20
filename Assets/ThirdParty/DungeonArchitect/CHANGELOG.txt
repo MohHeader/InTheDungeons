@@ -1,3 +1,17 @@
+CHANGE LOG: Dungeon Architect
+=============================
+
+Version 1.3.0
+=============
+* Fixed spatial constraints for 3D
+* Removed overlapping fence / walls
+* Optimized the nav mesh agent to update at customizable timesteps
+* Added a callback on the navigation build complete event
+* Added an experimental floor plan builder
+* Added spatial constraint sample scene
+* Fixed landscape transformer not painting the room ground textures properly
+* Added tooltips to the Grid configuration fields
+
 Version 1.2.0
 =============
 * Spatial constraints allow you to specify meshes selectively based on nearby constraints 

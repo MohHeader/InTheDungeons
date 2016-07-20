@@ -16,10 +16,9 @@ namespace DungeonArchitect.Editors
         public override void DrawConstraintEditor(SpatialConstraint constraint)
         {
             var constraint2x2 = constraint as SpatialConstraintGrid2x2;
-            if (constraint2x2.cells == null || constraint2x2.cells[0, 0] == null)
+            if (constraint2x2.cells == null || constraint2x2.cells[0] == null)
             {
                 // gets invalidated during code change / hot-reloading
-                //constraint2x2.Init();
                 throw new System.ApplicationException("invalid state");
             }
 
@@ -27,8 +26,8 @@ namespace DungeonArchitect.Editors
             for (int row = 0; row < 2; row++)
             {
                 EditorGUILayout.BeginHorizontal();
-                DrawGridCell(cells[row, 0]);
-                DrawGridCell(cells[row, 1]);
+                DrawGridCell(cells[row * 2 + 0]);
+                DrawGridCell(cells[row * 2 + 1]);
                 EditorGUILayout.EndHorizontal();
             }
         }

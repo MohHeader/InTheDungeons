@@ -1,7 +1,9 @@
 ﻿//$ Copyright 2016, Code Respawn Technologies Pvt Ltd - All Rights Reserved $//
 
 using UnityEngine;
+using System.Collections;
 using Assets.Game.Scripts.Utility.Common;
+using DungeonArchitect;
 
 namespace DungeonArchitect
 {

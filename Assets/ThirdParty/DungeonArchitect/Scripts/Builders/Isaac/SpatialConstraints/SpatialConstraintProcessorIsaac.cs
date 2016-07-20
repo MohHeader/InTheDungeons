@@ -9,8 +9,9 @@ namespace DungeonArchitect.Constraints
 {
     public class SpatialConstraintProcessorIsaac : SpatialConstraintProcessor
     {
-        public override bool ProcessSpatialConstraint(SpatialConstraint constraint, PropSocket socket, DungeonModel model, List<PropSocket> levelSockets)
+        public override bool ProcessSpatialConstraint(SpatialConstraint constraint, PropSocket socket, DungeonModel model, List<PropSocket> levelSockets, out Matrix4x4 outOffset)
         {
+            outOffset = Matrix4x4.identity;
             if (constraint is SpatialConstraintGrid3x3)
             {
                 return Process3x3(constraint as SpatialConstraintGrid3x3, socket, model);

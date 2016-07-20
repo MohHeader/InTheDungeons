@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Assets.Game.Scripts.Utility.Common;
 
 namespace DungeonArchitect.Builders.Isaac
 {
@@ -7,7 +7,7 @@ namespace DungeonArchitect.Builders.Isaac
     {
         public int minBrushSize = 1;
         public int maxBrushSize = 3;
-        public override IsaacRoomLayout GenerateLayout(IsaacRoom room, System.Random random, int roomWidth, int roomHeight)
+        public override IsaacRoomLayout GenerateLayout(IsaacRoom room, FastRandom random, int roomWidth, int roomHeight)
         {
             var doors = room.doorPositions;
             var layout = new IsaacRoomLayout();

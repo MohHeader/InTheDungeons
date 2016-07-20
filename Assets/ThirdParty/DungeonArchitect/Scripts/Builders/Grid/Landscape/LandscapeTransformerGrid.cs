@@ -54,8 +54,9 @@ namespace DungeonArchitect {
 		public AnimationCurve roomElevationCurve;
 		public AnimationCurve corridorElevationCurve;
 
-		public int roadBlurDistance = 6;
-		public float corridorBlurThreshold = 0.5f;
+        public int roadBlurDistance = 6;
+        public float corridorBlurThreshold = 0.5f;
+        public float roomBlurThreshold = 0.5f;
 
 		public override void OnPostDungeonLayoutBuild(Dungeon dungeon, DungeonModel model)
 		{
@@ -148,13 +149,34 @@ namespace DungeonArchitect {
 					}
 				}
 			}
-			
-			int roadIndex = GetTextureIndex(LandscapeTextureType.Corridor);
 
-			if (roadIndex >= 0) {
+            int corridorIndex = GetTextureIndex(LandscapeTextureType.Corridor);
+            int roomIndex = GetTextureIndex(LandscapeTextureType.Room);
+
+            if (roomIndex < 0 && corridorIndex < 0)
+            {
+                // Both corridor and room textures were not provided.  Fill them up with the fill index
+                roomIndex = fillIndex;
+                corridorIndex = fillIndex;
+            }
+            else if (roomIndex < 0)
+            {
+                // Use the same texture for the room used by the corridor
+                roomIndex = corridorIndex;
+            }
+            else if (corridorIndex < 0)
+            {
+                // Use the same texture for the corridor used by the room
+                corridorIndex = roomIndex;
+            }
+
+            // Apply the room/corridor texture
+            {
 				var gridSize = model.Config.GridCellSize;
-				var layoutMap = new float[map.GetLength(0), map.GetLength(1)];
-				foreach (var cell in model.Cells) {
+                var roomMap = new float[map.GetLength(0), map.GetLength(1)];
+                var corridorMap = new float[map.GetLength(0), map.GetLength(1)];
+                foreach (var cell in model.Cells)
+                {
 					var bounds = cell.Bounds;
 					var locationGrid = bounds.Location;
 					var location = locationGrid * gridSize;
@@ -164,27 +186,44 @@ namespace DungeonArchitect {
 					LandscapeDataRasterizer.WorldToTerrainTextureCoord(terrain, location.x + size.x, location.z + size.z, out gx2, out gy2);
 					for (var gx = gx1; gx <= gx2; gx++) {
 						for (var gy = gy1; gy <= gy2; gy++) {
-							layoutMap[gy, gx] = 1;
+                            if (cell.CellType == CellType.Unknown) continue;
+                            if (cell.CellType == CellType.Room)
+                            {
+                                roomMap[gy, gx] = 1;
+                            }
+                            else
+                            {
+                                corridorMap[gy, gx] = 1;
+                            }
 						}
 					}
 				}
 
 				// Blur the layout data
 				var filter = new BlurFilter(roadBlurDistance);
-				layoutMap = filter.ApplyFilter(layoutMap);
+                roomMap = filter.ApplyFilter(roomMap);
+                corridorMap = filter.ApplyFilter(corridorMap);
 				
 				// Fill up the inner region with corridor index
 				for (var y = 0; y < data.alphamapHeight; y++) {
 					for (var x = 0; x < data.alphamapWidth; x++) {
-						bool corridor = (layoutMap[y, x] > corridorBlurThreshold);
+                        bool corridor = (corridorMap[y, x] > corridorBlurThreshold);
 						if (corridor) {
-							map[y, x, roadIndex] = 1;
-							map[y, x, fillIndex] = 0;
-						}
-					}
+                            map[y, x, fillIndex] = 0;
+                            map[y, x, roomIndex] = 0;
+                            map[y, x, corridorIndex] = 1;
+                        }
+                    
+                        bool room = (roomMap[y, x] > roomBlurThreshold);
+                        if (room)
+                        {
+                            map[y, x, fillIndex] = 0;
+                            map[y, x, corridorIndex] = 0;
+                            map[y, x, roomIndex] = 1;
+                        }
+                    }
 				}
 			}
-
 		}
 
 		void UpdateCliffTexture(float[,,] map) {

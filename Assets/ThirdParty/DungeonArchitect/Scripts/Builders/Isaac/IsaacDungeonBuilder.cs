@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.Game.Scripts.Utility.Common;
 
 namespace DungeonArchitect.Builders.Isaac
 {
@@ -9,7 +10,7 @@ namespace DungeonArchitect.Builders.Isaac
         IsaacDungeonConfig isaacConfig;
         IsaacDungeonModel isaacModel;
 
-        new System.Random random;
+        new FastRandom random;
 
 
         List<IsaacRoom> rooms = new List<IsaacRoom>();
@@ -25,7 +26,7 @@ namespace DungeonArchitect.Builders.Isaac
         {
             base.BuildDungeon(config, model);
 
-            random = new System.Random((int)config.Seed);
+            random = new FastRandom((int)config.Seed);
 
             // We know that the dungeon prefab would have the appropriate config and models attached to it
             // Cast and save it for future reference

@@ -80,6 +80,31 @@ namespace DungeonArchitect.Editors
                 //EditorGUILayout.PropertyField(useSpatialConstraint);
                 useSpatialConstraint.boolValue = EditorGUILayout.ToggleLeft(" Use Spatial Constraints", useSpatialConstraint.boolValue);
 
+                {
+                    var node = target as VisualNode;
+                    bool oldRotateToFit = false;
+                    bool oldApplyMarkerRotation = false;
+                    if (node.spatialConstraint != null)
+                    {
+                        oldRotateToFit = node.spatialConstraint.rotateToFit;
+                        oldApplyMarkerRotation = node.spatialConstraint.applyMarkerRotation;
+                    }
+                    bool rotateToFit = EditorGUILayout.ToggleLeft("Rotate to Fit", oldRotateToFit);
+                    bool applyMarkerRotation = EditorGUILayout.ToggleLeft("Apply Marker Rotation", oldApplyMarkerRotation);
+                    if (node.spatialConstraint != null)
+                    {
+                        if (rotateToFit != oldRotateToFit)
+                        {
+                            node.spatialConstraint.rotateToFit = rotateToFit;
+                        }
+                        if (applyMarkerRotation != oldApplyMarkerRotation)
+                        {
+                            node.spatialConstraint.applyMarkerRotation = applyMarkerRotation;
+                        }
+                    }
+                }
+
+
                 GUI.enabled = useSpatialConstraint.boolValue;
 
                 System.Type[] constraintTypes = ReflectionUtils.GetAllSubtypes(typeof(SpatialConstraint), true);

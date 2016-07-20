@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Assets.Game.Scripts.Utility.Common;
 using DungeonArchitect;
-using DungeonArchitect.Utils;
 
 namespace SimpleCity
 {
@@ -10,7 +9,7 @@ namespace SimpleCity
         SimpleCityDungeonConfig demoConfig;
         SimpleCityDungeonModel demoModel;
 
-        new System.Random random;
+        new FastRandom random;
         /// <summary>
         /// Builds the dungeon layout.  In this method, you should build your dungeon layout and save it in your model file
         /// No markers should be emitted here.   (EmitMarkers function will be called later by the engine to do that)
@@ -21,7 +20,7 @@ namespace SimpleCity
         {
             base.BuildDungeon(config, model);
 
-            random = new System.Random((int)config.Seed);
+            random = new FastRandom((int)config.Seed);
 
             // We know that the dungeon prefab would have the appropriate config and models attached to it
             // Cast and save it for future reference

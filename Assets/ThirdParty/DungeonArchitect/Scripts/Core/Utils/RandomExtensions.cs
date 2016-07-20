@@ -3,18 +3,19 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Assets.Game.Scripts.Utility.Common;
 
 /// <summary>
 /// Extends System.Random with gamedev based utility functions
 /// </summary>
 public static class RandomExtensions {
 	
-	public static float NextFloat(this System.Random random)
+	public static float NextFloat(this FastRandom random)
 	{
 		return (float)random.NextDouble();
 	}
 
-	public static Vector3 OnUnitSphere(this System.Random random) {
+	public static Vector3 OnUnitSphere(this FastRandom random) {
 		var z = (float)random.NextDouble() * 2 - 1;
 		var rxy = Mathf.Sqrt(1 - z*z);
 		var phi = (float)random.NextDouble() * 2 * Mathf.PI;
@@ -23,15 +24,15 @@ public static class RandomExtensions {
 		return new Vector3(x, y, z);
 	}
 	
-	public static float Range(this System.Random random, float a, float b) {
+	public static float Range(this FastRandom random, float a, float b) {
 		return a + NextFloat(random) * (b - a);
 	}
 
-	public static int Range(this System.Random random, int a, int b) {
+	public static int Range(this FastRandom random, int a, int b) {
 		return Mathf.RoundToInt(a + NextFloat(random) * (b - a));
 	}
 
-	public static float value(this System.Random random) {
+	public static float value(this FastRandom random) {
 		return NextFloat(random);
 	}
 }

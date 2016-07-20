@@ -112,6 +112,8 @@ namespace DungeonArchitect
 					(Z < rect.Z + rect.Length);
 		}
 
+        
+
         public static Rectangle ExpandBounds(Rectangle rect, int distance)
         {
             

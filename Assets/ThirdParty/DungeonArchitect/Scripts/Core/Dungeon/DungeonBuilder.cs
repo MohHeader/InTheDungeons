@@ -214,14 +214,15 @@ namespace DungeonArchitect
             return ValidThemes[index];
         }
 
-        protected virtual bool ProcessSpatialConstraint(SpatialConstraintProcessor constraintProcessor, SpatialConstraint constraint, PropSocket socket)
+        protected virtual bool ProcessSpatialConstraint(SpatialConstraintProcessor constraintProcessor, SpatialConstraint constraint, PropSocket socket, out Matrix4x4 OutOffset)
         {
             if (constraintProcessor == null)
             {
+                OutOffset = Matrix4x4.identity;
                 return false;
             }
 
-            return constraintProcessor.ProcessSpatialConstraint(constraint, socket, model, propSockets);
+            return constraintProcessor.ProcessSpatialConstraint(constraint, socket, model, propSockets, out OutOffset);
         }
 
         public virtual void ApplyTheme(List<DungeonPropDataAsset> Themes, DungeonSceneProvider SceneProvider)
@@ -313,10 +314,23 @@ namespace DungeonArchitect
 
                         if (insertMesh && prop.useSpatialConstraint && prop.spatialConstraint != null)
                         {
-                            if (!ProcessSpatialConstraint(constraintProcessor, prop.spatialConstraint, socket))
+                            Matrix4x4 spatialOffset;
+                            if (!ProcessSpatialConstraint(constraintProcessor, prop.spatialConstraint, socket, out spatialOffset))
                             {
                                 // Fails spatial constraint
                                 insertMesh = false;
+                            }
+                            else
+                            {
+                                // Apply the offset
+                                var markerOffset = socket.Transform;
+                                if (prop.spatialConstraint != null && !prop.spatialConstraint.applyMarkerRotation)
+                                {
+                                    var markerPosition = Matrix.GetTranslation(ref markerOffset);
+                                    var markerScale = Matrix.GetScale(ref markerOffset);
+                                    markerOffset = Matrix4x4.TRS(markerPosition, Quaternion.identity, markerScale);
+                                }
+                                transform = markerOffset * spatialOffset * prop.Offset;
                             }
                         }
 

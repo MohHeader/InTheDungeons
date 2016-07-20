@@ -822,6 +822,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ff34708f79d524198c140aa6a09a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateToFit: 1
+  applyMarkerRotation: 1
   cells:
   - CellType: 0
   - CellType: 0
@@ -883,6 +885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ff34708f79d524198c140aa6a09a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateToFit: 1
+  applyMarkerRotation: 1
   cells:
   - CellType: 1
   - CellType: 1
@@ -973,6 +977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ff34708f79d524198c140aa6a09a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateToFit: 1
+  applyMarkerRotation: 1
   cells:
   - CellType: 1
   - CellType: 1

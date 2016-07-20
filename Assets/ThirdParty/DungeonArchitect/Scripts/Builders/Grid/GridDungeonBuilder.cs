@@ -309,8 +309,18 @@ namespace DungeonArchitect
             var cellsToRemove = new List<Cell>();
             foreach (var cell in gridModel.Cells)
             {
-                var intersects = cell.Bounds.IntersectsWith(bounds);
-                if (intersects)
+                bool removeCell;
+                if (volume.inverse)
+                {
+                    // Inverse the negation and remove everything outside the volume
+                    removeCell = !bounds.Contains(cell.Bounds);
+                }
+                else
+                {
+                    removeCell = cell.Bounds.IntersectsWith(bounds);
+                }
+
+                if (removeCell)
                 {
                     cellsToRemove.Add(cell);
                 }
@@ -1891,7 +1901,10 @@ namespace DungeonArchitect
                 }
                 BuildMesh_Stairs(cell);
             }
+
+            RemoveOverlappingMarkers();
         }
+
 
         int GetElevation(Cell baseCell, int x, int z, out int OutYOffset)
         {
@@ -2086,6 +2099,7 @@ namespace DungeonArchitect
                     // Add the pillar
                     Matrix.SetTranslation(ref transform, Vector3.Scale(new Vector3(x + 1, y, z), GridToMeshScale));
                     OffsetTransformY(OffsetY * GridToMeshScale.y, ref transform);
+                    gridPosition.x++;
                     EmitMarker(DungeonConstants.ST_WALLSEPARATOR, transform, gridPosition, cell.Id);
                     EmitMarker(DungeonConstants.ST_WALLHALFSEPARATOR, transform, elevation, HalfWallOffset, gridPosition, cell.Id, GridToMeshScale);
                 }
@@ -2119,6 +2133,7 @@ namespace DungeonArchitect
                 // Add the pillar
                 Matrix.SetTranslation(ref transform, Vector3.Scale(new Vector3(x, y, z + 1), GridToMeshScale));
                 OffsetTransformY(OffsetY * GridToMeshScale.y, ref transform);
+                gridPosition.z++;
                 EmitMarker(DungeonConstants.ST_WALLSEPARATOR, transform, gridPosition, cell.Id);
                 EmitMarker(DungeonConstants.ST_WALLHALFSEPARATOR, transform, elevation, HalfWallOffset, gridPosition, cell.Id, GridToMeshScale);
 
@@ -2225,6 +2240,7 @@ namespace DungeonArchitect
                 if (drawFence || drawPillar)
                 {
                     Matrix.SetTranslation(ref transform, Vector3.Scale(new Vector3(x + 1, y, z), GridToMeshScale));
+                    gridPosition.x++;
                     EmitMarker(DungeonConstants.ST_FENCESEPARATOR, transform, gridPosition, cell.Id);
                     if (isElevatedFence)
                     {
@@ -2265,6 +2281,7 @@ namespace DungeonArchitect
                 if (drawFence || drawPillar)
                 {
                     Matrix.SetTranslation(ref transform, Vector3.Scale(new Vector3(x, y, z + 1), GridToMeshScale));
+                    gridPosition.z++;
                     EmitMarker(DungeonConstants.ST_FENCESEPARATOR, transform, gridPosition, cell.Id);
                     if (isElevatedFence)
                     {
@@ -2312,6 +2329,52 @@ namespace DungeonArchitect
             return Mathf.Abs(owner.Bounds.Location.y - target.Bounds.Location.y);
         }
 
+        void RemoveOverlappingMarkers()
+        {
+            var wallPositions = new HashSet<Vector3>();
+            var wallSeparaterPositions = new HashSet<Vector3>();
+            foreach (PropSocket marker in propSockets)
+            {
+                if (marker.SocketType == DungeonConstants.ST_WALL)
+                {
+                    var position = Matrix.GetTranslation(ref marker.Transform);
+                    wallPositions.Add(position);
+                }
+                if (marker.SocketType == DungeonConstants.ST_WALLSEPARATOR)
+                {
+                    var position = Matrix.GetTranslation(ref marker.Transform);
+                    wallSeparaterPositions.Add(position);
+                }
+            }
+
+            var overlappingMarkers = new List<PropSocket>();
+            foreach (PropSocket marker in propSockets)
+            {
+                if (marker.SocketType == DungeonConstants.ST_FENCE)
+                {
+                    var position = Matrix.GetTranslation(ref marker.Transform);
+                    if (wallPositions.Contains(position))
+                    {
+                        overlappingMarkers.Add(marker);
+                    }
+                }
+                if (marker.SocketType == DungeonConstants.ST_FENCESEPARATOR)
+                {
+                    var position = Matrix.GetTranslation(ref marker.Transform);
+                    if (wallSeparaterPositions.Contains(position))
+                    {
+                        overlappingMarkers.Add(marker);
+                    }
+                }
+            }
+
+            // Remove all the overlapping markers
+            foreach (var overlappingMarker in overlappingMarkers)
+            {
+                propSockets.Remove(overlappingMarker);
+            }
+        }
+
         void BuildMesh_Stairs(Cell cell)
         {
             // Draw all the stairs registered with this cell
@@ -2320,8 +2383,7 @@ namespace DungeonArchitect
                 // No stairs registered here
                 return;
             }
-
-
+            
             foreach (StairInfo stair in CellStairs[cell.Id])
             {
                 Matrix4x4 transform = Matrix4x4.TRS(stair.Position, stair.Rotation, Vector3.one);

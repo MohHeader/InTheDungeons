@@ -10,19 +10,17 @@ namespace DungeonArchitect.Constraints.Grid
     [System.Serializable]
     public class SpatialConstraintGrid2x2 : SpatialConstraint
     {
-        public SpatialConstraintGridCell[,] cells = new SpatialConstraintGridCell[2, 2];
+        [SerializeField]
+        public SpatialConstraintGridCell[] cells = new SpatialConstraintGridCell[4];
         public override void OnEnable()
         {
             base.OnEnable();
 
-            for (int x = 0; x < cells.GetLength(0); x++)
+            for (int i = 0; i < cells.Length; i++)
             {
-                for (int y = 0; y < cells.GetLength(1); y++)
+                if (cells[i] == null)
                 {
-                    if (cells[x, y] == null)
-                    {
-                        cells[x, y] = new SpatialConstraintGridCell();
-                    }
+                    cells[i] = new SpatialConstraintGridCell();
                 }
             }
         }
