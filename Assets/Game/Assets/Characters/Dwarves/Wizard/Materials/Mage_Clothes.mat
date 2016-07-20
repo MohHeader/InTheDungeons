@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Mage_Clothes
   m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _DETAIL_MULX2 _EMISSION _NORMALMAP _SPECGLOSSMAP
+  m_ShaderKeywords: _EMISSION _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -19,14 +19,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 23f3f3321eeb51441ace4affec71ebaf, type: 3}
+          m_Texture: {fileID: 2800000, guid: 4d2777b9efd4e94449e5bd57d39efb83, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: 38b5c67141c22bf48adef72e69105a14, type: 3}
+          m_Texture: {fileID: 2800000, guid: 17bdd339c25019348b91fbaad18e3af5, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -54,7 +54,7 @@ Material:
         first:
           name: _EmissionMap
         second:
-          m_Texture: {fileID: 2800000, guid: 946eee4ada7685c4a8a53189549d096c, type: 3}
+          m_Texture: {fileID: 2800000, guid: 7873f848906ba194c9e22331e0642c9f, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -75,7 +75,7 @@ Material:
         first:
           name: _SpecGlossMap
         second:
-          m_Texture: {fileID: 2800000, guid: d41c714d8c0a99c42acb0418039c21b5, type: 3}
+          m_Texture: {fileID: 2800000, guid: 45e38eefa27b0c64f94fb075e461f7c6, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:

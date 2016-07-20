@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Dwarf_Mage_Sword
   m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _DETAIL_MULX2 _EMISSION _NORMALMAP _SPECGLOSSMAP
+  m_ShaderKeywords: _EMISSION _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -19,14 +19,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 1e928a6c66eaeef419557dd72405ef8f, type: 3}
+          m_Texture: {fileID: 2800000, guid: 682043d01eed436458247051bdbfeff4, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BumpMap
         second:
-          m_Texture: {fileID: 2800000, guid: efaf7c8abc1e5f54db1919e84c1d0a5c, type: 3}
+          m_Texture: {fileID: 2800000, guid: 72b84915df4e298468258d6af13c65be, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -54,7 +54,7 @@ Material:
         first:
           name: _EmissionMap
         second:
-          m_Texture: {fileID: 2800000, guid: dde50c679a19a064fb6ae5cd72ead5df, type: 3}
+          m_Texture: {fileID: 2800000, guid: f32cee815b646be43b380949f049266f, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -75,7 +75,7 @@ Material:
         first:
           name: _SpecGlossMap
         second:
-          m_Texture: {fileID: 2800000, guid: 3cae26e9a01b2e74a834de6a1d33cc67, type: 3}
+          m_Texture: {fileID: 2800000, guid: 6e8fd75276ef6b84daca350471211fe2, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
