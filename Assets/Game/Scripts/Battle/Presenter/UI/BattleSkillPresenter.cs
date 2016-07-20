@@ -1,4 +1,6 @@
-﻿using Assets.Game.Scripts.Utility.Skills;
+﻿using System;
+using Assets.Game.Scripts.Utility.Skills;
+using OrbCreationExtensions;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,6 +28,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         }
 
         protected override void BeforeInitialize(SquadPresenter argument) {
+            SelectionSubject.Throttle(TimeSpan.FromMilliseconds(250)).Subscribe(_ => { SelectingTarget.Value = !SelectingTarget.Value; });
         }
 
         private void CharacterChanged(CharacterPresenter characterPresenter) {
@@ -77,8 +80,10 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             SelectedCharacterPresenter.SelectedSkill.Value = SelectingTarget.Value ? Skill : null;
         }
 
+        protected Subject<Unit> SelectionSubject = new Subject<Unit>();
+
         public void OnSelected() {
-            SelectingTarget.Value = !SelectingTarget.Value;
+            SelectionSubject.OnNext(Unit.Default);
         }
 
         protected void Update() {
@@ -94,7 +99,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
                         if (character != null)
                         {
                             var distance = Vector3.Distance(SelectedCharacterPresenter.transform.position,
-                                character.transform.position);
+                                character.transform.position).Round(2);
                             if (distance <= Skill.MaximumDistance && distance >= Skill.MinimumDistance)
                             {
                                 StartCoroutine(SelectedCharacterPresenter.PlayTargetedSkill(Skill, character));

@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11463028}
   - 114: {fileID: 11448028}
   - 114: {fileID: 11488530}
-  - 114: {fileID: 11426772}
+  - 114: {fileID: 11498860}
   m_Layer: 12
   m_Name: Character
   m_TagString: Character
@@ -34,17 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11426772
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163824}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11434460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56,9 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5452bbfbb63bdc2489a1bff892de3ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Movement: {fileID: 0}
   StatusPresenter: {fileID: 11463028}
-  Speed: 3
-  RotationSpeed: 360
 --- !u!114 &11448028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,6 +115,21 @@ MonoBehaviour:
     tagsChange: -1
     tagsSet: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &11498860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fa39a098fa99c4d9210b007559917e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PathOffset: {x: 0, y: 0.1, z: 0}
+  RotationSpeed: 360
+  Speed: 6
+  SquareMat: {fileID: 2100000, guid: b3311fdb83f4fff41aebdf5a9525d867, type: 2}
 --- !u!143 &14357568
 CharacterController:
   m_ObjectHideFlags: 1

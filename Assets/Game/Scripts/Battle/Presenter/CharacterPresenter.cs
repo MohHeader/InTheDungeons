@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Assets.Game.Scripts.Battle.Components;
 using Assets.Game.Scripts.Battle.Model;
 using Assets.Game.Scripts.Battle.Presenter.Interfaces;
 using Assets.Game.Scripts.Battle.Presenter.UI;
@@ -8,16 +9,11 @@ using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
 using Assets.Game.Scripts.Utility.Skills;
-using DG.Tweening;
-using Pathfinding;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Game.Scripts.Battle.Presenter
-{
+namespace Assets.Game.Scripts.Battle.Presenter {
     public class CharacterPresenter : PresenterBase<Character>, IActor {
-        public BattleCharacterStatusPresenter StatusPresenter;
-
         public enum CharacterStateEnum {
             Idle,
             Moving,
@@ -26,37 +22,32 @@ namespace Assets.Game.Scripts.Battle.Presenter
             Dead
         }
 
-        public ReactiveProperty<CharacterStateEnum> CharacterState = new ReactiveProperty<CharacterStateEnum>();
-        public ReactiveProperty<SkillData> SelectedSkill = new ReactiveProperty<SkillData>();
+        protected Animator Animator;
 
         protected Character Character;
 
-        public BattleSkill[] Skills;
-
-        public Seeker Seeker
-        {
-            get { return _seeker ?? (_seeker = GetComponent<Seeker>()); }
-        }
-        protected Animator Animator;
-        protected CharacterController Controller;
-
-        private Seeker _seeker;
-        //The AI's speed per second
-        public float Speed = 100;
-        //The waypoint we are currently moving towards
-        private int _currentWaypoint;
-        public float RotationSpeed = 360;
-        protected Path Path;
-
         public CharacterStatusPresenter CharacterData;
+
+        public ReactiveProperty<CharacterStateEnum> CharacterState = new ReactiveProperty<CharacterStateEnum>();
+        protected CharacterController Controller;
+        public GridMovementBehaviour Movement;
+        public ReactiveProperty<SkillData> SelectedSkill = new ReactiveProperty<SkillData>();
+
+        public BattleSkill[] Skills;
+        public BattleCharacterStatusPresenter StatusPresenter;
 
         protected override IPresenter[] Children
         {
-            get { return new IPresenter[]{ StatusPresenter }; }
+            get
+            {
+                return new IPresenter[] {
+                                            StatusPresenter
+                                        };
+            }
         }
 
-        protected override void BeforeInitialize(Character argument)
-        {
+        protected override void BeforeInitialize(Character argument) {
+            Movement = GetComponent<GridMovementBehaviour>();
             Character = argument;
             SelectedSkill.Value = null;
             var instance = DataLayer.GetInstance();
@@ -70,10 +61,8 @@ namespace Assets.Game.Scripts.Battle.Presenter
             CharacterData.CharacterState.Subscribe(_ => StartCoroutine(AliveStateChanged(_)));
         }
 
-        private IEnumerator AliveStateChanged(CharacterStatusPresenter.CharactersStateEnum charactersStateEnum)
-        {
-            if (charactersStateEnum == CharacterStatusPresenter.CharactersStateEnum.Dead)
-            {
+        private IEnumerator AliveStateChanged(CharacterStatusPresenter.CharactersStateEnum charactersStateEnum) {
+            if (charactersStateEnum == CharacterStatusPresenter.CharactersStateEnum.Dead) {
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Dead);
                 DestroyImmediate(gameObject.GetComponent<Collider>());
                 AstarPath.active.Scan();
@@ -84,87 +73,15 @@ namespace Assets.Game.Scripts.Battle.Presenter
             }
         }
 
-        protected override void Initialize(Character argument)
-        {
+        protected override void Initialize(Character argument) {
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
-            SelectedSkill.Subscribe(_ =>
-            {
-                CharacterState.SetValueAndForceNotify(_ != null
-                    ? CharacterStateEnum.SelectingTarget
-                    : CharacterStateEnum.Idle);
-            });
+            SelectedSkill.Subscribe(_ => {
+                                        CharacterState.SetValueAndForceNotify(_ != null
+                                            ? CharacterStateEnum.SelectingTarget
+                                            : CharacterStateEnum.Idle);
+                                    });
+            Movement.Initialize();
         }
-
-        #region Movement methods
-        public IEnumerator MoveTo(Vector3 position) {
-            //var p = ABPath.Construct(transform.position, position, PathCallback);
-            //AstarPath.StartPath(p);
-            gameObject.GetComponent<GraphUpdateScene>().enabled = false;
-            AstarPath.active.Scan();
-            while (AstarPath.active.isScanning)
-            {
-                yield return new WaitForFixedUpdate();
-            }
-
-            var start = AstarPath.active.GetNearest(transform.position);
-            var end = AstarPath.active.GetNearest(position);
-
-            Seeker.StartPath((Vector3)start.node.position, (Vector3)end.node.position, PathCallback);
-        }
-
-        public void PathCallback(Path newPath)
-        {
-            if (!newPath.error)
-            {
-                gameObject.GetComponent<GraphUpdateScene>().enabled = true;
-                CharacterState.SetValueAndForceNotify(CharacterStateEnum.Moving);
-                //Reset the waypoint counter
-                _currentWaypoint = -1;
-
-                Path = newPath;
-                Animator.SetBool("Moving", true);
-                RotateCallback();
-            }
-        }
-
-        protected void MoveCallback() {
-            var duration = Vector3.Distance(Path.vectorPath[_currentWaypoint], transform.position)/Speed;
-            transform.DOMove(Path.vectorPath[_currentWaypoint], duration).OnComplete(RotateCallback);
-        }
-
-        protected void RotateCallback() {
-            _currentWaypoint ++;
-            if (_currentWaypoint >= Path.vectorPath.Count)
-            {
-                MoveFinished();
-                return;
-            }
-            if (Vector3.Distance(transform.position, Path.vectorPath[_currentWaypoint]) < 0.1f)
-            {
-                RotateCallback();
-            }
-            else
-            {
-                var sourceVector = new Vector3(gameObject.transform.position.x, 0f, gameObject.transform.position.z);
-                var destinationVector = new Vector3(Path.vectorPath[_currentWaypoint].x, 0f, Path.vectorPath[_currentWaypoint].z);
-                var relativePos = (destinationVector - sourceVector).normalized;
-                var duration = Vector3.Angle(transform.forward, relativePos);
-                if (duration < 0.2f) MoveCallback();
-                else transform.DOLookAt(Path.vectorPath[_currentWaypoint], duration/RotationSpeed)
-                    .OnComplete(MoveCallback);
-            }
-        }
-
-        protected void MoveFinished() {
-            Animator.SetBool("Moving", false);
-            AstarPath.active.Scan();
-
-            CharacterData.RemainingActionPoint.Value --;
-            Path = null;
-            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
-        }
-
-        #endregion
 
         #region Skill Player
 
@@ -177,7 +94,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
             while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 yield return new WaitForEndOfFrame();
             }
-            target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value);
+            target.CharacterData.DealDamage(skill.DamageMultiplier*CharacterData.Damage.Value);
             yield return new WaitForFixedUpdate();
 
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
@@ -200,7 +117,9 @@ namespace Assets.Game.Scripts.Battle.Presenter
         }
 
         #endregion
+
         #region IActor Implementation
+
         public void NewTurn() {
             CharacterData.RegenerateActionPoints();
         }
@@ -208,6 +127,7 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public void EndTurn() {
             CharacterData.RemainingActionPoint.Value = 0;
         }
+
         #endregion
     }
 }
