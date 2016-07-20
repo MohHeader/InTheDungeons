@@ -6139,7 +6139,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 473886, guid: b6ed04db3c3704ec18271f4fc8c52c2d, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11457970, guid: b6ed04db3c3704ec18271f4fc8c52c2d, type: 2}
       propertyPath: Seed
@@ -20302,7 +20302,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e84b65f6b68cbca4a9a9c63e390ea836, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: e84b65f6b68cbca4a9a9c63e390ea836, type: 2}
       propertyPath: fpsCounter.anchor
