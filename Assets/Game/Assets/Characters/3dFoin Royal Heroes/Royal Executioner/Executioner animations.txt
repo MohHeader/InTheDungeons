@@ -1,0 +1,31 @@
+walk		0	30
+run		33	52
+strafe left		55	74
+strafe right	77	96
+stand		99	143
+stand blink	146	190
+idle		193	312
+idle 2		315	464
+talk		467	556
+jump roll		559	613
+jump		616	670
+ready walk	673	702
+ready run		705	724
+ready strafe left	727	746
+ready strafe right	749	768
+ready		771	805
+ready blink	808	842
+attack 1		845	879
+attack 2		882	916
+attack 3		919	963
+attack 4		966	1025
+attack 5		1028	1077
+attack 6		1080	1124
+block		1127	1161
+hit 1		1164	1191
+hit 2		1194	1221
+death		1224	1301
+
+___________________________________________________________
+Executioner: 7890 Polys - 12620 Tris - 6442 Verts
+Axe: 933 Polys - 1612 Tris - 852 Verts
