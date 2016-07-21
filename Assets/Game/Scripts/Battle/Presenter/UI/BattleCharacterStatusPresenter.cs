@@ -47,7 +47,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             {
                 if (_ == CharacterStatusPresenter.CharactersStateEnum.Dead)
                 {
-                    DestroyImmediate(Hud);
+                    Destroy(Hud);
                     Destroy(this, 3f);
                 }
             });
@@ -75,9 +75,11 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         }
 
         private IEnumerator HealthChangedCoroutine() {
-            StatusText.transform.gameObject.SetActive(true);
+            if (StatusText != null)
+                StatusText.transform.gameObject.SetActive(true);
             yield return new WaitForSeconds(2f);
-            StatusText.transform.gameObject.SetActive(false);
+            if (StatusText != null)
+                StatusText.transform.gameObject.SetActive(false);
         }
 
         protected void LateUpdate() {

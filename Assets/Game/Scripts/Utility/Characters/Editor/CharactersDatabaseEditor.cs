@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Assets.Game.Scripts.Utility.Common;
 using Assets.Game.Scripts.Utility.Skills;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Game.Scripts.Utility.Characters.Editor {
     public class CharactersDatabaseEditor : CommonDatabaseEditor<UtilityDatabase<CharacterData>, CharacterData>{
@@ -72,21 +74,13 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             EditorGUILayout.LabelField(new GUIContent("Skills"));
             EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Active Skill")))
+            if (GUILayout.Button(new GUIContent("New Active Skill")))
             {
                 element.Skills.Add(new SkillData());
             }
-            //if (GUILayout.Button(new GUIContent("Shooting Skill")))
-            //{
-            //    element.Skills.Add(new ShootSkillData());
-            //}
-            //if (GUILayout.Button(new GUIContent("Spell Skill")))
-            //{
-            //    element.Skills.Add(new SpellSkillData());
-            //}
             if (GUILayout.Button(new GUIContent("Passive Skill")))
             {
-                element.Skills.Add(new PassiveSkillData());
+                //element.Skills.Add(new PassiveSkillData());
             }
             EditorGUILayout.EndHorizontal();
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
@@ -104,12 +98,13 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
         protected SkillData SkillEditor(CharacterData element, SkillData skill)
         {
             EditorGUILayout.Space();
-            if (GUILayout.Button(string.Format("- {0} {1}", skill.GetSkillTypeName(), skill.Name)))
+            if (GUILayout.Button(string.Format("- {0} {1}", skill.SkillType, skill.Name)))
             {
                 return skill;
             }
             EditorGUILayout.BeginHorizontal();
             skill.Index = EditorGUILayout.IntField("Skill index:", skill.Index);
+            skill.SkillType = (SkillTypeEnum)EditorGUILayout.EnumPopup("Skill type:", skill.SkillType);
             skill.Target = (TargetEnum) EditorGUILayout.EnumPopup("Target:", skill.Target);
             skill.TriggerName = (TriggerEnum) EditorGUILayout.EnumPopup("Trigger:", skill.TriggerName);
             EditorGUILayout.EndHorizontal();
@@ -123,6 +118,24 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             skill.MaximumDistance = EditorGUILayout.FloatField("Max distance", skill.MaximumDistance);
             EditorGUILayout.EndHorizontal();
             skill.Icon = (Sprite)EditorGUILayout.ObjectField("Icon:", skill.Icon, typeof(Sprite), false);
+
+            switch (skill.SkillType)
+            {
+                case SkillTypeEnum.Melee:
+                    skill.InflictDamageTime = EditorGUILayout.FloatField("Damage Time:", skill.InflictDamageTime);
+                    break;
+                case SkillTypeEnum.Shooting:
+                    break;
+                case SkillTypeEnum.Spell:
+                    skill.SpawnTime = EditorGUILayout.FloatField("Spawn Time:", skill.SpawnTime);
+                    skill.SpellType = (SpellTypeEnum)EditorGUILayout.EnumPopup("Skill type:", skill.SpellType);
+                    skill.Prefab = (GameObject)EditorGUILayout.ObjectField("Prefab:", skill.Prefab, typeof(GameObject), false);
+                    skill.SpellMovementSpeed = EditorGUILayout.FloatField("Movement speed:", skill.SpellMovementSpeed);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             return null;
         }
     }

@@ -36,8 +36,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Spell
+  - SpellTarget
   - MiniMap
   - MoveArea
   m_SortingLayers:

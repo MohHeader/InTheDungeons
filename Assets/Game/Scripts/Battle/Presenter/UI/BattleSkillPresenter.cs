@@ -102,7 +102,29 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
                                 character.transform.position).Round(2);
                             if (distance <= Skill.MaximumDistance && distance >= Skill.MinimumDistance)
                             {
-                                StartCoroutine(SelectedCharacterPresenter.PlayTargetedSkill(Skill, character));
+                                switch (Skill.SkillType)
+                                {
+                                    case SkillTypeEnum.Melee:
+                                        StartCoroutine(SelectedCharacterPresenter.PlayMeleeSkill(Skill, character));
+                                        break;
+                                    case SkillTypeEnum.Shooting:
+                                        break;
+                                    case SkillTypeEnum.Spell:
+                                        switch (Skill.SpellType)
+                                        {
+                                            case SpellTypeEnum.Projectile:
+                                                StartCoroutine(SelectedCharacterPresenter.PlayProjectileSpell(Skill, character));
+                                                break;
+                                            case SpellTypeEnum.Direction:
+                                                StartCoroutine(SelectedCharacterPresenter.PlayDirectionSpell(Skill, character));
+                                                break;
+                                            default:
+                                                throw new ArgumentOutOfRangeException();
+                                        }
+                                        break;
+                                    default:
+                                        throw new ArgumentOutOfRangeException();
+                                }
                             }
                         }
                     }

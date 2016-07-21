@@ -19,23 +19,35 @@ MonoBehaviour:
     MainStatValue: 0
     Skills:
     - Cooldown: 0
+      DamageMultiplier: 0
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_25.png
       Index: 0
+      InflictDamageTime: 0
+      MaximumDistance: 1.5
+      MinimumDistance: 0.5
       Name: Attack
+      SkillType: 0
       Target: 0
       TriggerName: 1
-      MinimumDistance: 0.5
-      MaximumDistance: 1.5
-      DamageMultiplier: 0
+      PrefabPath: 
+      SpellType: 0
+      SpawnTime: 0
+      SpellMovementSpeed: 0
     - Cooldown: 2
+      DamageMultiplier: 0
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_17.png
       Index: 1
+      InflictDamageTime: 0
+      MaximumDistance: 1.5
+      MinimumDistance: 0.5
       Name: Slash around
+      SkillType: 0
       Target: 0
       TriggerName: 0
-      MinimumDistance: 0.5
-      MaximumDistance: 1.5
-      DamageMultiplier: 0
+      PrefabPath: 
+      SpellType: 0
+      SpawnTime: 0
+      SpellMovementSpeed: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -57,23 +69,20 @@ MonoBehaviour:
     MainStatValue: 0
     Skills:
     - Cooldown: 0
+      DamageMultiplier: 1
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_36.png
       Index: 0
-      Name: Attack
+      InflictDamageTime: 0.5
+      MaximumDistance: 1.7
+      MinimumDistance: 0.5
+      Name: Slash
+      SkillType: 0
       Target: 0
       TriggerName: 1
-      MinimumDistance: 0.5
-      MaximumDistance: 1.5
-      DamageMultiplier: 1
-    - Cooldown: 2
-      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_39.png
-      Index: 1
-      Name: Stomp of bear
-      Target: 0
-      TriggerName: 2
-      MinimumDistance: 0.5
-      MaximumDistance: 1.5
-      DamageMultiplier: 1
+      PrefabPath: 
+      SpellType: 0
+      SpawnTime: 0
+      SpellMovementSpeed: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -91,27 +100,39 @@ MonoBehaviour:
   - Id: 5
     Name: Royal Wizard
     AssetPath: Assets/Game/Resources/Characters/RoyalWizard.prefab
-    IconPath: Assets/Game/Resources/CharacterIcons/Empty.png
+    IconPath: Assets/Game/Resources/CharacterIcons/RoyalWizard.png
     MainStatValue: 2
     Skills:
     - Cooldown: 0
+      DamageMultiplier: 5
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_40.png
       Index: 0
+      InflictDamageTime: 0
+      MaximumDistance: 3.5
+      MinimumDistance: 0.5
       Name: Fireball
+      SkillType: 2
       Target: 0
       TriggerName: 1
-      MinimumDistance: 2
-      MaximumDistance: 5
-      DamageMultiplier: 1
-    - Cooldown: 2
+      PrefabPath: Assets/Game/Resources/Spells/Fire_Fireball.prefab
+      SpellType: 0
+      SpawnTime: 0.5
+      SpellMovementSpeed: 3.5
+    - Cooldown: 0
+      DamageMultiplier: 5
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_41.png
       Index: 1
+      InflictDamageTime: 0
+      MaximumDistance: 5
+      MinimumDistance: 0.5
       Name: Fire Fissure
+      SkillType: 2
       Target: 0
       TriggerName: 2
-      MinimumDistance: 1
-      MaximumDistance: 3
-      DamageMultiplier: 1.4
+      PrefabPath: Assets/Game/Resources/Spells/Fire_Fissure.prefab
+      SpellType: 1
+      SpawnTime: 0.6
+      SpellMovementSpeed: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 1
@@ -153,23 +174,35 @@ MonoBehaviour:
     MainStatValue: 0
     Skills:
     - Cooldown: 0
+      DamageMultiplier: 0
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_45.png
       Index: 0
+      InflictDamageTime: 0
+      MaximumDistance: 0
+      MinimumDistance: 0
       Name: Attack
+      SkillType: 0
       Target: 0
       TriggerName: 1
-      MinimumDistance: 0
-      MaximumDistance: 0
-      DamageMultiplier: 0
+      PrefabPath: 
+      SpellType: 0
+      SpawnTime: 0
+      SpellMovementSpeed: 0
     - Cooldown: 2
+      DamageMultiplier: 0
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_49.png
       Index: 1
+      InflictDamageTime: 0
+      MaximumDistance: 0
+      MinimumDistance: 0
       Name: Rush
+      SkillType: 0
       Target: 0
       TriggerName: 2
-      MinimumDistance: 0
-      MaximumDistance: 0
-      DamageMultiplier: 0
+      PrefabPath: 
+      SpellType: 0
+      SpawnTime: 0
+      SpellMovementSpeed: 0
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0

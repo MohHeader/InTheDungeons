@@ -40,11 +40,13 @@ namespace MagicalFX
 		void OnTriggerEnter (Collider other)
 		{
 			Spawn ();
-		}
-	
-		void OnCollisionEnter (Collision collision)
+            Debug.LogWarning("OnTriggerEnter");
+        }
+
+        void OnCollisionEnter (Collision collision)
 		{
 			Spawn ();
+            Debug.LogWarning("OnCollisionEnter");
 		}
 	}
 }

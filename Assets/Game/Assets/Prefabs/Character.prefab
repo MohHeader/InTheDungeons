@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Movement: {fileID: 0}
   StatusPresenter: {fileID: 11463028}
+  SpellTarget: {fileID: 199488, guid: 8bcbd25245f76fe4dabb9cc8ea47333d, type: 2}
 --- !u!114 &11448028
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,13 +3,16 @@ using System.Collections;
 using System.Linq;
 using Assets.Game.Scripts.Battle.Components;
 using Assets.Game.Scripts.Battle.Model;
+using Assets.Game.Scripts.Battle.Model.Skills;
 using Assets.Game.Scripts.Battle.Presenter.Interfaces;
 using Assets.Game.Scripts.Battle.Presenter.UI;
 using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
 using Assets.Game.Scripts.Utility.Skills;
+using DG.Tweening;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter {
@@ -35,6 +38,8 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         public BattleSkill[] Skills;
         public BattleCharacterStatusPresenter StatusPresenter;
+
+        public GameObject SpellTarget;
 
         protected override IPresenter[] Children
         {
@@ -64,7 +69,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         private IEnumerator AliveStateChanged(CharacterStatusPresenter.CharactersStateEnum charactersStateEnum) {
             if (charactersStateEnum == CharacterStatusPresenter.CharactersStateEnum.Dead) {
                 CharacterState.SetValueAndForceNotify(CharacterStateEnum.Dead);
-                DestroyImmediate(gameObject.GetComponent<Collider>());
+                Destroy(gameObject.GetComponent<Collider>());
                 AstarPath.active.Scan();
                 Animator.SetBool("Dead", true);
                 yield return new WaitForSeconds(3f);
@@ -85,19 +90,95 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         #region Skill Player
 
-        public IEnumerator PlayTargetedSkill(SkillData skill, CharacterPresenter target) {
+        public IEnumerator PlayMeleeSkill(SkillData skill, CharacterPresenter target) {
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.UsingSkill);
 
             transform.LookAt(target.transform);
             Animator.SetTrigger(TriggerEnumToTriggerName(skill.TriggerName));
+            var subscriber =
+                Observable.Timer(TimeSpan.FromSeconds(skill.InflictDamageTime), Scheduler.MainThreadIgnoreTimeScale)
+                    .Subscribe(_ => target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value));
             yield return new WaitForSeconds(0.4f);
             while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 yield return new WaitForEndOfFrame();
             }
-            target.CharacterData.DealDamage(skill.DamageMultiplier*CharacterData.Damage.Value);
+            
             yield return new WaitForFixedUpdate();
-
+            subscriber.Dispose();
             CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+            SelectedSkill.Value = null;
+        }
+
+        public IEnumerator PlayProjectileSpell(SkillData skill, CharacterPresenter target) {
+            bool isCollided = false;
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.UsingSkill);
+
+            var spellTarget = Instantiate(SpellTarget);
+            spellTarget.transform.SetParent(target.transform, false);
+
+            transform.LookAt(target.transform);
+
+            var spellPrefab = Instantiate(skill.Prefab);
+            var collisionTrigger = spellTarget.GetComponent<ObservableTriggerTrigger>();
+            var subscriber = collisionTrigger.OnTriggerEnterAsObservable().Subscribe(_ =>
+            {
+                target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value);
+                isCollided = true;
+            });
+
+            spellPrefab.transform.position = transform.position + new Vector3(0f, 1f, 0f);
+
+            Animator.SetTrigger(TriggerEnumToTriggerName(skill.TriggerName));
+            yield return new WaitForSeconds(skill.SpawnTime);
+
+            spellPrefab.transform.DOMove(spellTarget.GetComponent<CapsuleCollider>().center + spellTarget.transform.position,
+                Vector3.Distance(spellTarget.transform.position, spellPrefab.transform.position)/
+                skill.SpellMovementSpeed);
+
+            while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !isCollided) {
+                yield return new WaitForEndOfFrame();
+            }
+
+            yield return new WaitForFixedUpdate();
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+
+            subscriber.Dispose();
+            DestroyImmediate(spellTarget);
+            SelectedSkill.Value = null;
+        }
+
+        public IEnumerator PlayDirectionSpell(SkillData skill, CharacterPresenter target)
+        {
+            bool isCollided = false;
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.UsingSkill);
+
+            var spellTarget = Instantiate(SpellTarget);
+            spellTarget.transform.SetParent(target.transform, false);
+
+            transform.LookAt(target.transform);
+
+            Animator.SetTrigger(TriggerEnumToTriggerName(skill.TriggerName));
+            yield return new WaitForSeconds(skill.SpawnTime);
+
+            var spellPrefab = Instantiate(skill.Prefab, transform.position + transform.forward, transform.rotation);
+            var collisionTrigger = spellTarget.GetComponent<ObservableTriggerTrigger>();
+            var subscriber = collisionTrigger.OnTriggerEnterAsObservable().Subscribe(_ =>
+            {
+                if (!isCollided)
+                    target.CharacterData.DealDamage(skill.DamageMultiplier * CharacterData.Damage.Value);
+                isCollided = true;
+            });
+
+            while (!Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !isCollided)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            yield return new WaitForFixedUpdate();
+            CharacterState.SetValueAndForceNotify(CharacterStateEnum.Idle);
+
+            subscriber.Dispose();
+            DestroyImmediate(spellTarget);
             SelectedSkill.Value = null;
         }
 

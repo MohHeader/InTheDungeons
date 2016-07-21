@@ -2582,7 +2582,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1456
+      value: 1456.6997
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -17485,6 +17485,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp:DungeonArchitect:DungeonToolData
+  paintedCells: []
 --- !u!1 &886784955
 GameObject:
   m_ObjectHideFlags: 0
@@ -20560,7 +20561,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1312
+      value: 1312.6997
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -23814,7 +23815,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1600
+      value: 1600.6997
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -24395,7 +24396,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1168
+      value: 1168.6997
       objectReference: {fileID: 0}
     - target: {fileID: 22474364, guid: 7a47a640c5cb1de439412d8db6577d40, type: 2}
       propertyPath: m_AnchoredPosition.y

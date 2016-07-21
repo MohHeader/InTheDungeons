@@ -11975,7 +11975,7 @@ ModelImporter:
       firstFrame: 592
       lastFrame: 672
       wrapMode: 0
-      orientationOffsetY: 64.69
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
@@ -11990,7 +11990,7 @@ ModelImporter:
       keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
       transformMask:
@@ -20147,7 +20147,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: Wizard
     hasTranslationDoF: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
