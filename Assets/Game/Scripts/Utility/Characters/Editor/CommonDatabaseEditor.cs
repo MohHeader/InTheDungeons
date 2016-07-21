@@ -1,7 +1,9 @@
-﻿using Assets.Dungeon.Scripts.Utility.Common;
+﻿using System;
+using Assets.Dungeon.Scripts.Utility.Common;
 using Assets.Game.Scripts.Utility.Common;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Game.Scripts.Utility.Characters.Editor {
     public class CommonDatabaseEditor<T, TU> : EditorWindow where T : UtilityDatabase<TU> where TU : ACommonData, new() {
@@ -89,7 +91,7 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
                     return;
                 }
 
-                if (GUILayout.Button(Database.ElementAt(cnt).Name, "box", GUILayout.ExpandWidth(true)))
+                if (GUILayout.Button(String.Format("{0} - ID: {1}", Database.ElementAt(cnt).Name, Database.ElementAt(cnt).Id), "box", GUILayout.ExpandWidth(true)))
                 {
                     SelectedIndex = cnt;
                     State = StateEnum.Edit;

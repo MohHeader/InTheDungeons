@@ -88,6 +88,44 @@ MonoBehaviour:
     ThirdGradeMultiplier: 0
     ForthGradeMultiplier: 0
     FifthGradeMultiplier: 0
+  - Id: 5
+    Name: Royal Wizard
+    AssetPath: Assets/Game/Resources/Characters/RoyalWizard.prefab
+    IconPath: Assets/Game/Resources/CharacterIcons/Empty.png
+    MainStatValue: 2
+    Skills:
+    - Cooldown: 0
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_40.png
+      Index: 0
+      Name: Fireball
+      Target: 0
+      TriggerName: 1
+      MinimumDistance: 2
+      MaximumDistance: 5
+      DamageMultiplier: 1
+    - Cooldown: 2
+      IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_41.png
+      Index: 1
+      Name: Fire Fissure
+      Target: 0
+      TriggerName: 2
+      MinimumDistance: 1
+      MaximumDistance: 3
+      DamageMultiplier: 1.4
+    LevelConstitution: 0
+    LevelDexterity: 0
+    LevelIntelligence: 1
+    LevelStrength: 0
+    StartConstitution: 3
+    StartDexterity: 1
+    StartIntelligence: 5
+    StartStrength: 1
+    ActionPoints: 2
+    MovementRange: 4
+    SecondGradeMultiplier: 0
+    ThirdGradeMultiplier: 0
+    ForthGradeMultiplier: 0
+    FifthGradeMultiplier: 0
   - Id: 4
     Name: Skeleton Archer
     AssetPath: Assets/Game/Resources/Monsters/Skeleton_archer.prefab

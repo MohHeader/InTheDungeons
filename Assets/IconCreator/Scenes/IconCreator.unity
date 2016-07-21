@@ -1142,8 +1142,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 860937093}
   m_LocalRotation: {x: 0, y: 0.9848078, z: 0, w: 0.17364824}
-  m_LocalPosition: {x: 0, y: -6.5, z: 0}
-  m_LocalScale: {x: 90, y: 90, z: 90}
+  m_LocalPosition: {x: 0, y: -0.58, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_LocalEulerAnglesHint: {x: 0, y: 160, z: 0}
   m_Children:
   - {fileID: 929063816}
@@ -2842,10 +2842,10 @@ MonoBehaviour:
   IconSizeY: 128
   doubleQuality: 1
   modelsToCreateIconsFrom:
-  - {fileID: 111272, guid: a81bfae145ee8204db94ee3d917a21ec, type: 2}
-  PivotPosition: {x: 0, y: -6.5, z: 0}
+  - {fileID: 179372, guid: a5831c4cbbf05d143aede37140b2b647, type: 2}
+  PivotPosition: {x: 0, y: -0.58, z: 0}
   PivotRotation: {x: 0, y: 160, z: 0}
-  PivotScale: {x: 90, y: 90, z: 90}
+  PivotScale: {x: 6, y: 6, z: 6}
   useOutline: 0
   outlineSize: 4
   outlineColors:
@@ -2885,8 +2885,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.21052632
-    height: 0.374269
+    width: 0.21333334
+    height: 0.37925926
   near clip plane: -10
   far clip plane: 1000
   field of view: 60
