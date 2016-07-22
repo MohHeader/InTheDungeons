@@ -1,52 +1,42 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-namespace MagicalFX
-{
-	public class FX_HitSpawner : MonoBehaviour
-	{
+namespace MagicalFX {
+    public class FX_HitSpawner : MonoBehaviour {
+        public bool DestoyOnHit = false;
+        public bool FixRotation = false;
 
 
-		public GameObject FXSpawn;
-		public bool DestoyOnHit = false;
-		public bool FixRotation = false;
-		public float LifeTimeAfterHit = 1;
-		public float LifeTime = 0;
-	
-		void Start ()
-		{
-		
-		}
-	
-		void Spawn ()
-		{
-			if (FXSpawn != null) {
-				Quaternion rotate = this.transform.rotation;
-				if (!FixRotation)
-					rotate = FXSpawn.transform.rotation;
-				GameObject fx = (GameObject)GameObject.Instantiate (FXSpawn, this.transform.position, rotate);
-				if (LifeTime > 0)
-					GameObject.Destroy (fx.gameObject, LifeTime);
-			}
-			if (DestoyOnHit) {
-			
-				GameObject.Destroy (this.gameObject, LifeTimeAfterHit);
-				if (this.gameObject.GetComponent<Collider>())
-					this.gameObject.GetComponent<Collider>().enabled = false;
+        public GameObject FXSpawn;
+        public float LifeTime = 0;
+        public float LifeTimeAfterHit = 1;
 
-			}
-		}
-	
-		void OnTriggerEnter (Collider other)
-		{
-			Spawn ();
-            Debug.LogWarning("OnTriggerEnter");
+        private void Start() {
         }
 
-        void OnCollisionEnter (Collision collision)
-		{
-			Spawn ();
-            Debug.LogWarning("OnCollisionEnter");
-		}
-	}
+        private void Spawn() {
+            if (FXSpawn != null)
+            {
+                var rotate = transform.rotation;
+                if (!FixRotation)
+                    rotate = FXSpawn.transform.rotation;
+                var fx = (GameObject) Instantiate(FXSpawn, transform.position, rotate);
+                if (LifeTime > 0)
+                    Destroy(fx.gameObject, LifeTime);
+            }
+            if (DestoyOnHit)
+            {
+                Destroy(gameObject, LifeTimeAfterHit);
+                if (gameObject.GetComponent<Collider>())
+                    gameObject.GetComponent<Collider>().enabled = false;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            Spawn();
+        }
+
+        private void OnCollisionEnter(Collision collision) {
+            Spawn();
+        }
+    }
 }

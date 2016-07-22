@@ -10,19 +10,47 @@ using Object = UnityEngine.Object;
 
 namespace Assets.Game.Scripts.Helpers {
     public static class ComponenHelpers {
-        public static List<Transform> GetCharactersBetween(this GameObject gameObject, float minimumDistance, float maximumDistance) {
+        public static List<Transform> GetCharactersBetween(this GameObject gameObject, float minimumDistance,
+            float maximumDistance) {
             var transformArray = Object.FindObjectsOfType<CharacterPresenter>()
-                                       .Select(go => go.transform)
-                                       .Where(
-                                           t =>
-                                               Vector3.Distance(t.position, gameObject.transform.position) <= maximumDistance &&
-                                               Vector3.Distance(t.position, gameObject.transform.position) >= minimumDistance)
-                                       .ToList();
+                .Select(go => go.transform)
+                .Where(
+                    t =>
+                        Vector3.Distance(t.position, gameObject.transform.position) <= maximumDistance &&
+                        Vector3.Distance(t.position, gameObject.transform.position) >= minimumDistance)
+                .ToList();
+            return transformArray;
+        }
+
+        public static List<Transform> GetDefenderCharactersBetween(this GameObject gameObject, float minimumDistance,
+            float maximumDistance) {
+            var transformArray = Object.FindObjectsOfType<CharacterPresenter>()
+                .Where(_ => _.CharacterSide == CharacterPresenter.CharacterSideEnum.Defender)
+                .Select(go => go.transform)
+                .Where(
+                    t =>
+                        Vector3.Distance(t.position, gameObject.transform.position) <= maximumDistance &&
+                        Vector3.Distance(t.position, gameObject.transform.position) >= minimumDistance)
+                .ToList();
+            return transformArray;
+        }
+
+        public static List<Transform> GetAttackerCharactersBetween(this GameObject gameObject, float minimumDistance,
+            float maximumDistance) {
+            var transformArray = Object.FindObjectsOfType<CharacterPresenter>()
+                .Where(_ => _.CharacterSide == CharacterPresenter.CharacterSideEnum.Attacker)
+                .Select(go => go.transform)
+                .Where(
+                    t =>
+                        Vector3.Distance(t.position, gameObject.transform.position) <= maximumDistance &&
+                        Vector3.Distance(t.position, gameObject.transform.position) >= minimumDistance)
+                .ToList();
             return transformArray;
         }
 
         public static Animation FindAnimationComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<Animation>() != null);
@@ -32,7 +60,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(Animation));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(Animation), ex);
                 return null;
@@ -40,7 +69,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static DynamicGridObstacle FindDynamicGridObstacleComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<DynamicGridObstacle>() != null);
@@ -50,7 +80,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(DynamicGridObstacle));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(DynamicGridObstacle), ex);
                 return null;
@@ -58,7 +89,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static Animator FindAnimatorComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<Animator>() != null);
@@ -68,7 +100,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(Animator));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(Animator), ex);
                 return null;
@@ -76,7 +109,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static CharacterController FindCharacterControllerComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<CharacterController>() != null);
@@ -86,7 +120,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(CharacterController));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(CharacterController), ex);
                 return null;
@@ -94,7 +129,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static NavMeshAgent FindNavMeshAgentComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<NavMeshAgent>() != null);
@@ -104,7 +140,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(NavMeshAgent));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(NavMeshAgent), ex);
                 return null;
@@ -112,7 +149,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static NavMeshObstacle FindNavMeshObstacleComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<NavMeshObstacle>() != null);
@@ -122,7 +160,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(NavMeshObstacle));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(NavMeshObstacle), ex);
                 return null;
@@ -130,7 +169,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static Slider FindSliderComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<Slider>() != null);
@@ -140,7 +180,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(Slider));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(Slider), ex);
                 return null;
@@ -148,7 +189,8 @@ namespace Assets.Game.Scripts.Helpers {
         }
 
         public static TextMeshProUGUI FindTextMeshProUguiComponent(this GameObject gameObject) {
-            try {
+            try
+            {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();
                 var componentHolder =
                     gameObjects.FirstOrDefault(_ => _.GetComponent<TextMeshProUGUI>() != null);
@@ -158,7 +200,8 @@ namespace Assets.Game.Scripts.Helpers {
                     gameObject.name, typeof(TextMeshProUGUI));
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogErrorFormat("Object {0} doesn't contains {1} component on itself or any descendant: {2}",
                     gameObject.name, typeof(TextMeshProUGUI), ex);
                 return null;

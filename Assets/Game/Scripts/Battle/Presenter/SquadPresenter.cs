@@ -5,8 +5,10 @@ using Assets.Game.Scripts.Battle.Model;
 using Assets.Game.Scripts.Battle.Presenter.UI;
 using DungeonArchitect;
 using DungeonArchitect.Utils;
+using OrbCreationExtensions;
 using UniRx;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Game.Scripts.Battle.Presenter {
     public class SquadPresenter : PresenterBase<Squad> {
@@ -55,6 +57,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             {
                 var instance = Instantiate(CharacterPrefab);
                 var characterInstance = instance.GetComponent<CharacterPresenter>();
+                characterInstance.CharacterSide = CharacterPresenter.CharacterSideEnum.Attacker;
                 characterInstance.ForceInitialize(character);
                 Characters.Add(characterInstance);
 
@@ -92,22 +95,70 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         public void Update() {
             // For debugging purposes
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
                 {
                     var character = hit.transform.GetComponent<CharacterPresenter>();
-                    if (Characters.Contains(character))
-                        SelectCharacter(character);
+                    if (character != null)
+                    {
+                        if (CommandSelectCharacter(character)) return;
+                        if (CommandSelectSpellTarget(character)) return;
+                    }
+                    else
+                    {
+                        if (CommandSetRoutePath(hit)) return;
+                    }
+                    Debug.LogWarning("Inappropriate action!");
                 }
             }
         }
 
-        public void SelectCharacter(CharacterPresenter character) {
-            if (character != null)
-                SelectedCharacter.SetValueAndForceNotify(character);
+        protected void SelectCharacter(CharacterPresenter character) {
+            SelectedCharacter.SetValueAndForceNotify(character);
         }
+
+        #region Player battle commands
+
+        public bool CommandSelectCharacter(CharacterPresenter newSelection) {
+            // Условия: выбран персонаж в состоянии Idle + выбираемый персонаж имеет очки действия + выбираемый персонаж находится на той же стороне что и игрок
+            if (newSelection == null || !SelectedCharacter.HasValue) return false;
+            if (SelectedCharacter.Value.CharacterState.Value != CharacterPresenter.CharacterStateEnum.Idle || newSelection.CharacterState.Value != CharacterPresenter.CharacterStateEnum.Idle)
+                return false;
+            if (newSelection.CharacterData.RemainingActionPoint.Value <= 0) return false;
+            if (newSelection.CharacterSide == CharacterPresenter.CharacterSideEnum.Defender) return false;
+            SelectCharacter(newSelection);
+            return true;
+        }
+
+        public bool CommandSelectSpellTarget(CharacterPresenter newSelection)
+        {
+            // Условия: выбран персонаж в состоянии SelectingTarget + выбрана подходящая цель + цель находится на дистанции поражения
+            if (newSelection == null || !SelectedCharacter.HasValue) return false;
+            if (SelectedCharacter.Value.CharacterState.Value != CharacterPresenter.CharacterStateEnum.SelectingTarget || newSelection.CharacterState.Value != CharacterPresenter.CharacterStateEnum.Idle)
+                return false;
+            if (newSelection.CharacterSide != CharacterPresenter.CharacterSideEnum.Defender) return false;
+
+            var distance = Vector3.Distance(SelectedCharacter.Value.transform.position, newSelection.transform.position).Round(2);
+            var skill = SelectedCharacter.Value.SelectedSkill.Value;
+            if (distance > skill.MaximumDistance || distance < skill.MinimumDistance) return false;
+
+            SelectedCharacter.Value.UseSelectedSkill(newSelection);
+            return true;
+        }
+
+        public bool CommandSetRoutePath(RaycastHit hit) {
+            // Условия: выбран персонаж в состоянии Idle + нажатие произошло по сетке перемещения
+            if (!SelectedCharacter.HasValue) return false;
+            if (SelectedCharacter.Value.CharacterState.Value != CharacterPresenter.CharacterStateEnum.Idle) return false;
+            var closestNode = AstarPath.active.GetNearest(hit.point).node;
+            if (!SelectedCharacter.Value.Movement.CanMoveToGridNode(closestNode)) return false;
+            StartCoroutine(SelectedCharacter.Value.Movement.MoveToGridNode(closestNode));
+            return true;
+        }
+
+        #endregion
     }
 }

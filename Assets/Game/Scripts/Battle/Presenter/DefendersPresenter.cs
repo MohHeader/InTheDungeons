@@ -20,6 +20,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             {
                 var instance = Instantiate(CharacterPrefab);
                 var characterInstance = instance.GetComponent<CharacterPresenter>();
+                characterInstance.CharacterSide = CharacterPresenter.CharacterSideEnum.Defender;
                 characterInstance.ForceInitialize(character);
                 Characters.Add(characterInstance);
 

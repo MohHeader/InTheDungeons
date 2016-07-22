@@ -174,12 +174,12 @@ MonoBehaviour:
     MainStatValue: 0
     Skills:
     - Cooldown: 0
-      DamageMultiplier: 0
+      DamageMultiplier: 1
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_45.png
       Index: 0
-      InflictDamageTime: 0
-      MaximumDistance: 0
-      MinimumDistance: 0
+      InflictDamageTime: 0.65
+      MaximumDistance: 1.7
+      MinimumDistance: 0.5
       Name: Attack
       SkillType: 0
       Target: 0
@@ -189,12 +189,12 @@ MonoBehaviour:
       SpawnTime: 0
       SpellMovementSpeed: 0
     - Cooldown: 2
-      DamageMultiplier: 0
+      DamageMultiplier: 1.3
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_49.png
       Index: 1
-      InflictDamageTime: 0
-      MaximumDistance: 0
-      MinimumDistance: 0
+      InflictDamageTime: 0.8
+      MaximumDistance: 1.7
+      MinimumDistance: 0.5
       Name: Rush
       SkillType: 0
       Target: 0
@@ -206,11 +206,11 @@ MonoBehaviour:
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
-    LevelStrength: 0
+    LevelStrength: 2
     StartConstitution: 5
     StartDexterity: 0
     StartIntelligence: 0
-    StartStrength: 0
+    StartStrength: 9
     ActionPoints: 2
     MovementRange: 6
     SecondGradeMultiplier: 0

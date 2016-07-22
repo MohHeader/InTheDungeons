@@ -85,7 +85,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             }
 
             if (select) {
-                var transformArray = SelectedCharacterPresenter.transform.gameObject.GetCharactersBetween(Skill.MinimumDistance, Skill.MaximumDistance);
+                var transformArray = SelectedCharacterPresenter.transform.gameObject.GetDefenderCharactersBetween(Skill.MinimumDistance, Skill.MaximumDistance);
                 foreach (var targetTransform in transformArray) {
                     var prefab = Instantiate(TargetIndicatorPrefab);
                     prefab.transform.SetParent(targetTransform, false);
@@ -105,52 +105,6 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
 
         public void OnSelected() {
             SelectionSubject.OnNext(Unit.Default);
-        }
-
-        protected void Update() {
-            if (SelectingTarget.Value)
-            {
-                if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
-                {
-                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
-                    {
-                        var character = hit.transform.GetComponent<CharacterPresenter>();
-                        if (character != null)
-                        {
-                            var distance = Vector3.Distance(SelectedCharacterPresenter.transform.position,
-                                character.transform.position).Round(2);
-                            if (distance <= Skill.MaximumDistance && distance >= Skill.MinimumDistance)
-                            {
-                                switch (Skill.SkillType)
-                                {
-                                    case SkillTypeEnum.Melee:
-                                        StartCoroutine(SelectedCharacterPresenter.PlayMeleeSkill(Skill, character));
-                                        break;
-                                    case SkillTypeEnum.Shooting:
-                                        break;
-                                    case SkillTypeEnum.Spell:
-                                        switch (Skill.SpellType)
-                                        {
-                                            case SpellTypeEnum.Projectile:
-                                                StartCoroutine(SelectedCharacterPresenter.PlayProjectileSpell(Skill, character));
-                                                break;
-                                            case SpellTypeEnum.Direction:
-                                                StartCoroutine(SelectedCharacterPresenter.PlayDirectionSpell(Skill, character));
-                                                break;
-                                            default:
-                                                throw new ArgumentOutOfRangeException();
-                                        }
-                                        break;
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }

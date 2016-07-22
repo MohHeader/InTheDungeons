@@ -82,6 +82,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
                 StatusText.transform.gameObject.SetActive(false);
         }
 
+        // TODO: Требуется оптимизация? Не обновлять положение HUD'а на каждом кадре
         protected void LateUpdate() {
             if (Hud == null) return;
             Hud.transform.position = Camera.main.WorldToScreenPoint(transform.position);

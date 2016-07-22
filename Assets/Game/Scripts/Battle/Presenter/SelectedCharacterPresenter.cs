@@ -2,7 +2,6 @@
 using Pathfinding;
 using UniRx;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Assets.Game.Scripts.Battle.Presenter {
     public class SelectedCharacterPresenter : PresenterBase<SquadPresenter> {
@@ -68,19 +67,6 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         protected override void Initialize(SquadPresenter argument) {
             argument.SelectedCharacter.Subscribe(SelectedCharacterChanged);
-        }
-
-        public void Update() {
-            if (Input.GetMouseButtonDown(0) && SelectedCharacter != null && !EventSystem.current.IsPointerOverGameObject() && SelectedCharacter.CharacterState.Value == CharacterPresenter.CharacterStateEnum.Idle) {
-                RaycastHit hit;
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit))
-                {
-                    var closestNode = AstarPath.active.GetNearest(hit.point).node;
-                    if (SelectedCharacter.Movement.CanMoveToGridNode(closestNode))
-                        StartCoroutine(SelectedCharacter.Movement.MoveToGridNode(closestNode));
-                }
-            }
         }
     }
 }
