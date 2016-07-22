@@ -97,7 +97,7 @@ namespace Assets.Game.Scripts.Utility.Skills {
 
                 // Spell data
 
-                Prefab = Prefab,
+                PrefabPath = PrefabPath,
                 SpellType = SpellType,
                 SpawnTime = SpawnTime,
                 SpellMovementSpeed = SpellMovementSpeed,

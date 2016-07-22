@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Skills;
 using OrbCreationExtensions;
 using UniRx;
@@ -15,6 +18,9 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
 
         public Sprite UnselectedSprite;
         public Sprite SelectedSprite;
+
+        public GameObject TargetIndicatorPrefab;
+        protected List<GameObject> TargetIndicators = new List<GameObject>();
 
         protected CharacterPresenter SelectedCharacterPresenter;
 
@@ -72,6 +78,21 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         private void ToggleSkillSelection(bool select) {
             Border.sprite = select ? SelectedSprite : UnselectedSprite;
             SelectingTarget.Value = select;
+
+            // TODO: Find targets and spawn target prefabs
+            for (int i = 0; i < TargetIndicators.Count; i++) {
+                Destroy(TargetIndicators[i]);
+            }
+
+            if (select) {
+                var transformArray = SelectedCharacterPresenter.transform.gameObject.GetCharactersBetween(Skill.MinimumDistance, Skill.MaximumDistance);
+                foreach (var targetTransform in transformArray) {
+                    var prefab = Instantiate(TargetIndicatorPrefab);
+                    prefab.transform.SetParent(targetTransform, false);
+                    prefab.transform.localPosition = new Vector3(0f, 0.1f, 0f);
+                    TargetIndicators.Add(prefab);
+                }
+            }
         }
 
         private void SkillSelection(bool b) {

@@ -89,7 +89,7 @@ MonoBehaviour:
   FixRotation: 0
   Normal: 0
   FXSpawn: {fileID: 111678, guid: da9ba6eae6b20714d883f10da4264b3d, type: 2}
-  LifeTime: 3.5
+  LifeTime: 1.7
   TimeSpawn: 0.01
   UseObjectForward: 1
   Direction: {x: 0, y: 0, z: 1}

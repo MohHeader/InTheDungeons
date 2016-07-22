@@ -1,12 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Assets.Game.Scripts.Battle.Presenter;
 using TMPro;
 using Unity.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace Assets.Game.Scripts.Helpers {
     public static class ComponenHelpers {
+        public static List<Transform> GetCharactersBetween(this GameObject gameObject, float minimumDistance, float maximumDistance) {
+            var transformArray = Object.FindObjectsOfType<CharacterPresenter>()
+                                       .Select(go => go.transform)
+                                       .Where(
+                                           t =>
+                                               Vector3.Distance(t.position, gameObject.transform.position) <= maximumDistance &&
+                                               Vector3.Distance(t.position, gameObject.transform.position) >= minimumDistance)
+                                       .ToList();
+            return transformArray;
+        }
+
         public static Animation FindAnimationComponent(this GameObject gameObject) {
             try {
                 var gameObjects = gameObject.DescendantsAndSelf().ToList();

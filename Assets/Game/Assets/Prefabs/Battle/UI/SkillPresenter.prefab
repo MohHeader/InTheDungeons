@@ -78,6 +78,8 @@ MonoBehaviour:
   Border: {fileID: 11419806}
   UnselectedSprite: {fileID: 21300000, guid: 8cdc50797ee4b4e3eac717182cc5ca75, type: 3}
   SelectedSprite: {fileID: 21300000, guid: 371e05d1fe27341c48e9000da6d8bb52, type: 3}
+  TargetIndicatorPrefab: {fileID: 157508, guid: 01c9826a4f8dc5448960229ee78bfca4,
+    type: 2}
   SkillIndex: 0
 --- !u!114 &11486830
 MonoBehaviour:
