@@ -161,7 +161,6 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 var collisionTrigger = spellTarget.GetComponent<ObservableTriggerTrigger>();
                 var copy = targetTransform;
                 var subscriber = collisionTrigger.OnTriggerEnterAsObservable().SubscribeWithState(copy, (c, t) => {
-                                                                                                            Debug.LogFormat("targetName is {0}", copy.name);
                                                                                                             if (!hitTargets.Contains(t)) {
                                                                                                                 t.GetComponent<CharacterPresenter>()
                                                                                                                  .CharacterData.DealDamage(skill.DamageMultiplier*
