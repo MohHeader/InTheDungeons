@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Game.Scripts.Battle.Model;
 using UniRx;
@@ -49,17 +50,23 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                     SquadState.Value = SquadStateEnum.InProgress;
                     break;
                 case SquadStateEnum.InProgress:
-                    foreach (var characterPresenter in Characters)
-                    {
-                        characterPresenter.EndTurn();
-                    }
-                    SquadState.Value = SquadStateEnum.Finished;
+                    StartCoroutine(FakeDelay());
                     break;
                 case SquadStateEnum.Finished:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("squadStateEnum", squadStateEnum, null);
             }
+        }
+
+        protected IEnumerator FakeDelay() {
+            yield return new WaitForSeconds(5f);
+            foreach (var characterPresenter in Characters)
+            {
+                characterPresenter.EndTurn();
+            }
+            SquadState.Value = SquadStateEnum.Finished;
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }
