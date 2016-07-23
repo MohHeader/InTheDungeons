@@ -42,7 +42,8 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         private void CharacterStateChanged(CharacterPresenter.CharacterStateEnum characterStateEnum) {
             switch (characterStateEnum) {
                 case CharacterPresenter.CharacterStateEnum.Idle:
-                    ShowPossibleMovements();
+                    if (SelectedCharacter.CharacterData.RemainingActionPoint.Value > 0)
+                        ShowPossibleMovements();
                     break;
                 case CharacterPresenter.CharacterStateEnum.Moving:
                     SelectedCharacter.Movement.ClearPrevious();

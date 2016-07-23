@@ -1,6 +1,6 @@
 ﻿namespace Assets.Game.Scripts.Battle.Presenter.Interfaces {
     public interface IActor {
-        void NewTurn();
+        void StartNewTurn();
         void EndTurn();
     }
 }

@@ -104,15 +104,14 @@ namespace Assets.Game.Scripts.Common {
             MaximumActionPoints = new ReactiveProperty<int>(CharacterData.Value.ActionPoints);
             RemainingActionPoint = new ReactiveProperty<int>(CharacterData.Value.ActionPoints);
             ActionPointsRegen = new ReactiveProperty<int>(CharacterData.Value.ActionPoints);
+            Debug.LogFormat("CharacterData.Value.ActionPoints {0}", CharacterData.Value.ActionPoints);
         }
 
         public void RegenerateActionPoints() {
-            RemainingActionPoint.Value = Mathf.Clamp(RemainingActionPoint.Value + ActionPointsRegen.Value, 0,
-                MaximumActionPoints.Value);
+            RemainingActionPoint.Value = ActionPointsRegen.Value;
         }
 
         public void DealDamage(float damageAmount) {
-            Debug.LogFormat("Dealing damage {0}", damageAmount);
             RemainingHealth.Value = Mathf.Clamp(RemainingHealth.Value - damageAmount, 0f, MaximumHealth.Value);
         }
 

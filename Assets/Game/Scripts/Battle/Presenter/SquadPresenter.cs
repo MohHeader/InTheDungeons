@@ -22,6 +22,8 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         public ReactiveProperty<CharacterPresenter> SelectedCharacter;
         public SelectedCharacterPresenter SelectedCharacterPresenter;
 
+        public ReactiveProperty<SquadStateEnum> SquadState = new ReactiveProperty<SquadStateEnum>(SquadStateEnum.None);
+
         public BattleSkillPresenter[] Skills;
         protected Squad Squad;
 
@@ -78,8 +80,22 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         protected override void Initialize(Squad argument) {
             SpawnPortraights();
+            SquadState.Subscribe(SquadStateChanged);
 
-            SelectCharacter(Characters.First());
+            foreach (var characterPresenter in Characters)
+            {
+                characterPresenter.CharacterData.RemainingActionPoint.Subscribe(CheckForActionPointsLeft);
+            }
+        }
+
+        private void CheckForActionPointsLeft(int remaining) {
+            if (SquadState.Value != SquadStateEnum.InProgress || remaining > 0) return;
+
+            var remainingActionPoints = Characters.All(_ => _.CharacterData.RemainingActionPoint.Value <= 0);
+            if (remainingActionPoints)
+            {
+                EndTurn();
+            }
         }
 
         protected void SpawnPortraights() {
@@ -154,11 +170,46 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             if (!SelectedCharacter.HasValue) return false;
             if (SelectedCharacter.Value.CharacterState.Value != CharacterPresenter.CharacterStateEnum.Idle) return false;
             var closestNode = AstarPath.active.GetNearest(hit.point).node;
+            if (closestNode == null) return false;
             if (!SelectedCharacter.Value.Movement.CanMoveToGridNode(closestNode)) return false;
             StartCoroutine(SelectedCharacter.Value.Movement.MoveToGridNode(closestNode));
             return true;
         }
 
+        #endregion
+
+        #region Battle state management
+
+        private void SquadStateChanged(SquadStateEnum squadStateEnum) {
+            switch (squadStateEnum)
+            {
+                case SquadStateEnum.None:
+                    break;
+                case SquadStateEnum.Started:
+                    foreach (var characterPresenter in Characters)
+                    {
+                        characterPresenter.StartNewTurn();
+                    }
+                    SquadState.Value = SquadStateEnum.InProgress;
+                    break;
+                case SquadStateEnum.InProgress:
+                    SelectCharacter(Characters.First());
+                    break;
+                case SquadStateEnum.Finished:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("squadStateEnum", squadStateEnum, null);
+            }
+        }
+
+        private void EndTurn() {
+            SelectCharacter(null);
+            foreach (var characterPresenter in Characters)
+            {
+                characterPresenter.EndTurn();
+            }
+            SquadState.Value = SquadStateEnum.Finished;
+        }
         #endregion
     }
 }

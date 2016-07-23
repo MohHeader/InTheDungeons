@@ -106,6 +106,8 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             var skill = SelectedSkill.Value;
             if (skill == null) return;
 
+            if (CharacterData.RemainingActionPoint.Value < skill.ActionPoints) return;
+
             switch (skill.SkillType)
             {
                 case SkillTypeEnum.Melee:
@@ -129,6 +131,9 @@ namespace Assets.Game.Scripts.Battle.Presenter {
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            CharacterData.RemainingActionPoint.Value -= skill.ActionPoints;
+            skill.RemainingCooldown = skill.Cooldown;
         }
 
         public IEnumerator PlayMeleeSkill(SkillData skill, CharacterPresenter target) {
@@ -268,8 +273,12 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         #region IActor Implementation
 
-        public void NewTurn() {
+        public void StartNewTurn() {
             CharacterData.RegenerateActionPoints();
+            foreach (var skillData in CharacterData.Skills)
+            {
+                if (skillData.Cooldown > 0) skillData.Cooldown--;
+            }
         }
 
         public void EndTurn() {
@@ -277,5 +286,11 @@ namespace Assets.Game.Scripts.Battle.Presenter {
         }
 
         #endregion
+
+        public void ReduceActionPoints(int amount) {
+            CharacterData.RemainingActionPoint.Value = Mathf.Clamp(CharacterData.RemainingActionPoint.Value - amount, 0,
+                CharacterData.RemainingActionPoint.Value);
+            Debug.LogWarning(CharacterData.RemainingActionPoint.Value);
+        }
     }
 }

@@ -44,6 +44,8 @@ namespace Assets.Game.Scripts.Utility.Skills {
 
         [SerializeField] public int Index;
 
+        [SerializeField] public int ActionPoints;
+
         #region Melee data
 
         [SerializeField] public float InflictDamageTime;
@@ -61,6 +63,8 @@ namespace Assets.Game.Scripts.Utility.Skills {
         [SerializeField] public TargetEnum Target;
 
         [SerializeField] public TriggerEnum TriggerName;
+
+        public int RemainingCooldown;
 
         public Sprite Icon
         {
@@ -87,6 +91,8 @@ namespace Assets.Game.Scripts.Utility.Skills {
                 Index = Index,
                 IconPath = IconPath,
                 Cooldown = Cooldown,
+                RemainingCooldown = RemainingCooldown,
+                ActionPoints = ActionPoints,
                 Name = Name,
                 Target = Target,
                 TriggerName = TriggerName,

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using Assets.Game.Scripts.Battle.Model;
 using DungeonArchitect;
 using UniRx;
+using UnityEngine;
 
 namespace Assets.Game.Scripts.Battle.Presenter
 {
@@ -15,6 +17,11 @@ namespace Assets.Game.Scripts.Battle.Presenter
         public DefenderSquad DefendersSquad;
         public SquadPresenter SquadPresenter;
         public DefendersPresenter DefendersPresenter;
+
+        public GameObject AttackerTurnMessage;
+        public GameObject DefenderTurnMessage;
+
+        public float ShowTime = 3f;
 
         public uint Seed = 524145472;
         public int Rooms = 10;
@@ -42,14 +49,59 @@ namespace Assets.Game.Scripts.Battle.Presenter
                 SquadPresenter.PropagateArgument(PlayerSquad);
                 CameraPresenter.PropagateArgument(SquadPresenter);
                 DefendersPresenter.PropagateArgument(DefendersSquad);
+                SquadPresenter.SquadState.Subscribe(_ => AttackerSquadStateChanged(_));
+                DefendersPresenter.SquadState.Subscribe(_ => DefendersSquadStateChanged(_));
             }
             else {
                 throw new Exception("Dungeon config not valid. Use GridDungeonConfig");
             }
         }
 
-        protected override void Initialize()
-        {
+        private void DefendersSquadStateChanged(SquadStateEnum squadStateEnum) {
+            switch (squadStateEnum)
+            {
+                case SquadStateEnum.None:
+                    break;
+                case SquadStateEnum.Started:
+                    StartCoroutine(ShowMessage(DefenderTurnMessage, ShowTime));
+                    break;
+                case SquadStateEnum.InProgress:
+                    break;
+                case SquadStateEnum.Finished:
+                    SquadPresenter.SquadState.Value = SquadStateEnum.Started;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("squadStateEnum", squadStateEnum, null);
+            }
+        }
+
+        private void AttackerSquadStateChanged(SquadStateEnum squadStateEnum) {
+            switch (squadStateEnum)
+            {
+                case SquadStateEnum.None:
+                    break;
+                case SquadStateEnum.Started:
+                    StartCoroutine(ShowMessage(AttackerTurnMessage, ShowTime));
+                    break;
+                case SquadStateEnum.InProgress:
+                    break;
+                case SquadStateEnum.Finished:
+                    DefendersPresenter.SquadState.Value = SquadStateEnum.Started;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("squadStateEnum", squadStateEnum, null);
+            }
+        }
+
+        private IEnumerator ShowMessage(GameObject message, float time) {
+            yield return new WaitForEndOfFrame();
+            message.SetActive(true);
+            yield return new WaitForSeconds(time);
+            message.SetActive(false);
+        }
+
+        protected override void Initialize() {
+            SquadPresenter.SquadState.Value = SquadStateEnum.Started;
         }
     }
 }

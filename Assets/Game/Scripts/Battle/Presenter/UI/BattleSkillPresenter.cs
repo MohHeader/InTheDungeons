@@ -56,13 +56,24 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             else
             {
                 characterPresenter.SelectedSkill.Subscribe(SelectedSkill).AddTo(_characterDisposables);
+                characterPresenter.CharacterState.Subscribe(_ => UpdateState()).AddTo(_characterDisposables);
                 Skill = characterPresenter.Skills[SkillIndex].SkillData;
                 Icon.enabled = true;
                 Icon.sprite = characterPresenter.Skills[SkillIndex].Icon;
 
                 Border.enabled = true;
                 Border.sprite = UnselectedSprite;
+
+                UpdateState();
             }
+        }
+
+        private void UpdateState() {
+            if (SelectedCharacterPresenter == null || Skill == null) return;
+
+            var available = SelectedCharacterPresenter.CharacterData.RemainingActionPoint.Value >= Skill.ActionPoints &&
+                            Skill.Cooldown <= 0;
+            Icon.color = available ? Color.white : Color.grey;
         }
 
         protected override void Initialize(SquadPresenter argument) {
@@ -79,7 +90,6 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
             Border.sprite = select ? SelectedSprite : UnselectedSprite;
             SelectingTarget.Value = select;
 
-            // TODO: Find targets and spawn target prefabs
             for (int i = 0; i < TargetIndicators.Count; i++) {
                 Destroy(TargetIndicators[i]);
             }
@@ -96,7 +106,7 @@ namespace Assets.Game.Scripts.Battle.Presenter.UI {
         }
 
         private void SkillSelection(bool b) {
-            if (SelectedCharacterPresenter == null) return;
+            if (SelectedCharacterPresenter == null || (SelectedCharacterPresenter.CharacterData.RemainingActionPoint.Value <= 0 && b) || (Skill.Cooldown > 0 && b)) return;
 
             SelectedCharacterPresenter.SelectedSkill.Value = SelectingTarget.Value ? Skill : null;
         }

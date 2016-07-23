@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Game.Scripts.Battle.Presenter;
 using Assets.Game.Scripts.Helpers;
 using DG.Tweening;
@@ -161,6 +162,7 @@ namespace Assets.Game.Scripts.Battle.Components {
         }
 
         public bool CanMoveToGridNode(GraphNode node) {
+            if (_constantPathNodes == null || !_constantPathNodes.Any()) return false;
             return _constantPathNodes.Contains(node);
         }
 

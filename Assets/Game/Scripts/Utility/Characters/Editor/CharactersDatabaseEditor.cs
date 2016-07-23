@@ -111,6 +111,7 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             EditorGUILayout.BeginHorizontal();
             skill.Name = EditorGUILayout.TextField("Skill name:", skill.Name);
             skill.Cooldown = EditorGUILayout.IntField("Cooldown (turns):", skill.Cooldown);
+            skill.ActionPoints = EditorGUILayout.IntField("Action points:", skill.ActionPoints);
             skill.DamageMultiplier = EditorGUILayout.FloatField("Damage:", skill.DamageMultiplier);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
