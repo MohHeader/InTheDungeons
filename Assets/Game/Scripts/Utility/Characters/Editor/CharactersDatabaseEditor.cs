@@ -23,7 +23,7 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             get { return "Character"; }
         }
 
-        [MenuItem("Astaror/Database/Characters Database")]
+        [MenuItem("Astaror/Database/Characters CharactersDatabase")]
         public static void Init()
         {
             var window = GetWindow<CharactersDatabaseEditor>(false, "Characters");

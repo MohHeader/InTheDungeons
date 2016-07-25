@@ -65,7 +65,7 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             Character = argument;
             SelectedSkill.Value = null;
             var instance = DataLayer.GetInstance();
-            CharacterData = new CharacterStatusPresenter(instance.Database.GetCharacterData(Character.Id),
+            CharacterData = new CharacterStatusPresenter(instance.CharactersDatabase.GetCharacterData(Character.Id),
                 Character.Level);
             var prefab = Instantiate(CharacterData.Asset);
             prefab.transform.SetParent(transform, false);
