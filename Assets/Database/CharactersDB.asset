@@ -21,10 +21,10 @@ MonoBehaviour:
     DefaultOffhandVisual: 5
     Skills:
     - Cooldown: 0
-      DamageMultiplier: 0
+      DamageMultiplier: 1
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_25.png
       Index: 0
-      ActionPoints: 0
+      ActionPoints: 1
       InflictDamageTime: 0
       MaximumDistance: 1.5
       MinimumDistance: 0.5
@@ -37,8 +37,8 @@ MonoBehaviour:
       SpellType: 0
       SpawnTime: 0
       SpellMovementSpeed: 0
-    - Cooldown: 2
-      DamageMultiplier: 0
+    - Cooldown: 0
+      DamageMultiplier: 1.5
       IconPath: Assets/Game/Resources/Icons/Skills/Colored/icon_128x128_17.png
       Index: 1
       ActionPoints: 1
@@ -48,20 +48,20 @@ MonoBehaviour:
       Name: Slash around
       SkillType: 0
       Target: 0
-      TriggerName: 0
+      TriggerName: 2
       RemainingCooldown: 0
       PrefabPath: 
       SpellType: 0
       SpawnTime: 0
       SpellMovementSpeed: 0
-    LevelConstitution: 0
-    LevelDexterity: 0
-    LevelIntelligence: 0
-    LevelStrength: 0
+    LevelConstitution: 5
+    LevelDexterity: 1
+    LevelIntelligence: 1
+    LevelStrength: 2
     StartConstitution: 5
-    StartDexterity: 0
-    StartIntelligence: 0
-    StartStrength: 0
+    StartDexterity: 1
+    StartIntelligence: 1
+    StartStrength: 5
     ActionPoints: 2
     MovementRange: 5
     SecondGradeMultiplier: 0

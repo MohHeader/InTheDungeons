@@ -14,6 +14,7 @@
         LeatherArmor,
         HeavyArmor,
         Ring,
-        Necklace
+        Necklace,
+        Fake
     }
 }
