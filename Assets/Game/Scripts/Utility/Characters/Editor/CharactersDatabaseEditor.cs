@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assets.Game.Scripts.Utility.Common;
+using Assets.Game.Scripts.Utility.Equipment;
 using Assets.Game.Scripts.Utility.Skills;
 using UnityEditor;
 using UnityEngine;
@@ -41,6 +42,8 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             EditorGUILayout.BeginHorizontal();
             element.ActionPoints = EditorGUILayout.IntField("Action points:", element.ActionPoints);
             element.MovementRange = EditorGUILayout.IntField("Movement Range:", element.MovementRange);
+            element.DefaultWeaponVisual = (EquipmentTypeEnum) EditorGUILayout.EnumPopup("Default weapon visual", element.DefaultWeaponVisual);
+            element.DefaultOffhandVisual = (EquipmentTypeEnum) EditorGUILayout.EnumPopup("Default offhand visual", element.DefaultOffhandVisual);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space();

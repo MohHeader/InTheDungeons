@@ -10,6 +10,7 @@ using Assets.Game.Scripts.Battle.Presenter.UI;
 using Assets.Game.Scripts.Common;
 using Assets.Game.Scripts.Helpers;
 using Assets.Game.Scripts.Utility.Characters;
+using Assets.Game.Scripts.Utility.Equipment;
 using Assets.Game.Scripts.Utility.Skills;
 using DG.Tweening;
 using UniRx;
@@ -48,14 +49,24 @@ namespace Assets.Game.Scripts.Battle.Presenter {
 
         public GameObject SpellTarget;
         public BattleCharacterStatusPresenter StatusPresenter;
+        public WeaponPresenter Weapon;
+        public WeaponPresenter Offhand;
 
+        #region Visuals for weapon and offhand
+
+        public EquipmentTypeEnum WeaponVisual;
+        public EquipmentTypeEnum OffhandVisual;
+
+        #endregion
         protected override IPresenter[] Children
         {
             get
             {
                 return new IPresenter[]
                 {
-                    StatusPresenter
+                    StatusPresenter,
+                    Weapon,
+                    Offhand
                 };
             }
         }
@@ -64,15 +75,22 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             Movement = GetComponent<GridMovementBehaviour>();
             Character = argument;
             SelectedSkill.Value = null;
-            var instance = DataLayer.GetInstance();
-            CharacterData = new CharacterStatusPresenter(instance.CharactersDatabase.GetCharacterData(Character.Id),
-                Character.Level);
+            var dataLayer = DataLayer.GetInstance();
+
+            var characterData = dataLayer.CharactersDatabase.GetCharacterData(Character.Id);
+            CharacterData = new CharacterStatusPresenter(characterData, Character.Level);
+
+            WeaponVisual = characterData.DefaultWeaponVisual;
+            OffhandVisual = characterData.DefaultOffhandVisual;
+
             var prefab = Instantiate(CharacterData.Asset);
             prefab.transform.SetParent(transform, false);
             Animator = gameObject.FindAnimatorComponent();
             Controller = gameObject.FindCharacterControllerComponent();
             Skills = CharacterData.Skills.Select(_ => new BattleSkill(_)).ToArray();
             StatusPresenter.PropagateArgument(CharacterData);
+            Weapon.PropagateArgument(this);
+            Offhand.PropagateArgument(this);
             CharacterData.CharacterState.Subscribe(_ => StartCoroutine(AliveStateChanged(_)));
         }
 

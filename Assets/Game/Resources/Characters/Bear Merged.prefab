@@ -1030,10 +1030,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 490116}
-  - 33: {fileID: 3322710}
-  - 23: {fileID: 2331066}
   m_Layer: 0
-  m_Name: TH_Mace01
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1738,7 +1736,6 @@ Transform:
   - {fileID: 463790}
   - {fileID: 453816}
   - {fileID: 494140}
-  - {fileID: 490116}
   m_Father: {fileID: 407998}
   m_RootOrder: 0
 --- !u!4 &443614
@@ -2099,6 +2096,7 @@ Transform:
   - {fileID: 407164}
   - {fileID: 400204}
   - {fileID: 470944}
+  - {fileID: 490116}
   m_Father: {fileID: 436096}
   m_RootOrder: 1
 --- !u!4 &479780
@@ -2215,12 +2213,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187486}
-  m_LocalRotation: {x: 0.6780442, y: 0.034174442, z: 0.1359267, w: 0.72153455}
-  m_LocalPosition: {x: -0.011, y: -0.0021, z: 0.0306}
-  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
-  m_LocalEulerAnglesHint: {x: 75.7368, y: 71.5, z: 79.8164}
+  m_LocalRotation: {x: 0.27404734, y: 0.7376738, z: -0.55089307, w: -0.27794296}
+  m_LocalPosition: {x: -0.007982639, y: -0.0036864202, z: 0.0068360697}
+  m_LocalScale: {x: 0.05999996, y: 0.0600001, z: 0.059999797}
+  m_LocalEulerAnglesHint: {x: -318.6681, y: 251.47859, z: 71.132095}
   m_Children: []
-  m_Father: {fileID: 440640}
+  m_Father: {fileID: 479580}
   m_RootOrder: 5
 --- !u!4 &492926
 Transform:
@@ -2360,39 +2358,6 @@ Transform:
   - {fileID: 428970}
   m_Father: {fileID: 493858}
   m_RootOrder: 0
---- !u!23 &2331066
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187486}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: e5c0ca9c8951d4648b98b36448dde3ae, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!33 &3322710
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187486}
-  m_Mesh: {fileID: 4300000, guid: 816a22589f3a7b043baf507fc79202f8, type: 3}
 --- !u!95 &9570012
 Animator:
   serializedVersion: 3

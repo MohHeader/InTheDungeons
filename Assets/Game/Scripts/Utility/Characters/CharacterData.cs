@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Dungeon.Scripts.Utility.Common;
+using Assets.Game.Scripts.Utility.Equipment;
 using Assets.Game.Scripts.Utility.Skills;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -24,6 +25,10 @@ namespace Assets.Game.Scripts.Utility.Characters {
         [SerializeField] public string IconPath;
 
         [SerializeField] public MainStatEnum MainStatValue;
+
+        [SerializeField] public EquipmentTypeEnum DefaultWeaponVisual;
+
+        [SerializeField] public EquipmentTypeEnum DefaultOffhandVisual;
 
         #region Skills
 

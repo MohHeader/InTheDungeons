@@ -14,6 +14,8 @@ GameObject:
   - 114: {fileID: 11448028}
   - 114: {fileID: 11488530}
   - 114: {fileID: 11498860}
+  - 114: {fileID: 11426342}
+  - 114: {fileID: 11424642}
   m_Layer: 12
   m_Name: Character
   m_TagString: Character
@@ -34,6 +36,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11424642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c48c1f038a57144bca2aa65b9f00bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponPresenterType: 1
+--- !u!114 &11426342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c48c1f038a57144bca2aa65b9f00bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponPresenterType: 0
 --- !u!114 &11434460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -45,9 +71,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5452bbfbb63bdc2489a1bff892de3ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterSide: 0
   Movement: {fileID: 0}
-  StatusPresenter: {fileID: 11463028}
   SpellTarget: {fileID: 199488, guid: 8bcbd25245f76fe4dabb9cc8ea47333d, type: 2}
+  StatusPresenter: {fileID: 11463028}
+  Weapon: {fileID: 11426342}
+  Offhand: {fileID: 11424642}
+  WeaponVisual: 0
+  OffhandVisual: 0
 --- !u!114 &11448028
 MonoBehaviour:
   m_ObjectHideFlags: 1
