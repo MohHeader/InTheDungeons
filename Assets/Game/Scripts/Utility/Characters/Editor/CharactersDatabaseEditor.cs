@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Game.Scripts.Utility.Common;
 using Assets.Game.Scripts.Utility.Equipment;
@@ -74,6 +75,34 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
+            EditorGUILayout.LabelField(new GUIContent("Equipment slots"));
+            EditorGUILayout.BeginVertical();
+            if (element.EquipmentSlots == null) element.EquipmentSlots = new List<EquipmentSlot>();
+            if (GUILayout.Button("New equipment slot")) {
+                element.EquipmentSlots.Add(new EquipmentSlot());
+            }
+
+            var slotRemovalList = new List<EquipmentSlot>();
+
+            foreach (var equipmentSlot in element.EquipmentSlots) {
+                EditorGUILayout.BeginHorizontal();
+                equipmentSlot.Slot = (WearSlotEnum)EditorGUILayout.EnumPopup("Slot:", equipmentSlot.Slot, GUILayout.Width(250));
+                if (GUILayout.Button("+", GUILayout.Width(40))) {
+                    equipmentSlot.PossibleEquipmentTypes.Add(EquipmentTypeEnum.Fake);
+                }
+                for (int eqSltId = 0; eqSltId < equipmentSlot.PossibleEquipmentTypes.Count; eqSltId++) {
+                    equipmentSlot.PossibleEquipmentTypes[eqSltId] = (EquipmentTypeEnum)EditorGUILayout.EnumPopup("", equipmentSlot.PossibleEquipmentTypes[eqSltId], GUILayout.Width(250));
+                }
+                if (GUILayout.Button("-", GUILayout.Width(40)))
+                {
+                    slotRemovalList.Add(equipmentSlot);
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            EditorGUILayout.EndVertical();
+
+
+            EditorGUILayout.Space();
             EditorGUILayout.LabelField(new GUIContent("Skills"));
             EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
@@ -90,14 +119,20 @@ namespace Assets.Game.Scripts.Utility.Characters.Editor {
             var list = element.Skills.Select(skillData => SkillEditor(element, skillData)).ToList();
             EditorGUILayout.EndScrollView();
             EditorGUILayout.EndVertical();
+
             foreach (var skillData in list)
             {
                 if (skillData != null) element.Skills.Remove(skillData);
+            }
+
+            foreach (var equipmentSlot in slotRemovalList) {
+                if (equipmentSlot != null) element.EquipmentSlots.Remove(equipmentSlot);
             }
         }
 
         private Vector2 _scrollPosition;
 
+        
         protected SkillData SkillEditor(CharacterData element, SkillData skill)
         {
             EditorGUILayout.Space();

@@ -54,6 +54,19 @@ MonoBehaviour:
       SpellType: 0
       SpawnTime: 0
       SpellMovementSpeed: 0
+    EquipmentSlots:
+    - Slot: 1
+      PossibleEquipmentTypes: 0c000000
+    - Slot: 3
+      PossibleEquipmentTypes: 000000000500000001000000
+    - Slot: 4
+      PossibleEquipmentTypes: 0e000000
+    - Slot: 5
+      PossibleEquipmentTypes: 0d000000
+    - Slot: 6
+      PossibleEquipmentTypes: 0d000000
+    - Slot: 3
+      PossibleEquipmentTypes: 000000000500000001000000
     LevelConstitution: 5
     LevelDexterity: 1
     LevelIntelligence: 1
@@ -74,7 +87,7 @@ MonoBehaviour:
     IconPath: Assets/Game/Resources/CharacterIcons/Bear.png
     MainStatValue: 0
     DefaultWeaponVisual: 9
-    DefaultOffhandVisual: 14
+    DefaultOffhandVisual: 15
     Skills:
     - Cooldown: 0
       DamageMultiplier: 1
@@ -93,6 +106,17 @@ MonoBehaviour:
       SpellType: 0
       SpawnTime: 0
       SpellMovementSpeed: 0
+    EquipmentSlots:
+    - Slot: 1
+      PossibleEquipmentTypes: 0c000000
+    - Slot: 3
+      PossibleEquipmentTypes: 0800000009000000
+    - Slot: 4
+      PossibleEquipmentTypes: 0e000000
+    - Slot: 5
+      PossibleEquipmentTypes: 0d000000
+    - Slot: 6
+      PossibleEquipmentTypes: 0d000000
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -113,7 +137,7 @@ MonoBehaviour:
     IconPath: Assets/Game/Resources/CharacterIcons/RoyalWizard.png
     MainStatValue: 2
     DefaultWeaponVisual: 3
-    DefaultOffhandVisual: 14
+    DefaultOffhandVisual: 15
     Skills:
     - Cooldown: 0
       DamageMultiplier: 5
@@ -149,6 +173,17 @@ MonoBehaviour:
       SpellType: 1
       SpawnTime: 0.6
       SpellMovementSpeed: 0
+    EquipmentSlots:
+    - Slot: 1
+      PossibleEquipmentTypes: 0a000000
+    - Slot: 3
+      PossibleEquipmentTypes: 03000000
+    - Slot: 4
+      PossibleEquipmentTypes: 0e000000
+    - Slot: 5
+      PossibleEquipmentTypes: 0d000000
+    - Slot: 6
+      PossibleEquipmentTypes: 0d000000
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 1
@@ -168,9 +203,10 @@ MonoBehaviour:
     AssetPath: Assets/Game/Resources/Monsters/Skeleton_archer.prefab
     IconPath: 
     MainStatValue: 0
-    DefaultWeaponVisual: 14
-    DefaultOffhandVisual: 14
+    DefaultWeaponVisual: 15
+    DefaultOffhandVisual: 15
     Skills: []
+    EquipmentSlots: []
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0
@@ -191,7 +227,7 @@ MonoBehaviour:
     IconPath: Assets/Game/Resources/CharacterIcons/Warrior.png
     MainStatValue: 0
     DefaultWeaponVisual: 0
-    DefaultOffhandVisual: 14
+    DefaultOffhandVisual: 15
     Skills:
     - Cooldown: 0
       DamageMultiplier: 1
@@ -227,6 +263,17 @@ MonoBehaviour:
       SpellType: 0
       SpawnTime: 0
       SpellMovementSpeed: 0
+    EquipmentSlots:
+    - Slot: 1
+      PossibleEquipmentTypes: 0b000000
+    - Slot: 3
+      PossibleEquipmentTypes: 000000000100000005000000
+    - Slot: 4
+      PossibleEquipmentTypes: 0e000000
+    - Slot: 5
+      PossibleEquipmentTypes: 0d000000
+    - Slot: 6
+      PossibleEquipmentTypes: 0d000000
     LevelConstitution: 0
     LevelDexterity: 0
     LevelIntelligence: 0

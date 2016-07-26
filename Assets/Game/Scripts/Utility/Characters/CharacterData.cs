@@ -36,6 +36,8 @@ namespace Assets.Game.Scripts.Utility.Characters {
 
         #endregion
 
+        [SerializeField] public List<EquipmentSlot> EquipmentSlots = new List<EquipmentSlot>();
+
         public GameObject Asset
         {
 #if UNITY_EDITOR
