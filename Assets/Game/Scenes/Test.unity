@@ -4255,22 +4255,41 @@ MonoBehaviour:
     Characters:
     - Id: 1
       Level: 2
+      Items: []
     - Id: 2
       Level: 2
+      Items: []
     - Id: 3
       Level: 2
+      Items:
+      - Item:
+          Blueprint:
+            Id: 1
+            Name: 
+            AssetPath: 
+            EquipmentType: 0
+            IconPath: 
+            MainStats: []
+            RequiredLevel: 0
+          MainStatusChanges: []
+          RandomSeed: 0
+        Slot: 3
     - Id: 5
       Level: 2
+      Items: []
   DefendersSquad:
     Defenders:
     - Id: 4
       Level: 1
+      Items: []
       Position: {x: 2, y: 0, z: -10}
     - Id: 4
       Level: 1
+      Items: []
       Position: {x: 0, y: 0, z: -8}
     - Id: 4
       Level: 1
+      Items: []
       Position: {x: -2, y: 0, z: -10}
   SquadPresenter: {fileID: 494039852}
   DefendersPresenter: {fileID: 494039857}
@@ -4293,6 +4312,7 @@ MonoBehaviour:
   CharactersDatabase: {fileID: 11400000, guid: a01396eb2377b27428eb55a7bc12b0a1, type: 2}
   DefaultEquipmentDatabase: {fileID: 11400000, guid: bc5d8a52d9f496a4d86f7b85e11ae3ce,
     type: 2}
+  EquipmentDatabase: {fileID: 11400000, guid: 30399a6b3a2771b4b900f11262af5b04, type: 2}
 --- !u!114 &494039856
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Game.Scripts.Utility.Characters;
+using Assets.Game.Scripts.Utility.Equipment;
 using Assets.Game.Scripts.Utility.Skills;
 using UniRx;
 using UnityEngine;
@@ -20,6 +22,7 @@ namespace Assets.Game.Scripts.Common {
 
         public ReactiveProperty<CharactersStateEnum> CharacterState =
             new ReactiveProperty<CharactersStateEnum>(CharactersStateEnum.Alive);
+        public ReactiveCollection<EquippedItem> EquippedItems = new ReactiveCollection<EquippedItem>();
 
         public CharacterStatusPresenter(CharacterData characterData, int level) {
             CharacterData = new ReactiveProperty<CharacterData>(new CharacterData());
@@ -37,6 +40,13 @@ namespace Assets.Game.Scripts.Common {
                 if (_)
                     CharacterState.Value = CharactersStateEnum.Dead;
             });
+        }
+
+        public void SetItems(List<EquippedItem> items) {
+            foreach (var equippedItem in items) {
+                equippedItem.Initialize();
+                EquippedItems.Add(equippedItem);
+            }
         }
 
         public ReactiveProperty<int> Level { get; protected set; }
@@ -86,18 +96,22 @@ namespace Assets.Game.Scripts.Common {
         }
 
         protected void SetupStatCalculations() {
-            Level.Subscribe(_ =>
-            {
-                Strength.Value = Level.Value*CharacterData.Value.LevelStrength + CharacterData.Value.StartStrength;
-                Dexterity.Value = Level.Value*CharacterData.Value.LevelDexterity + CharacterData.Value.StartDexterity;
-                Intelligence.Value = Level.Value*CharacterData.Value.LevelIntelligence +
-                                     CharacterData.Value.StartIntelligence;
-                Consitution.Value = Level.Value*CharacterData.Value.LevelConstitution +
-                                    CharacterData.Value.StartConstitution;
-            });
+            Level.Subscribe(_ => CalculateMainStats());
+            EquippedItems.ObserveRemove().Subscribe(_ => CalculateMainStats());
+            EquippedItems.ObserveAdd().Subscribe(_ => CalculateMainStats());
+            EquippedItems.ObserveReplace().Subscribe(_ => CalculateMainStats());
 
             Consitution.Subscribe(_ => MaximumHealth.Value = _*25f);
             Consitution.Subscribe(_ => RemainingHealth.Value = _*25f);
+        }
+
+        protected void CalculateMainStats() {
+            Strength.Value = Level.Value * CharacterData.Value.LevelStrength + CharacterData.Value.StartStrength + EquippedItems.Sum(i => i.Item.MainStatusChanges.Where(__ => __.MainStat == MainStatEnum.Strength).Sum(__ => __.Value));
+            Dexterity.Value = Level.Value * CharacterData.Value.LevelDexterity + CharacterData.Value.StartDexterity + EquippedItems.Sum(i => i.Item.MainStatusChanges.Where(__ => __.MainStat == MainStatEnum.Dexterity).Sum(__ => __.Value));
+            Intelligence.Value = Level.Value * CharacterData.Value.LevelIntelligence +
+                                 CharacterData.Value.StartIntelligence + EquippedItems.Sum(i => i.Item.MainStatusChanges.Where(__ => __.MainStat == MainStatEnum.Intelligence).Sum(__ => __.Value));
+            Consitution.Value = Level.Value * CharacterData.Value.LevelConstitution +
+                                CharacterData.Value.StartConstitution;
         }
 
         protected void SetupActionPoints() {

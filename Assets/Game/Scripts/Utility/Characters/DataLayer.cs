@@ -7,6 +7,7 @@ namespace Assets.Game.Scripts.Utility.Characters
     {
         public CharactersDatabase CharactersDatabase;
         public DefaultEquipmentDatabase DefaultEquipmentDatabase;
+        public EquipmentDatabase EquipmentDatabase;
 
         private static DataLayer _instance;
 

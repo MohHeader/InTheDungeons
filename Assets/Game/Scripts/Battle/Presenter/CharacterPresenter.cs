@@ -91,6 +91,9 @@ namespace Assets.Game.Scripts.Battle.Presenter {
             StatusPresenter.PropagateArgument(CharacterData);
             Weapon.PropagateArgument(this);
             Offhand.PropagateArgument(this);
+
+            CharacterData.SetItems(argument.Items);
+
             CharacterData.CharacterState.Subscribe(_ => StartCoroutine(AliveStateChanged(_)));
         }
 

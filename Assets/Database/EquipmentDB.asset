@@ -14,8 +14,12 @@ MonoBehaviour:
   Database:
   - Id: 1
     Name: Sword
-    AssetPath: Assets/Game/Resources/Weapons/Sword/Sword01.prefab
+    AssetPath: Assets/Game/Resources/Weapons/Sword/Sword29.prefab
     EquipmentType: 0
     IconPath: 
-    MainStats: []
+    MainStats:
+    - MainStat: 0
+      Minimum: 10
+      Maximum: 15
+      Probability: 1
     RequiredLevel: 0

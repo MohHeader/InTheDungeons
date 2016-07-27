@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: TopDownDungeon2Theme
   m_EditorClassIdentifier: 
   indexCounter:
-    index: 14
+    index: 15
   topZIndex:
-    index: 190
+    index: 198
   nodes:
   - {fileID: 11468980}
   - {fileID: 11478870}
@@ -38,6 +38,7 @@ MonoBehaviour:
   - {fileID: 11496196}
   - {fileID: 11496650}
   - {fileID: 11423274}
+  - {fileID: 11499548}
   links:
   - {fileID: 11441094}
   - {fileID: 11471450}
@@ -49,6 +50,7 @@ MonoBehaviour:
   - {fileID: 11426898}
   - {fileID: 11440664}
   - {fileID: 11438624}
+  - {fileID: 11474690}
 --- !u!114 &11400414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -966,6 +968,28 @@ MonoBehaviour:
     height: 15
   tangent: {x: 0, y: -1}
   tangentStrength: 50
+--- !u!114 &11449718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a4af758c5024ee3ad022895232667f, type: 3}
+  m_Name: MarkerNode_dc78df82-0c6b-4478-80fb-34f518488cb6_OutputPin
+  m_EditorClassIdentifier: 
+  pinType: 1
+  node: {fileID: 11499548}
+  position: {x: 60, y: 48}
+  boundsOffset:
+    serializedVersion: 2
+    x: -40
+    y: -15
+    width: 80
+    height: 15
+  tangent: {x: 0, y: 1}
+  tangentStrength: 50
 --- !u!114 &11450714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1106,8 +1130,8 @@ MonoBehaviour:
     y: 412
     width: 120
     height: 120
-  selected: 0
-  zIndex: 128
+  selected: 1
+  zIndex: 198
   inputPins:
   - {fileID: 11466264}
   outputPins:
@@ -1131,7 +1155,7 @@ MonoBehaviour:
     e32: 0
     e33: 1
   consumeOnAttach: 1
-  attachmentProbability: 0
+  attachmentProbability: 1
   IsStatic: 1
   affectsNavigation: 0
   selectionRuleEnabled: 0
@@ -1470,6 +1494,21 @@ MonoBehaviour:
   input: {fileID: 11449340}
   output: {fileID: 11412780}
   graph: {fileID: 11400000}
+--- !u!114 &11474690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1574844e380142bb9f5e4a8003b85a1, type: 3}
+  m_Name: Link_15
+  m_EditorClassIdentifier: 
+  id: 15
+  input: {fileID: 11444850}
+  output: {fileID: 11449718}
+  graph: {fileID: 11400000}
 --- !u!114 &11474754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1659,7 +1698,7 @@ MonoBehaviour:
     y: -199.42859
     width: 120
     height: 120
-  selected: 1
+  selected: 0
   zIndex: 190
   inputPins:
   - {fileID: 11420730}
@@ -1804,3 +1843,28 @@ MonoBehaviour:
     height: 15
   tangent: {x: 0, y: 1}
   tangentStrength: 50
+--- !u!114 &11499548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f86a247f92be461b8448085107abfca, type: 3}
+  m_Name: MarkerNode_dc78df82-0c6b-4478-80fb-34f518488cb6
+  m_EditorClassIdentifier: 
+  id: dc78df82-0c6b-4478-80fb-34f518488cb6
+  caption: BuildingWall
+  bounds:
+    serializedVersion: 2
+    x: 255.94812
+    y: -37.065002
+    width: 120
+    height: 50
+  selected: 0
+  zIndex: 197
+  inputPins: []
+  outputPins:
+  - {fileID: 11449718}
+  graph: {fileID: 11400000}
